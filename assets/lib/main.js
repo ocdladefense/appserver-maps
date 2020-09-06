@@ -48,22 +48,24 @@ let features = {
 	lifetime: {
 		name: "lifetime",
 		label: "Lifetime",
-		count: 20,
+		count: 5,
 		config: {
-			markers: {
+			marker: {
 				label: "L",
-				color: "#660066"
+				color: "#660066",
+				style: new CustomMarkerStyle()
 			}
 		}
 	},
 	sustaining: {
 		name: "sustaining",
 		label: "Sustaining",
-		count: 100,
+		count: 5,
 		config: {
-			markers: {
+			marker: {
 				label: "S",
-				color: "#660066"
+				color: "#660066",
+				style: new CustomMarkerStyle()
 			}
 		}
 	},
@@ -71,12 +73,13 @@ let features = {
 	honored: {
 		name: "honored",
 		label: "Honored",
-		count: 20,
+		count: 5,
 		color: "#660066",
 		config: {
-			markers: {
+			marker: {
 				label: "S",
-				color: "#660066"
+				color: "#660066",
+				style: new CustomMarkerStyle()
 			}
 		}
 	},
@@ -84,11 +87,12 @@ let features = {
 	regular: {
 		name: "regular",
 		label: "Regular",
-		count: 200,
+		count: 5,
 		config: {
-			markers: {
+			marker: {
 				label: "R",
-				color: "#660066"
+				color: "#660066",
+				style: new CustomMarkerStyle()
 			}
 		}
 	},
@@ -96,11 +100,12 @@ let features = {
 	courts: {
 		name: "courts",
 		label: "Circuit Courts",
-		count: 50,
+		count: 5,
 		config: {
-			markers: {
+			marker: {
 				label: "C",
-				color: "#660066"
+				color: "#660066",
+				style: new CustomMarkerStyle()
 			}
 		}
 	}
@@ -144,10 +149,14 @@ function handleEvent(e) {
 	var featureName = target.dataset && target.dataset.featureName;
 	if(!featureName) return;
 	
+
+	
 	if(myMap.isVisible(featureName)) {
+		target.classList.remove("feature-active");
 		myMap.hideFeature(featureName);
 	} else {
 		myMap.showFeature(featureName);
+		target.classList.add("feature-active");
 	}
 	
 }

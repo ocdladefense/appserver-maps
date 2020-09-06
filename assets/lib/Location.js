@@ -45,12 +45,15 @@ const Location = (function () {
     */
 
     function Location(position) {
-        this.type = "location";
         this.position = position;
         this.label = "C";
     }
+    
 
-    var prototype = {};
+
+    var prototype = {
+    	getPosition: function() { return this.position; }
+    };
     Location.prototype = prototype;
 
     return Location;

@@ -1,3 +1,6 @@
+
+
+
 const MapDatasources = (function() {
 
 	// Example for future fetch
@@ -74,12 +77,10 @@ const MapDatasources = (function() {
 			var pt_x = Math.sqrt(pt_radius_sq) * Math.cos(pt_angle);
 			var pt_y = Math.sqrt(pt_radius_sq) * Math.sin(pt_angle);
 			
-			returnedPosition = {
+			return {
 					lat: fromPoint.lat + pt_x / 2,
 					lng: fromPoint.lng + pt_y / 2,
 			};
-		
-			return returnedPosition;
 	}
 
 	// @todo - make some notes about the shape of this Contact object.
@@ -106,16 +107,30 @@ const MapDatasources = (function() {
 			let members = [];
 			let start = positions[feature.name];
 
+			console.log("Executing callout for feature: ",feature);
+
 			for (let i = 0; i < feature.count; i++) {
 					// Add a new member to the array
+					var lat, lng;
+					
+					({lat,lng} = randomizeCoordinates(start));
+					
 					let contact = {
-						Member_Type__c: status,
+						Member_Type__c: "R",
 						Name: "John Doe",
 						Email: "jdoe@gmail.com",
 						Phone: "5412288481",
-						MailingAddress: { street: "1234 Sandy Ln.", city: "Eugene",state: "Oregon",  country: "United States", postalCode: "97401"},
-						position: randomizeCoordinates(start)
+						MailingAddress: {
+							street: "1234 Sandy Ln.",
+							city: "Eugene",
+							state: "Oregon",
+							country: "United States",
+							postalCode: "97401"
+						},
+						MailingLatitude: lat,
+						MailingLongitude: lng
 					};
+					
 					members[i] = new Member(contact);
 			}
 
@@ -128,7 +143,7 @@ const MapDatasources = (function() {
 			let locations = [];
 			let position = positions["courts"];
 
-			for (let i = 0; i < 50; i++) {
+			for (let i = 0; i < feature.count; i++) {
 					// Add a new member to the array
 					locations[i] = new Location(randomizeCoordinates(position));
 			}

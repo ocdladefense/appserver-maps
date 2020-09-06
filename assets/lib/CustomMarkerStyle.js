@@ -1,4 +1,4 @@
-const MarkerStyle = (function() {
+const CustomMarkerStyle = (function() {
 	
 	let DEFAULT_MARKER_PATH = 'M 0,0  C -0.7,-9 -3,-14 -5.5,-18.5 ' +
 						'A 16,16 0 0,1 -11,-29 ' +
@@ -15,7 +15,8 @@ const MarkerStyle = (function() {
 	let DEFAULT_STROKE_COLOR = "rgba(255,255,255,1.0)";
 	
 	
-	function MarkerStyle(config) {
+	function CustomMarkerStyle(config) {
+		config = config || {};
 		this.path = config.path || DEFAULT_MARKER_PATH;
 		this.color = config.color || DEFAULT_FILL_COLOR;
 		this.opacity = config.opacity || 1;
@@ -24,8 +25,8 @@ const MarkerStyle = (function() {
 		this.scale = config.scale || 1;
 	}
 			
-	function toMarkerStyleObject(domain) {
-			domain = domain || "google.maps.Marker";
+	function getVendorObject(vendor) {
+			vendor = vendor || "google.maps.Marker";
 			
 			return {
 					path: this.path,
@@ -33,14 +34,14 @@ const MarkerStyle = (function() {
 					fillOpacity: 1,
 					strokeColor: this.strokeColor,
 					strokeWeight: this.strokeWeight,
-					scale: 1
+					scale: this.scale
 			};
 	}          
 								
 	
-	MarkerStyle.prototype = {
-		toMarkerStyleObject: toMarkerStyleObject
+	CustomMarkerStyle.prototype = {
+		getVendorObject: getVendorObject
 	};
 
-	return MarkerStyle;
+	return CustomMarkerStyle;
 })();

@@ -33,7 +33,7 @@ class MapTemplate extends Template {
 			"Callout.js",
 			"Member.js",
 			"Location.js",
-			"MarkerStyle.js",
+			"CustomMarkerStyle.js",
 			"Marker.js",
 			"CustomMapTheme.js",
 			"MapConfiguration.js",

@@ -3,22 +3,39 @@ const Marker = (function() {
 
 
     function Marker(data) {
-    	this.icon = new MarkerStyle();
     	this.animation = google.maps.Animation.DROP;
-    	this.position = data.position;
-    	this.data = data.data;
     }
     
 
+		function setIcon(icon) {
+			this.icon = icon;
+		}
+		
+		function setLabel(label) {
+			this.label = label;
+		}
+		
+		function setColor(color) {
+			this.color = color;
+		}
+		
+		function setPosition(pos) {
+			this.position = pos;
+		}
+
     
-    function getAsMarker() {        
-            
+    function getVendorObject(vendor) {        
+      	vendor = vendor || "google.maps.Marker";
+      	
 				let marker = new google.maps.Marker({
 						map: null,
 						animation: google.maps.Animation.DROP,
 						position: this.position,
-						icon: this.icon,
-						data: this.data
+						/* icon: this.icon, */
+						label: {
+							text: "R",
+							color: "rgba(255,255,255,1.0)"
+						}
 				});
        
        	/*
@@ -63,7 +80,8 @@ const Marker = (function() {
     
 
     Marker.prototype = {
-    	getAsMapMarker: getAsMarker
+    	setPosition: setPosition,
+    	getVendorObject: getVendorObject
     };
     
     

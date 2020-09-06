@@ -8,8 +8,9 @@ const MapFeature = (function () {
         this.label = feature.label;
         this.data = feature.data || [];
         this.markers = [];
-				this.config = feature.config.markers;
-				console.log("Configuration for feature, ",this.name," is: ",this.config);
+        this.count = feature.count;
+				this.marker = feature.config.marker;
+				console.log("Marker config for feature, ",this.name," is: ",this.marker);
 		}
 
 
@@ -77,12 +78,19 @@ const MapFeature = (function () {
         let marker = null;
 
 				// Handle the response from getMarkerData()
-				return this.data.then(function(data) {
+				return this.data.then(function(sources) {
 					let markers = [];
 					// create the markers
-					for (let i = 0; i < data.length; i++) {
-							// Set up the marker array for the feature
-							markers.push(new Marker(data[i]));
+					for (let i = 0; i < sources.length; i++) {
+							let source = sources[i];
+							
+							let marker = new Marker();
+							marker.setPosition(source.getPosition());
+							// Do some validation on the marker.
+							
+							
+							// Get the Google Map Marker format.
+							markers.push(marker.getVendorObject());
 					}
 					
 					return markers;
