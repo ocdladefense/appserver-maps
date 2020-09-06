@@ -1,0 +1,38 @@
+#map {
+	height: 100%;
+}
+
+html, body, #wrapper {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+address {
+	padding-right: 2px;
+}
+
+/* Toolbar Styles */
+#toolbar {
+    cursor: pointer;
+    padding: 0;
+}
+
+#toolbarOptions a {
+    /* color: #660066; */
+}
+
+ 
+  /* syntax for creating different screen sizes */
+@media screen and (max-width: 400px){ 
+    #toolbar{ 
+      /* display: none; */
+    } 
+    
+    #ocdlaIcon {
+        /* display: none; */
+    }
+} 
+  
+  /* below example for mobile  
+  body.ismobile #map-toolbar */
