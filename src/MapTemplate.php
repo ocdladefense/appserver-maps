@@ -29,22 +29,22 @@ class MapTemplate extends Template {
 
 
 		private $module = array(
-			"Location.js",
-			"CustomMarkerStyle.js",
-			"Marker.js",
-			"CustomMapTheme.js",
-			"MapConfiguration.js",
-			"MapApplication.js",
-			"MapFeature.js",
-			"MapDatasources.js",
-			"main.js"
+			"lib/Location.js",
+			"lib/CustomMarkerStyle.js",
+			"lib/Marker.js",
+			"lib/CustomMapTheme.js",
+			"lib/MapConfiguration.js",
+			"lib/MapApplication.js",
+			"lib/MapFeature.js",
+			"lib/MapDatasources.js",
+			"js/config.js",
+			"lib/main.js"
 		);
 
 		private $moduleCore = array(
 			"Repository.js",
 			"Callout.js",
 			"Member.js"
-			// "User.js"
 		);
 
 
@@ -58,12 +58,11 @@ class MapTemplate extends Template {
 			foreach($this->core as $name) {
 				$scripts [] = array("src" => "/content/libraries/core/".$name);			
 			}
-			foreach($this->module as $name) {
-				$scripts [] = array("src" => "/modules/map/assets/lib/".$name);			
-			}
-			
 			foreach($this->moduleCore as $name) {
 				$scripts [] = array("src" => "/modules/map/assets/core/".$name);			
+			}
+			foreach($this->module as $name) {
+				$scripts [] = array("src" => "/modules/map/assets/".$name);			
 			}
 			
 			

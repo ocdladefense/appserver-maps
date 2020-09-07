@@ -28,6 +28,16 @@ const User = (function () {
 					window.navigator.geolocation.getCurrentPosition(resolve);
 			});
     }
+    
+
+		/*
+		init.then(function() {
+				locationProcess.then(function (position) {
+						user.setUserLocation(position.coords);
+						myApp.pan(user.getCoordinates());
+				});
+		});
+		*/
 
     // Set up the prototype obj
     var prototype = {
