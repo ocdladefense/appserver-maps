@@ -27,16 +27,23 @@
 							<a class="nav-link text-dark" data-toggle="dropdown">Members</a>
 							<ul class="dropdown-menu">
 									<li>
+										<a data-feature-name="lifetime" class="nav-link text-dark">Regular</a>
+									</li>
+									<li>
+										<a data-feature-name="sustaining"  class="nav-link text-dark">Sustaining</a>
+									</li>
+									<li>
+										<a data-feature-name="honored" class="nav-link text-dark">Honored</a>
+									</li>
+									<li>
 										<a data-feature-name="lifetime" class="nav-link text-dark">Lifetime</a>
 									</li>
-									<li><a data-feature-name="sustaining"  class="nav-link text-dark">Sustaining</a></li>
-									<li><a data-feature-name="honored" class="nav-link text-dark">Honored</a></li>
 							</ul>
 					</li>
 					<li class="nav-item dropdown">
 							<a class="nav-link text-dark" data-toggle="dropdown">Locations</a>
 							<ul class="dropdown-menu">
-									<li><a data-feature-name="courts"  class="nav-link text-dark">Courthouses</a></li>
+									<li><a data-feature-name="courts"  class="nav-link text-dark">Circuit Courts</a></li>
 							</ul>
 					</li>
 			</ul>

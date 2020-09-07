@@ -6,15 +6,9 @@
  */
 
 
-
-
-
-
-
-
-
 // Instatiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
+// myMap.setRepository(repository)
 myMap.loadFeatures(features);
 
 // Render the map to the page
@@ -26,15 +20,9 @@ let init = myMap.init().then(function() {
 
 
 
-
-
-
-/*
- Needs to test whether the feature has been created or not. If 
- feature hasn't been created, create a NEW feature. 
-*/
-
-
+/**
+ * Let the user turn features on and off.
+ */
 function handleEvent(e) {
 	var target = e.target;
 	var featureName = target.dataset && target.dataset.featureName;
@@ -51,10 +39,6 @@ function handleEvent(e) {
 	}
 	
 }
-
-
-
-
 
 
 document.addEventListener("click", handleEvent, true);

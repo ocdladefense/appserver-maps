@@ -1,4 +1,4 @@
-const CustomMarkerStyle = (function() {
+const MarkerStyle = (function() {
 	
 	let DEFAULT_MARKER_PATH = 'M 0,0  C -0.7,-9 -3,-14 -5.5,-18.5 ' +
 						'A 16,16 0 0,1 -11,-29 ' +
@@ -15,8 +15,8 @@ const CustomMarkerStyle = (function() {
 	let DEFAULT_STROKE_COLOR = "rgba(255,255,255,1.0)";
 	
 	
-	function CustomMarkerStyle(config) {
-		config = config || {};
+	function MarkerStyle(label, color, config) {
+		config = arguments.length === 1 ? config : (!config ? {label: label, color: color} : config);
 		this.path = config.path || DEFAULT_MARKER_PATH;
 		this.color = config.color || DEFAULT_FILL_COLOR;
 		this.opacity = config.opacity || 1;
@@ -39,9 +39,9 @@ const CustomMarkerStyle = (function() {
 	}          
 								
 	
-	CustomMarkerStyle.prototype = {
+	MarkerStyle.prototype = {
 		getVendorObject: getVendorObject
 	};
 
-	return CustomMarkerStyle;
+	return MarkerStyle;
 })();

@@ -26,10 +26,10 @@ const config = {
 		theme: new CustomMapTheme(),
     enableHighAccuracy: true,
     start: {
-			latitude: 45.633331,
+			latitude: 42.633331,
 			longitude: -122.599998
     },
-    zoom: 10
+    zoom: 6
 };
 
 
@@ -38,30 +38,28 @@ const config = {
  * Describe MapFeatures that can be layered 
  *  onto the map.
  */
-let features = {
-	lifetime: {
-		name: "lifetime",
-		label: "Lifetime",
+const features = {
+
+	regular: {
+		name: "regular",
+		label: "Regular",
 		count: 5,
-		config: {
-			marker: {
-				label: "L",
-				color: "#660066",
-				style: new CustomMarkerStyle()
-			}
-		}
+		markerStyle: new MarkerStyle("R","#660066")
 	},
+	
+	regular: {
+		name: "nonlawyer",
+		label: "Professional",
+		count: 5,
+		markerStyle: new MarkerStyle("N","#660066")
+	},
+	
+
 	sustaining: {
 		name: "sustaining",
 		label: "Sustaining",
 		count: 5,
-		config: {
-			marker: {
-				label: "S",
-				color: "#660066",
-				style: new CustomMarkerStyle()
-			}
-		}
+		markerStyle: new MarkerStyle("S","#660066")
 	},
 	
 	honored: {
@@ -69,39 +67,21 @@ let features = {
 		label: "Honored",
 		count: 5,
 		color: "#660066",
-		config: {
-			marker: {
-				label: "S",
-				color: "#660066",
-				style: new CustomMarkerStyle()
-			}
-		}
+		markerStyle: new MarkerStyle("H","#660066")
 	},
 	
-	regular: {
-		name: "regular",
-		label: "Regular",
+	lifetime: {
+		name: "lifetime",
+		label: "Lifetime",
 		count: 5,
-		config: {
-			marker: {
-				label: "R",
-				color: "#660066",
-				style: new CustomMarkerStyle()
-			}
-		}
+		markerStyle: new MarkerStyle("L","rgba(255,255,255,1.0)")
 	},
 	
 	courts: {
 		name: "courts",
 		label: "Circuit Courts",
 		count: 5,
-		config: {
-			marker: {
-				label: "C",
-				color: "#660066",
-				style: new CustomMarkerStyle()
-			}
-		}
+		markerStyle: new MarkerStyle("C","#660066")
 	}
 };
 

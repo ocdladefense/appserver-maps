@@ -1,12 +1,17 @@
 const Marker = (function() {
 
 
-
+		/**
+		 * Marker - represent a wrapper object that 
+		 *   links a map marker to
+		 *   a related object.
+		 *  The related object is used, for example,
+		 *   to display the map marker.
+		 */
     function Marker(data) {
-    	this.animation = google.maps.Animation.DROP;
+    	this.relatedTo = data;
     }
     
-
 		function setIcon(icon) {
 			this.icon = icon;
 		}
@@ -15,12 +20,21 @@ const Marker = (function() {
 			this.label = label;
 		}
 		
+		function setRelated(obj) {
+			this.relatedTo = obj;
+		}
+		
 		function setColor(color) {
 			this.color = color;
 		}
 		
 		function setPosition(pos) {
 			this.position = pos;
+		}
+		
+		function setStyle(style) {
+			if(!style) throw new Error("INVALID_DATA_ERROR: The given style is invalid.");
+			this.style = style.getVendorObject();
 		}
 
     
@@ -31,23 +45,29 @@ const Marker = (function() {
 						map: null,
 						animation: google.maps.Animation.DROP,
 						position: this.position,
-						/* icon: this.icon, */
-						label: {
-							text: "R",
-							color: "rgba(255,255,255,1.0)"
-						}
+						icon: this.style
+						// label: this.style
 				});
-       
-       	/*
-        // Add a click event listener for the info window
-        marker.addListener("click", function () {
+     
+     		return marker;  
+    }  	
+    
+    function addEventListener() {
+        /* Add a click event listener for the info window
+        marker.addListener("click", () => {
             // Set up the info window when clicked
-            initMapInfoWindow(marker);
+        		window.markerInfoWindow = new google.maps.InfoWindow({
+        			content: this.relatedTo.getInfo()
+        		});
             window.markerInfoWindow.open(map, marker);
         });
-				*/
+            // initMapInfoWindow(marker);
+            // window.markerInfoWindow.open(map, marker);
+        });
+				
 				
         return marker;
+        */
     }
     
     /**
@@ -55,32 +75,13 @@ const Marker = (function() {
      */
     // This needs to be adjusted
     function getInfo() {
-        // Info window for marker, showing member details
-        let contact = this.contact;
-        
-				return `<div id="infoWindow">
-					<div>
-						<label style="text-align:center;"><b>${contact.name}</b></label><br><br>
-							</div>
-							<div>
-									<label>${contact.phone}</label><br>
-									<label><a href="mailto:${marker.email}">${contact.email}</a></label><br>
-							</div><br>
-							<address>
-									<label>${contact.mailingAddress.street}</label><br>
-									<label>
-											${contact.mailingAddress.city}, ${contact.mailingAddress.state} ${contact.mailingAddress.postalCode}
-									</label><br>
-							</address><br>
-							<div>
-									<label><b>Occupation:</b> Need to update</label><br>
-							</div>
-					</div>`
+        return this.related.getInfo();
     }
     
 
     Marker.prototype = {
     	setPosition: setPosition,
+    	setStyle: setStyle,
     	getVendorObject: getVendorObject
     };
     
