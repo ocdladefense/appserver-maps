@@ -1,4 +1,4 @@
-const CustomMapTheme = (function () {
+const MapTheme = (function () {
     const CUSTOM_THEME = [
       {
         "elementType": "geometry.fill",
@@ -224,13 +224,13 @@ const CustomMapTheme = (function () {
     ];
 
 
-    function CustomMapTheme() { }
+    function MapTheme() { }
 
     var prototype = {
         getTheme: function () { return CUSTOM_THEME; }
     };
-    CustomMapTheme.prototype = prototype;
+    MapTheme.prototype = prototype;
 
 
-    return CustomMapTheme;
+    return MapTheme;
 })();
