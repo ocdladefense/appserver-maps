@@ -27,7 +27,8 @@ const MapConfiguration = (function () {
     	return {
 					zoom: this.zoom,
 					center: { lat: this.start.latitude, lng: this.start.longitude },
-					styles: this.styles
+					styles: this.styles,
+					disableDefaultUI: true
 			};
     }
 
