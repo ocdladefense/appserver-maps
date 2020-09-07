@@ -32,7 +32,7 @@ class MapTemplate extends Template {
 			"lib/Location.js",
 			"lib/MarkerStyle.js",
 			"lib/Marker.js",
-			"lib/CustomMapTheme.js",
+			"lib/MapTheme.js",
 			"lib/MapConfiguration.js",
 			"lib/MapApplication.js",
 			"lib/MapFeature.js",

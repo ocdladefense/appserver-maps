@@ -23,7 +23,7 @@ const config = {
     apiKey: "AIzaSyCvKb3IYis6dF0y940d4Ffe_ngP-lTiGZI",
     target: "map",
     repository: repository, // Where to get data consumed by the Map.
-		theme: new CustomMapTheme(),
+		theme: new MapTheme(),
     enableHighAccuracy: true,
     start: {
 			latitude: 42.633331,
