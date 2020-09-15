@@ -1,0 +1,14 @@
+{
+	"comment": "Module definition file.",
+	"name": "map",
+	"description": "Render Org data visually on maps.",
+	"files": [
+		"MapTemplate.php"
+	],
+	"routes": {
+		"maps": {
+			"callback":"home",
+			"content-type":"text\/html"
+		}
+	}
+}
