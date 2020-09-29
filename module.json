@@ -1,0 +1,18 @@
+{
+    "comment": "Module definition file.",
+    "name": "map",
+    "description": "Retrieve OCDLA Case Reviews.",
+    "files": [
+        "MapTemplate.php"
+    ],
+    "routes": {
+        "maps": {
+            "callback": "home",
+            "content-type": "text\/html"
+        },
+        "map/contacts": {
+            "callback": "getMemberData",
+            "content-type": "application\/json"
+        }
+    }
+}
