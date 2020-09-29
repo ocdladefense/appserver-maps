@@ -1,7 +1,7 @@
 {
     "comment": "Module definition file.",
     "name": "map",
-    "description": "Retrieve OCDLA Case Reviews.",
+    "description": "Render Org data visually on maps.",
     "files": [
         "MapTemplate.php"
     ],
@@ -10,7 +10,7 @@
             "callback": "home",
             "content-type": "text\/html"
         },
-        "map/contacts": {
+        "maps/contacts": {
             "callback": "getMemberData",
             "content-type": "application\/json"
         }
