@@ -85,15 +85,19 @@ const MapDatasources = (function () {
 
 	// Setting up call to get member data
 	let phpMemberData = new Callout(function (feature) {
-		$contacts = fetch("/map/contacts").then(function (resp) {
+		$contacts = fetch("/maps/contacts").then(function (resp) {
 			return resp.json();
 		});
 
 		// Contacts 'cause simple reminder this is from the Salesforce Contact object.
 		$members = $contacts.then(function (contacts) {
-			return contacts.map(function (contact) {
-				contact.position = { lat: contact.MailingLatitude, lng: contact.MailingLongitude };
-				return new Member(contact);
+			console.log(contacts);
+
+			return contacts.records.map(function (contact) {
+				let newMember = new Member(contact);
+
+				//contact.records.position = { lat: contact.records.MailingAddress.latitude, lng: contact.records.MailingAddress.longitude };
+				return newMember;
 			});
 		});
 
@@ -106,6 +110,7 @@ const MapDatasources = (function () {
 	let forceMemberData = new Callout(function (feature) {
 		var callout = ForceRemoting.invokeAction(null);
 		$contacts = callout("MapController", "getMembers", memberTypes[label]);
+		console.log($contacts);
 
 		// Contacts 'cause simple reminder this is from the Salesforce Contact object.
 		$members = $contacts.then(function (contacts) {
@@ -178,6 +183,7 @@ const MapDatasources = (function () {
 		repo.add("mockLocationData", mockLocationData);
 		repo.add("mockMemberData", mockMemberData);
 		repo.add("forceMemberData", forceMemberData);
+		repo.add("phpMemberData", phpMemberData);
 
 		if (!!fn) repo.setIndex(fn);
 

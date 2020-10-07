@@ -116,7 +116,7 @@ const MapApplication = (function () {
             let mapElement = document.createElement("script");
             mapElement.async = true;
             mapElement.defer = true;
-            mapElement.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB7xT16UiXsYTLS5_LaGLswFCPmA5tNVK8";//
+            mapElement.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB7xT16UiXsYTLS5_LaGLswFCPmA5tNVK8";
             // + apiKey
             ;// + "&callback=initMap";
             mapElement.onload = resolve;
@@ -163,6 +163,13 @@ const MapApplication = (function () {
         }, 5000);
     }
 
+    // Testing render here using new marker classes
+    function render(markers) {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(this.map);
+        }
+    }
+
 
     var prototype = {
         init: init,
@@ -174,7 +181,8 @@ const MapApplication = (function () {
         showFeature: showFeature,
         hideFeature: hideFeature,
         loadFeatures: loadFeatures,
-        isVisible: isVisible
+        isVisible: isVisible,
+        render: render
     };
     MapApplication.prototype = prototype;
 

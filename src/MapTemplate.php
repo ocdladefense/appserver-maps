@@ -30,7 +30,9 @@ class MapTemplate extends Template
 
 	private $module = array(
 		"lib/Location.js",
-		"lib/MarkerStyle.js",
+		"lib/UrlMarker.js",
+		"lib/CustomMarker.js",
+		"lib/GoogleMarker.js",
 		"lib/Marker.js",
 		"lib/OCDLATheme.js",
 		"lib/MapConfiguration.js",
@@ -42,8 +44,8 @@ class MapTemplate extends Template
 	);
 
 	private $moduleCore = array(
-		//"Repository.js",
-		"Callout.js",
+		// "Repository.js",
+		// "Callout.js",
 		"Member.js"
 	);
 
