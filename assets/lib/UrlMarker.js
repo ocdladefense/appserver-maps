@@ -14,7 +14,7 @@ const UrlMarker = (function () {
             position: this.position,
             icon: {
                 url: this.url,
-                scaledSize: new google.maps.Size(33, 50)
+                scaledSize: new google.maps.Size(30, 42)
             },
             data: this.data
         });

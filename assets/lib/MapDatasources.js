@@ -84,25 +84,25 @@ const MapDatasources = (function () {
 	}
 
 	// Setting up call to get member data
-	let phpMemberData = new Callout(function (feature) {
-		$contacts = fetch("/maps/contacts").then(function (resp) {
-			return resp.json();
-		});
+	// let phpMemberData = new Callout(function (feature) {
+	// 	$contacts = fetch("/maps/contacts").then(function (resp) {
+	// 		return resp.json();
+	// 	});
 
-		// Contacts 'cause simple reminder this is from the Salesforce Contact object.
-		$members = $contacts.then(function (contacts) {
-			console.log(contacts);
+	// 	// Contacts 'cause simple reminder this is from the Salesforce Contact object.
+	// 	$members = $contacts.then(function (contacts) {
+	// 		console.log(contacts);
 
-			return contacts.records.map(function (contact) {
-				let newMember = new Member(contact);
+	// 		return contacts.records.map(function (contact) {
+	// 			let newMember = new Member(contact);
 
-				//contact.records.position = { lat: contact.records.MailingAddress.latitude, lng: contact.records.MailingAddress.longitude };
-				return newMember;
-			});
-		});
+	// 			//contact.records.position = { lat: contact.records.MailingAddress.latitude, lng: contact.records.MailingAddress.longitude };
+	// 			return newMember;
+	// 		});
+	// 	});
 
-		return $members;
-	});
+	// 	return $members;
+	// });
 
 	// @todo - make some notes about the shape of this Contact object.
 	// c.Member_Type__c

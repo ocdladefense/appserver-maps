@@ -29,8 +29,13 @@ const MapFeature = (function () {
 	 */
 	function loadData() {
 		console.log(this.datasource);
+		this.data = this.datasource.send(this);
+	}
 
-		return this.datasource.send(this);
+	function initialize() {
+		this.isInitialized = true;
+		this.loadData();
+		this.markers = this.loadMarkers();
 	}
 
 
@@ -43,15 +48,17 @@ const MapFeature = (function () {
 		// hideFeatures();
 
 		// Make sure the feature has not been initialized 
-		if (!this.isInitialized) {
-			// Cache data for later use.
-			// Especially in case this MapFeature is cloned.
-			this.data = this.loadData();
-			console.log(this.data);
-			this.markers = this.loadMarkers();
+		// if (!this.isInitialized) {
+		// 	// Cache data for later use.
+		// 	// Especially in case this MapFeature is cloned.
+		// 	this.loadData();
+		// 	console.log(this.data);
+		// 	this.loadMarkers();
 
-			this.isInitialized = true;
-		}
+		// 	this.isInitialized = true;
+		// }
+
+
 
 		this.markers.then(function (markers) {
 			markers.forEach(function (marker) { marker.setMap(targetMap); });
@@ -76,6 +83,7 @@ const MapFeature = (function () {
 	// Creates the marker then passes the marker to the map
 	function loadMarkers() {
 		let marker = null;
+		//this.datasource.send(this);
 
 		// Handle the response from getMarkerData()
 		return this.data.then((sources) => {
@@ -107,7 +115,8 @@ const MapFeature = (function () {
 		loadMarkers: loadMarkers,
 		getMarkers: getMarkers,
 		render: render,
-		setDatasource: setDatasource
+		setDatasource: setDatasource,
+		initialize: initialize
 	};
 
 	MapFeature.prototype = prototype;

@@ -11,7 +11,12 @@ const MapApplication = (function () {
     function loadFeatures(config) {
         for (var name in config) {
             let f = new MapFeature(config[name]);
+            // This line should go away
             f.setDatasource(this.repo.get(f));
+            // f.loadData();
+            //f.loadMarkers();
+            //f.isInitialized = true;
+            f.initialize();
             this.features.push(f);
         }
     }
@@ -72,7 +77,7 @@ const MapApplication = (function () {
             console.error("Could not locate Feature, ", name);
             return;
         }
-
+        f.loadMarkers();
         f.render(this.map);
     }
 
