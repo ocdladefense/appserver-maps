@@ -74,6 +74,13 @@ const MapApplication = (function () {
     }
 
     function isVisible(feature) {
+        // find the feature
+        let f = this.features.find(element => element.name == feature);
+
+        // check its map property
+        if (f.markers[0].map !== null) {
+            return true;
+        }
         return false;
     }
 
@@ -119,7 +126,6 @@ const MapApplication = (function () {
 
 
     function getFeature(name) {
-        console.log(this.features);
         return this.features.find(feature => feature.name == name);
     }
 

@@ -65,7 +65,7 @@ const MapFeature = (function () {
 		return new MapFeature(this.config)
 	}
 
-	function hide(targetMap) {
+	function hide() {
 		this.markers.forEach(function (marker) {
 			marker.setMap(null);
 		});
@@ -139,6 +139,7 @@ const MapFeature = (function () {
 		loadMarkers: loadMarkers,
 		getMarkers: getMarkers,
 		render: render,
+		hide: hide,
 		setDatasource: setDatasource,
 		initialize: initialize
 	};

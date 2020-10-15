@@ -5,6 +5,10 @@ const UrlMarker = (function () {
         this.data = data;
         this.url = data.markerUrl || null
         this.position = data.position;
+
+        if (this.url === null) {
+            console.log(data);
+        }
     }
 
     function createMarker() {
@@ -13,7 +17,7 @@ const UrlMarker = (function () {
             animation: google.maps.Animation.DROP, // Animation options - BOUNCE & DROP
             position: this.position,
             icon: {
-                url: this.url,
+                url: this.url || null,
                 scaledSize: new google.maps.Size(30, 33)
             },
             data: this.data

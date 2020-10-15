@@ -5,12 +5,12 @@ class MapTemplate extends Template
 
 	// Component styles.
 	private $css = array(
-		/*
-			array(
-				"active" => true,
-				"href" => "/modules/car/assets/css/carCreateStyles.css"
-			)
-			*/);
+
+		array(
+			"active" => true,
+			"href" => "/modules/maps/assets/css/mapStyles.css"
+		)
+	);
 
 	/*
       <apex:stylesheet value="{!$Resource.MapStyles}" />
@@ -44,8 +44,8 @@ class MapTemplate extends Template
 	);
 
 	private $moduleCore = array(
-		// "Repository.js",
-		// "Callout.js",
+		// "Repository.js", // Included in -- "/content/libraries/core/"
+		// "Callout.js",	// Included in -- "/content/libraries/core/"
 		"Member.js"
 	);
 

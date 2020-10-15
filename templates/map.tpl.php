@@ -5,17 +5,7 @@
  * Template to render a map.
  */
 ?>
-<style type="text/css">
-	#stage-content {
-		height: 800px;
-	}
 
-	#map {
-		height: 100%;
-	}
-
-	#container-left {}
-</style>
 <nav id="toolbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
 	<div class="x-container">
 
