@@ -1,0 +1,67 @@
+#map {
+    height: 95%;
+    position: relative;
+    overflow-y: hidden !important;
+    overflow-x: auto !important;
+}
+
+#stage-content {
+    height: 800px;
+}
+
+html, body, #wrapper {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+address {
+    padding-right: 2px;
+}
+
+
+
+
+/* These styles need to be updated */
+
+/* Toolbar dropdown menu styles  */
+
+
+/* .dropbtn {
+    float: right;
+    margin: 2px 5px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 3px 3px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;} */
+
+/* syntax for creating different screen sizes */
+/* @media screen and (max-width: 550px){
+#mapToolbar{
+    display: none;
+}  */
+
+/* below example for mobile  
+body.ismobile #map-toolbar */

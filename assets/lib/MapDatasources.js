@@ -1,30 +1,4 @@
-
-
-
 const MapDatasources = (function () {
-
-	// Example for future fetch
-	//let callout = fetch('/member-map-data');
-
-	/*
-	Example member
-
-	var member = {
-			id: 1,
-			firstName: "Jane",
-			lastName: "Doe",
-			company: "Jacob Accurso Investigations",
-			pNumber: "(541) 444-1234",
-			email: "jdoe@example.com",
-			occupation: "Investigator",
-			address: {
-					streetAddress: "PO Box 123",
-					city: "Siletz",
-					state: "OR",
-					zipcode: "97380"
-			}
-	};
-	*/
 
 	let positions = {
 		lifetime: {
@@ -61,12 +35,10 @@ const MapDatasources = (function () {
 		}
 	};
 
-
-
-
 	/**
 	 * Using a starting point, return a pseudo-randomized point 
 	 *  within a given radius of `fromPoint`.
+	 * 	Not currently being used
 	 */
 	function randomizeCoordinates(fromPoint, radius) {
 		radius = radius || 2.5;
@@ -83,29 +55,13 @@ const MapDatasources = (function () {
 		};
 	}
 
-	// Setting up call to get member data
-	let phpMemberData = new Callout(function (feature) {
-		$contacts = fetch("/map/contacts").then(function (resp) {
-			return resp.json();
-		});
-
-		// Contacts 'cause simple reminder this is from the Salesforce Contact object.
-		$members = $contacts.then(function (contacts) {
-			return contacts.map(function (contact) {
-				contact.position = { lat: contact.MailingLatitude, lng: contact.MailingLongitude };
-				return new Member(contact);
-			});
-		});
-
-		return $members;
-	});
-
 	// @todo - make some notes about the shape of this Contact object.
 	// c.Member_Type__c
 	// c.Name, c.MailingXXX, c.Phone, c.Email, c.MailingLatitude, c.MailingLongitude
 	let forceMemberData = new Callout(function (feature) {
 		var callout = ForceRemoting.invokeAction(null);
 		$contacts = callout("MapController", "getMembers", memberTypes[label]);
+		console.log($contacts);
 
 		// Contacts 'cause simple reminder this is from the Salesforce Contact object.
 		$members = $contacts.then(function (contacts) {
@@ -170,7 +126,6 @@ const MapDatasources = (function () {
 
 
 
-
 	function MapDatasources() { }
 
 	MapDatasources.index = function (fn) {
@@ -178,12 +133,12 @@ const MapDatasources = (function () {
 		repo.add("mockLocationData", mockLocationData);
 		repo.add("mockMemberData", mockMemberData);
 		repo.add("forceMemberData", forceMemberData);
+		//repo.add("phpMemberData", phpMemberData);
 
 		if (!!fn) repo.setIndex(fn);
 
 		return repo;
 	};
-
 
 	return MapDatasources;
 })();

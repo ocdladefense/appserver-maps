@@ -7,13 +7,41 @@ const MapApplication = (function () {
         this.map = null;
     }
 
+    // This gets called during startup
+    // Loads in the data for each feature
+    // Does not initialize all features, just prepares the data for each feature
+    function loadFeatureData() {
+        for (var MapFeature in this.features) {
+            // Set up the new feature
+            let feature = this.features[MapFeature];
+            feature.isInitialized = true;
+        }
 
+        // get the allMembers feature, load the data, then the markers
+        let f = this.features.find(element => element.name == "allMembers");
+        f.loadData(this.features);
+        f.markers = f.loadMarkers(this.features);
+
+        // Set up circuit courts
+        // let c = this.features.find(element => element.name == "court");
+        // c.loadData(c);
+        // c.markers = c.loadMarkers(c);
+    }
+
+    /**
+     * Set up each feature, then call loadFeatureData()
+     *  to set up data for each feature
+     */
     function loadFeatures(config) {
         for (var name in config) {
+            // Set up the new feature
             let f = new MapFeature(config[name]);
-            f.setDatasource(this.repo.get(f));
             this.features.push(f);
         }
+    }
+
+    function sortFeatureData() {
+        console.log(this.features);
     }
 
 
@@ -46,6 +74,13 @@ const MapApplication = (function () {
     }
 
     function isVisible(feature) {
+        // find the feature
+        let f = this.features.find(element => element.name == feature);
+
+        // check its map property
+        if (f.markers[0].map !== null) {
+            return true;
+        }
         return false;
     }
 
@@ -72,7 +107,6 @@ const MapApplication = (function () {
             console.error("Could not locate Feature, ", name);
             return;
         }
-
         f.render(this.map);
     }
 
@@ -92,7 +126,6 @@ const MapApplication = (function () {
 
 
     function getFeature(name) {
-        console.log(this.features);
         return this.features.find(feature => feature.name == name);
     }
 
@@ -116,7 +149,7 @@ const MapApplication = (function () {
             let mapElement = document.createElement("script");
             mapElement.async = true;
             mapElement.defer = true;
-            mapElement.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB7xT16UiXsYTLS5_LaGLswFCPmA5tNVK8";//
+            mapElement.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB7xT16UiXsYTLS5_LaGLswFCPmA5tNVK8";
             // + apiKey
             ;// + "&callback=initMap";
             mapElement.onload = resolve;
@@ -163,6 +196,13 @@ const MapApplication = (function () {
         }, 5000);
     }
 
+    // Testing render here using new marker classes
+    function render(markers) {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(this.map);
+        }
+    }
+
 
     var prototype = {
         init: init,
@@ -173,8 +213,10 @@ const MapApplication = (function () {
         getFeature: getFeature,
         showFeature: showFeature,
         hideFeature: hideFeature,
+        loadFeatureData: loadFeatureData,
         loadFeatures: loadFeatures,
-        isVisible: isVisible
+        isVisible: isVisible,
+        render: render
     };
     MapApplication.prototype = prototype;
 

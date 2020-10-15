@@ -1,22 +1,20 @@
 const Member = (function () {
 
 
-    function Member(contact) {
+	function Member(contact) {
+		this.status = contact.Ocdla_Member_Status__c;
+		this.name = contact.Name;
+		this.email = contact.Email;
+		this.phone = contact.Phone;
+		this.mailingAddress = contact.MailingAddress || "";
+		this.position = { lat: contact.MailingAddress.latitude, lng: contact.MailingAddress.longitude };
+	}
 
-
-				this.status = contact.Member_Status__c;
-				this.name = contact.Name;
-				this.email = contact.Email;
-				this.phone = contact.Phone;
-				this.mailingAddress = contact.MailingAddress || "";
-				this.position = { lat: contact.MailingLatitude, lng: contact.MailingLongitude };
-    }
-    
-		function getInfo() {
+	function getInfo() {
 		// Info window for marker, showing member details
-			let contact = this;
+		let contact = this;
 
-			return `<div id="infoWindow">
+		return `<div id="infoWindow">
 				<div>
 					<label style="text-align:center;"><b>${contact.name}</b></label><br><br>
 						</div>
@@ -34,13 +32,13 @@ const Member = (function () {
 								<label><b>Occupation:</b> Need to update</label><br>
 						</div>
 				</div>`;
-		}
+	}
 
-    var prototype = {
-    	getPosition: function() { return this.position; },
-    	getInfo: getInfo
-    };
-    Member.prototype = prototype;
+	var prototype = {
+		getPosition: function () { return this.position; },
+		getInfo: getInfo
+	};
+	Member.prototype = prototype;
 
-    return Member;
+	return Member;
 })();

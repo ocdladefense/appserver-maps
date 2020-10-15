@@ -10,20 +10,28 @@
 const myMap = new MapApplication(config);
 const mapTheme = new OCDLATheme();
 
-// myMap.setConfig(config);
-//myMap.setTheme(mapTheme);
-
 
 // myMap.setRepository(repository)
+
+// Set up the features and load in the data
 myMap.loadFeatures(features);
+myMap.loadFeatureData();
+
+
+// Set up a config for the OCDLA home marker
+let ocdlaConfig = {
+	url: '/modules/maps/assets/markers/ocdlaMarker/ocdla-marker-round-origLogo.svg',
+	position: {
+		lat: 44.044570,
+		lng: -123.090780
+	}
+};
 
 // Render the map to the page
 // After the map finished initializing, get and set the users 
 // location to the center point of the map
 let init = myMap.init().then(function () {
-	// initOCDLAHome();
-	// const marker = new CustomMarker("url");
-	// myMap.render(marker);
+
 });
 
 
