@@ -7,18 +7,41 @@ const MapApplication = (function () {
         this.map = null;
     }
 
+    // This gets called during startup
+    // Loads in the data for each feature
+    // Does not initialize all features, just prepares the data for each feature
+    function loadFeatureData() {
+        for (var MapFeature in this.features) {
+            // Set up the new feature
+            let feature = this.features[MapFeature];
+            feature.isInitialized = true;
+        }
 
+        // get the allMembers feature, load the data, then the markers
+        let f = this.features.find(element => element.name == "allMembers");
+        f.loadData(this.features);
+        f.markers = f.loadMarkers(this.features);
+
+        // Set up circuit courts
+        // let c = this.features.find(element => element.name == "court");
+        // c.loadData(c);
+        // c.markers = c.loadMarkers(c);
+    }
+
+    /**
+     * Set up each feature, then call loadFeatureData()
+     *  to set up data for each feature
+     */
     function loadFeatures(config) {
         for (var name in config) {
+            // Set up the new feature
             let f = new MapFeature(config[name]);
-            // This line should go away
-            f.setDatasource(this.repo.get(f));
-            // f.loadData();
-            //f.loadMarkers();
-            //f.isInitialized = true;
-            f.initialize();
             this.features.push(f);
         }
+    }
+
+    function sortFeatureData() {
+        console.log(this.features);
     }
 
 
@@ -77,7 +100,6 @@ const MapApplication = (function () {
             console.error("Could not locate Feature, ", name);
             return;
         }
-        f.loadMarkers();
         f.render(this.map);
     }
 
@@ -185,6 +207,7 @@ const MapApplication = (function () {
         getFeature: getFeature,
         showFeature: showFeature,
         hideFeature: hideFeature,
+        loadFeatureData: loadFeatureData,
         loadFeatures: loadFeatures,
         isVisible: isVisible,
         render: render

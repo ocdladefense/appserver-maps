@@ -36,9 +36,19 @@ class MapModule extends Module
 		global $oauth_config;
 
 		$saleforce = new Salesforce($oauth_config);
-		$assets = $saleforce->CreateQuery('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c ' .
+		$assets = $saleforce->CreateQuery('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
 			'FROM Contact WHERE Ocdla_Current_Member_Flag__c = true');	//  AND Ocdla_Member_Status__c = R
 
+		// $assets = $saleforce->CreateQuery('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
+		// 	'FROM Contact WHERE Ocdla_Is_Expert_Witness__c = true');
+
+		// $assets = $saleforce->CreateQuery('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
+		// 	'FROM Contact WHERE Ocdla_Member_Status__c = null');
+
 		return $assets;
+	}
+
+	function getCourtData()
+	{
 	}
 }

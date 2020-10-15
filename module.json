@@ -13,6 +13,10 @@
         "maps/contacts": {
             "callback": "getMemberData",
             "content-type": "application\/json"
+        },
+        "maps/courts": {
+            "callback": "getCourtData",
+            "content-type": "application\/json"
         }
     }
 }

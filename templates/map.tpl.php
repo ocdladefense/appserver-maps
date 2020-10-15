@@ -25,19 +25,19 @@
 					<a class="nav-link text-dark" data-toggle="dropdown">Members</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a data-feature-name="allMembers" class="nav-link text-dark">All Members</a>
+							<a data-feature-name="nonlawyer/regular" class="nav-link text-dark">Professional</a>
 						</li>
 						<li>
-							<a data-feature-name="lifetime" class="nav-link text-dark">Regular</a>
+							<a data-feature-name="regular" class="nav-link text-dark">Regular</a>
 						</li>
 						<li>
 							<a data-feature-name="sustaining" class="nav-link text-dark">Sustaining</a>
 						</li>
 						<li>
-							<a data-feature-name="honored" class="nav-link text-dark">Honored</a>
+							<a data-feature-name="lifetime" class="nav-link text-dark">Lifetime</a>
 						</li>
 						<li>
-							<a data-feature-name="lifetime" class="nav-link text-dark">Lifetime</a>
+							<a data-feature-name="honored" class="nav-link text-dark">Honored</a>
 						</li>
 					</ul>
 				</li>
