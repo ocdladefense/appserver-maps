@@ -15,26 +15,35 @@
 					<a class="nav-link text-dark" data-toggle="dropdown">Members</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a data-feature-name="nonlawyer/regular" class="nav-link text-dark">Professional</a>
+							<input type="checkbox" data-feature-name="nonlawyer/regular">
+							<label>Professional</label>
+							<!-- <a data-feature-name="nonlawyer/regular" class="nav-link text-dark">Professional</a> -->
 						</li>
 						<li>
-							<a data-feature-name="regular" class="nav-link text-dark">Regular</a>
+							<input type="checkbox" data-feature-name="regular">
+							<label>Regular</label>
 						</li>
 						<li>
-							<a data-feature-name="sustaining" class="nav-link text-dark">Sustaining</a>
+							<input type="checkbox" data-feature-name="sustaining">
+							<label>Sustaining</label>
 						</li>
 						<li>
-							<a data-feature-name="lifetime" class="nav-link text-dark">Lifetime</a>
+							<input type="checkbox" data-feature-name="lifetime">
+							<label>Lifetime</label>
 						</li>
 						<li>
-							<a data-feature-name="honored" class="nav-link text-dark">Honored</a>
+							<input type="checkbox" data-feature-name="honored">
+							<label>Honored</label>
 						</li>
 					</ul>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link text-dark" data-toggle="dropdown">Locations</a>
 					<ul class="dropdown-menu">
-						<li><a data-feature-name="courts" class="nav-link text-dark">Circuit Courts</a></li>
+						<li>
+							<input type="checkbox" data-feature-name="courts">
+							<label>Circuit Courts - NA</label>
+						</li>
 					</ul>
 				</li>
 			</ul>

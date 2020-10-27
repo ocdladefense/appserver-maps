@@ -29,11 +29,11 @@ const MapFeature = (function () {
 	}
 
 
-	function getInfoWindow(content) {
-		window.markerInfoWindow = new google.maps.InfoWindow({
-			content: content
-		});
-	}
+	// function getInfoWindow(content) {
+	// 	window.markerInfoWindow = new google.maps.InfoWindow({
+	// 		content: content
+	// 	});
+	// }
 
 	function setDatasource(callout) {
 		this.datasource = callout;

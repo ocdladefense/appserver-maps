@@ -31,7 +31,7 @@ let ocdlaConfig = {
 // After the map finished initializing, get and set the users 
 // location to the center point of the map
 let init = myMap.init().then(function () {
-
+	// add event handlers here
 });
 
 
@@ -40,7 +40,9 @@ let init = myMap.init().then(function () {
  * Let the user turn features on and off.
  */
 function handleEvent(e) {
+
 	var target = e.target;
+
 	var featureName = target.dataset && target.dataset.featureName;
 	if (!featureName) return;
 
@@ -49,7 +51,8 @@ function handleEvent(e) {
 	if (myMap.isVisible(featureName)) {
 		target.classList.remove("feature-active");
 		myMap.hideFeature(featureName);
-	} else {
+	}
+	else {
 		myMap.showFeature(featureName);
 		target.classList.add("feature-active");
 	}

@@ -5,6 +5,10 @@
     overflow-x: auto !important;
 }
 
+#toolbar {
+    cursor: default;
+}
+
 #stage-content {
     height: 800px;
 }
@@ -13,6 +17,10 @@ html, body, #wrapper {
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+.dropdown-menu {
+    padding-left: 10px;
 }
 
 address {
