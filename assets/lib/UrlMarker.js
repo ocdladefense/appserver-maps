@@ -2,13 +2,17 @@ const UrlMarker = (function () {
 
     // Currently being used for testing
     function UrlMarker(data) {
-        this.data = data;
-        this.url = data.markerUrl || null
-        this.position = data.position;
+        this.data = data || null;
+        this.url = !!data.markerUrl ? data.markerUrl : data;
+        this.position = !!data.position ? data.position : { lat: null, lng: null };
 
         if (this.url === null) {
             console.log(data);
         }
+    }
+
+    function setPosition(position) {
+        this.position = position;
     }
 
     function createMarker() {
@@ -31,30 +35,30 @@ const UrlMarker = (function () {
                 window.infoWindow.close();
             }
             // Set up the info window when clicked
-            initInfoWindow(marker);
+            window.infoWindow = initInfoWindow(marker.data);
             window.infoWindow.open(map, marker);
         });
 
         return marker;
     }
 
-    function initInfoWindow(marker) {
+    function initInfoWindow(contact) {
         // Info window for marker, showing marker details
         // Currently only set up for members
-        window.infoWindow = new google.maps.InfoWindow({
+        return new google.maps.InfoWindow({
             content:
                 `<div id="infoWindow">
                     <div>
-                        <label style="text-align:center;"><b>${marker.data.name || ""}</b></label><br><br>
+                        <label style="text-align:center;"><b>${contact.name || ""}</b></label><br><br>
                     </div>
                     <div>
-                        <label>${marker.data.phone || ""}</label><br>
-                        <label>${marker.data.email || ""} </label><br>
+                        <label>${contact.phone || ""}</label><br>
+                        <label>${contact.email || ""} </label><br>
                     </div><br>
                     <address>
-                        <label>${marker.data.mailingAddress.street}</label><br>
+                        <label>${contact.mailingAddress.street}</label><br>
                         <label>
-                            ${marker.data.mailingAddress.city || ""}, ${marker.data.mailingAddress.state || marker.data.mailingAddress.country || ""} ${marker.data.mailingAddress.postalCode || ""}
+                            ${contact.mailingAddress.city || ""}, ${contact.mailingAddress.state || contact.mailingAddress.country || ""} ${contact.mailingAddress.postalCode || ""}
                         </label><br>
                     </address><br>
                 </div>`
@@ -64,7 +68,8 @@ const UrlMarker = (function () {
 
     UrlMarker.prototype = {
         createMarker: createMarker,
-        initInfoWindow: initInfoWindow
+        initInfoWindow: initInfoWindow,
+        setPosition: setPosition
     };
 
     return UrlMarker;
