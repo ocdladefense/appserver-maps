@@ -5,6 +5,7 @@ const MapApplication = (function () {
         this.config = new MapConfiguration(conf);
         this.features = []; // array of MapFeature objects.
         this.map = null;
+        this.defaultMarkerCoordinates = this.config.mapOptions.center;
     }
 
     // This gets called during startup
@@ -198,8 +199,14 @@ const MapApplication = (function () {
 
     // Testing render here using new marker classes
     function render(markers) {
+        markers = Array.isArray(markers) ? markers : [markers];
+
         for (let i = 0; i < markers.length; i++) {
-            markers[i].setMap(this.map);
+            let marker = markers[i];
+            if (null == marker.postion) {
+                marker.setPosition(this.defaultMarkerCoordinates);
+            }
+            marker.createMarker().setMap(this.map);
         }
     }
 
