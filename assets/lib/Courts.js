@@ -1,5 +1,6 @@
-{
-    "circuitCourts": [
+const Courts = (function () {
+
+    const CIRCUIT_COURTS = [
         {
             "judicialDistrict": "1",
             "district": "Jackson County",
@@ -13,6 +14,7 @@
                 "lng": -122.876380
             },
             "website": "www.courts.oregon.gov/courts/jackson"
+
         },
         {
             "judicialDistrict": "2",
@@ -476,5 +478,17 @@
             },
             "website": "www.courts.oregon.gov/courts/tillamook"
         }
-    ]
-}
+    ];
+
+    function Courts() { }
+
+    // Set up the prototype obj
+    var prototype = {
+        getCourts: function () { return CIRCUIT_COURTS; }
+    };
+    Courts.prototype = prototype;
+
+    // Return the class
+    return Courts;
+})();
+

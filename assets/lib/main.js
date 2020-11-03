@@ -11,11 +11,14 @@ const myMap = new MapApplication(config);
 const mapTheme = new OCDLATheme();
 
 
+//const courts = new Courts();
+
+
 // myMap.setRepository(repository)
 
 // Set up the features and load in the data
-myMap.loadFeatures(features);
-myMap.loadFeatureData();
+// myMap.loadFeatures(features);
+// myMap.loadFeatureData();
 
 
 // Render the map to the page
@@ -25,6 +28,10 @@ let init = myMap.init().then(function () {
 	// add event handlers here
 	let ocdlaIcon = new UrlMarker('/modules/maps/assets/markers/ocdlaMarker/ocdla-marker-round-origLogo.svg');
 	myMap.render(ocdlaIcon);
+
+	// Set up the features and load in the data
+	myMap.loadFeatures(features);
+	myMap.loadFeatureData();
 });
 
 

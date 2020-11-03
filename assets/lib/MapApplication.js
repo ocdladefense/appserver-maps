@@ -6,6 +6,7 @@ const MapApplication = (function () {
         this.features = []; // array of MapFeature objects.
         this.map = null;
         this.defaultMarkerCoordinates = this.config.mapOptions.center;
+        this.defaultMarkerSize = this.config.mapOptions.defaultMarkerStyles.icon.scaledSize;
     }
 
     // This gets called during startup
@@ -21,12 +22,12 @@ const MapApplication = (function () {
         // get the allMembers feature, load the data, then the markers
         let f = this.features.find(element => element.name == "allMembers");
         f.loadData(this.features);
-        f.markers = f.loadMarkers(this.features);
+        f.markers = f.loadMemberMarkers(this.features);
 
         // Set up circuit courts
-        // let c = this.features.find(element => element.name == "court");
-        // c.loadData(c);
-        // c.markers = c.loadMarkers(c);
+        let c = this.features.find(element => element.name == "courts");
+        c.data = c.loadCourts();
+        c.markers = c.loadCourtMarkers(c);
     }
 
     /**
@@ -203,8 +204,9 @@ const MapApplication = (function () {
 
         for (let i = 0; i < markers.length; i++) {
             let marker = markers[i];
-            if (null == marker.postion) {
+            if (null == marker.position.lat && null == marker.position.lng) {
                 marker.setPosition(this.defaultMarkerCoordinates);
+                marker.setIconSize(this.defaultMarkerSize);
             }
             marker.createMarker().setMap(this.map);
         }
