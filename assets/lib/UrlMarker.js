@@ -44,15 +44,15 @@ const UrlMarker = (function () {
                 window.infoWindow.close();
             }
 
+            /**
+             * If the marker doesn't have data to show the user, do not open an info window
+             *  Currently the only marker without data is the OCDLA icon 
+             */
             if (marker.data != null) {
                 // Set up the info window when clicked
                 window.infoWindow = initInfoWindow(marker.data);
                 window.infoWindow.open(map, marker);
-                return;
             }
-
-
-
         });
 
         return marker;

@@ -25,18 +25,21 @@ class MapModule extends Module
 		global $oauth_config;
 
 		$saleforce = new Salesforce($oauth_config);
-		$assets = $saleforce->CreateQuery('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
+		$assets = $saleforce->createQueryFromSession('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
 			'FROM Contact WHERE Ocdla_Current_Member_Flag__c = true');	//  AND Ocdla_Member_Status__c = R
 
 		return $assets;
 	}
 
-	// This is not currently being used --  getting courts through Courts.js -> getCourts()
+	/**
+	 * Need to update courts to this method call,
+	 * 	currently using Courts.js -> getCourts()
+	 */
 	function getCourtData()
 	{
-		// $data = file_get_contents('../modules/maps/assets/data/circuitcourts.json');
-		// //$jsonData = json_decode($data, true);
+		$data = file_get_contents('../modules/maps/assets/data/circuitcourts.json');
+		$jsonData = json_decode($data, true);
 
-		// return $data;
+		return $jsonData;
 	}
 }
