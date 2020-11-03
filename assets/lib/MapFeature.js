@@ -28,13 +28,6 @@ const MapFeature = (function () {
 		//console.log("Marker config for feature, ", this.name, " is: ", this.marker);
 	}
 
-
-	// function getInfoWindow(content) {
-	// 	window.markerInfoWindow = new google.maps.InfoWindow({
-	// 		content: content
-	// 	});
-	// }
-
 	function setDatasource(callout) {
 		this.datasource = callout;
 	}
@@ -43,10 +36,13 @@ const MapFeature = (function () {
 	 * Consistently returns Promises for use with .then().
 	 */
 	function loadData() {
-		//console.log(this.datasource);
-
 		//send method lives in Callout.js
 		this.data = this.datasource.send(this);
+	}
+
+	function loadCourts() {
+		const courts = new Courts();
+		return courts.getCourts();
 	}
 
 	function initialize() {
@@ -77,8 +73,7 @@ const MapFeature = (function () {
 	}
 
 	// Creates the marker then passes the marker to the map
-	function loadMarkers(features) {
-
+	function loadMemberMarkers(features) {
 		// Handle the response from getMarkerData()
 		return this.data.then((sources) => {
 			let markers = [];
@@ -132,11 +127,29 @@ const MapFeature = (function () {
 		});
 	}
 
+	function loadCourtMarkers(courts) {
+		var markers = []
+		for (var i = 0; i < courts.data.length; i++) {
+			let court = courts.data[i];
+
+			// Set up the marker style for the court
+			court.markerUrl = courts.markerStyle;
+
+			let urlMarker = new UrlMarker(court);
+			let newMarker = urlMarker.createMarker();
+			markers.push(newMarker);
+		}
+
+		return markers;
+	}
+
 
 
 	var prototype = {
 		loadData: loadData,
-		loadMarkers: loadMarkers,
+		loadCourts: loadCourts,
+		loadMemberMarkers: loadMemberMarkers,
+		loadCourtMarkers: loadCourtMarkers,
 		getMarkers: getMarkers,
 		render: render,
 		hide: hide,

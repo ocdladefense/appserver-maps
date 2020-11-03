@@ -42,7 +42,7 @@
 					<ul class="dropdown-menu">
 						<li>
 							<input type="checkbox" data-feature-name="courts">
-							<label>Circuit Courts - NA</label>
+							<label>Circuit Courts</label>
 						</li>
 					</ul>
 				</li>

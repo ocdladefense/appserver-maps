@@ -30,6 +30,7 @@ class MapTemplate extends Template
 
 	private $module = array(
 		"lib/Location.js",
+		"lib/Courts.js",
 		"lib/UrlMarker.js",
 		"lib/CustomMarker.js",
 		"lib/GoogleMarker.js",

@@ -19,36 +19,27 @@ class MapModule extends Module
 		return $tpl;
 	}
 
-	/*
-	 	Call to get member data here
-	 	memberTypes = "null", A", "N", "R", "S", "L", "LL",
-		null = Academic Members (typically law students), 
-		A = Admin/Exec/Private Investigator (licensed) 
-		N = NonLawyer (Professional Member)
-		R = Regular Members (practicing lawyers)
-		S = Sustaining Members (paid extra fee for annual perks)
-		L = Lifetime Members (paid extra fee for lifetime membership)
-		LL = Law Library (could have a membership)
-	*/
 	function getMemberData()
 	{
 		// From config/config.php
 		global $oauth_config;
 
 		$saleforce = new Salesforce($oauth_config);
-		$assets = $saleforce->CreateQuery('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
+		$assets = $saleforce->createQueryFromSession('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
 			'FROM Contact WHERE Ocdla_Current_Member_Flag__c = true');	//  AND Ocdla_Member_Status__c = R
-
-		// $assets = $saleforce->CreateQuery('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
-		// 	'FROM Contact WHERE Ocdla_Is_Expert_Witness__c = true');
-
-		// $assets = $saleforce->CreateQuery('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
-		// 	'FROM Contact WHERE Ocdla_Member_Status__c = null');
 
 		return $assets;
 	}
 
+	/**
+	 * Need to update courts to this method call,
+	 * 	currently using Courts.js -> getCourts()
+	 */
 	function getCourtData()
 	{
+		$data = file_get_contents('../modules/maps/assets/data/circuitcourts.json');
+		$jsonData = json_decode($data, true);
+
+		return $jsonData;
 	}
 }

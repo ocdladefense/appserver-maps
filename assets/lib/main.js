@@ -11,20 +11,19 @@ const myMap = new MapApplication(config);
 const mapTheme = new OCDLATheme();
 
 
-// myMap.setRepository(repository)
-
-// Set up the features and load in the data
-myMap.loadFeatures(features);
-myMap.loadFeatureData();
-
 
 // Render the map to the page
 // After the map finished initializing, get and set the users 
-// location to the center point of the map
 let init = myMap.init().then(function () {
-	// add event handlers here
+
+	// The OCDLA icon Info Window is currently being unused
+	// 
 	let ocdlaIcon = new UrlMarker('/modules/maps/assets/markers/ocdlaMarker/ocdla-marker-round-origLogo.svg');
 	myMap.render(ocdlaIcon);
+
+	// Set up the features and load in the data
+	myMap.loadFeatures(features);
+	myMap.loadFeatureData();
 });
 
 
