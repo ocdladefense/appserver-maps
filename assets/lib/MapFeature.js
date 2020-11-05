@@ -116,12 +116,13 @@ const MapFeature = (function () {
 
 			// console log the errors array if needed
 			if (errors.length > 0) {
-				console.log("These members do not have an available address:");
-				console.log(errors);
+				console.log("Some members do not have an available address:");
+				// console log members without addresses
+				//console.log(errors);
 			}
 
 
-			console.log(features);
+			//console.log(features);
 			// Return the markers array to fill the allMembers feature
 			return markers;
 		});
