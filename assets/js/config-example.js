@@ -73,6 +73,7 @@ const config = {
 const featureLabelConfig = {
 	null: "academic",
 	ADMIN: "administration",
+	admin: "administration",
 	A: "exec_investigator", // Need to change this name to reflect "Admin/Exec/Private Investigator (licensed)"
 	N: "nonlawyer",
 	R: "regular",

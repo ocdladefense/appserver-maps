@@ -5,6 +5,7 @@ const MapFeature = (function () {
 	const featureLabelConfig = {
 		null: "academic",
 		ADMIN: "administration",
+		admin: "administration",
 		A: "exec_investigator", // Need to change this name 
 		N: "nonlawyer/regular",
 		R: "regular",
