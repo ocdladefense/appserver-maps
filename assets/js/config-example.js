@@ -72,7 +72,8 @@ const config = {
 // This config is used to assist sorting all members into each perspective feature (feature.name.data)
 const featureLabelConfig = {
 	null: "academic",
-	A: "foobar", // Need to change this name to reflect "Admin/Exec/Private Investigator (licensed)"
+	ADMIN: "administration",
+	A: "exec_investigator", // Need to change this name to reflect "Admin/Exec/Private Investigator (licensed)"
 	N: "nonlawyer",
 	R: "regular",
 	S: "sustaining",
@@ -89,6 +90,13 @@ const featureLabelConfig = {
  */
 const features = {
 
+	administration: {
+		name: "administration",
+		label: "admin",
+		data: [],
+		markerStyle: 'https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg',
+	},
+
 	academic: {
 		name: "academic",
 		label: "Student",
@@ -97,8 +105,8 @@ const features = {
 	},
 
 	// Update this name, as well as the featureLabelConfig above for reference
-	foobar: {
-		name: "admin/exec/investigator",
+	exec_investigator: {
+		name: "exec_investigator",
 		label: "other",
 		data: [],
 		markerStyle: 'https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg',
@@ -190,7 +198,7 @@ const features = {
 
 			// Contacts 'cause simple reminder this is from the Salesforce Contact object.
 			$members = $contacts.then(function (contacts) {
-				console.log(contacts);
+				//console.log(contacts);
 
 				return contacts.records.map(function (contact) {
 					let newMember = new Member(contact);
