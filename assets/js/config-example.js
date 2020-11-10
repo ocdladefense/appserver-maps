@@ -93,7 +93,7 @@ const features = {
 
 	administration: {
 		name: "administration",
-		label: "admin",
+		label: "Admin",
 		data: [],
 		markerStyle: 'https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg',
 	},
