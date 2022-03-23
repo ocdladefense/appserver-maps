@@ -4,7 +4,9 @@ const MapFeature = (function () {
 	// 	perspective feature (used in loadMarkers())
 	const featureLabelConfig = {
 		null: "academic",
-		A: "admin/exec/investigator", // Need to change this name 
+		ADMIN: "administration",
+		admin: "administration",
+		A: "exec_investigator", // Need to change this name 
 		N: "nonlawyer/regular",
 		R: "regular",
 		S: "sustaining",
@@ -93,8 +95,10 @@ const MapFeature = (function () {
 
 				// Some members may not have a mailing address on file
 				if (member.mailingAddress.latitude !== null) {
+
 					// Set the source for the marker URL
 					member.markerUrl = feature.markerStyle;
+
 
 					let urlMarker = new UrlMarker(member);
 					let newMarker = urlMarker.createMarker();
@@ -118,11 +122,11 @@ const MapFeature = (function () {
 			if (errors.length > 0) {
 				console.log("Some members do not have an available address:");
 				// console log members without addresses
-				//console.log(errors);
+				console.log(errors);
 			}
 
 
-			//console.log(features);
+			console.log(features);
 			// Return the markers array to fill the allMembers feature
 			return markers;
 		});
