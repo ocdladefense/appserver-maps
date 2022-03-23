@@ -1,0 +1,12 @@
+{
+    "name": "ocdladefense/appserver-maps",
+    "description": "A module for visualizing OCDLA data on maps.",
+    "type": "wordpress-theme",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jose Bernal",
+            "email": "jbernal.web.dev@gmail.com"
+        }
+    ]
+}
