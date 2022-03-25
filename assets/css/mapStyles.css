@@ -1,12 +1,27 @@
+@media screen and (min-width: 1024px) {
+
+
+	#stage-content {
+		width: auto;
+	}
+}
+
+
 #map {
     height: 95%;
     position: relative;
     overflow-y: hidden !important;
     overflow-x: auto !important;
+    max-width: 80%;
+    width:900px;
 }
 
 #toolbar {
     cursor: default;
+    display: block;
+    max-width:25%;
+    float: left;
+    margin-right: 50px;
 }
 
 #stage-content {
