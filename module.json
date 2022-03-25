@@ -1,6 +1,7 @@
 {
     "comment": "Module definition file.",
     "name": "map",
+    "connectedApp":"default",
     "description": "Render Org data visually on maps.",
     "files": [
         "MapTemplate.php"

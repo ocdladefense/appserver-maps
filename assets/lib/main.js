@@ -6,7 +6,7 @@
  */
 
 
-// Instatiate the app and pass in the mapConfig obj
+// Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
 const mapTheme = new OCDLATheme();
 
@@ -15,7 +15,8 @@ const mapTheme = new OCDLATheme();
 // Render the map to the page
 // After the map finished initializing, get and set the users 
 let init = myMap.init().then(function () {
-
+	console.log("map loaded");
+	
 	// The OCDLA icon Info Window is currently being unused
 	// 
 	let ocdlaIcon = new UrlMarker('/modules/maps/assets/markers/ocdlaMarker/ocdla-marker-round-origLogo.svg');

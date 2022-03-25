@@ -21,14 +21,15 @@ class MapModule extends Module
 
 	function getMemberData()
 	{
-		// From config/config.php
-		global $oauth_config;
+		$query = "SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Current_Member_Flag__c = true";	
+		
+		$api = $this->loadForceApi();
 
-		$saleforce = new Salesforce($oauth_config);
-		$assets = $saleforce->createQueryFromSession('SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c ' .
-			'FROM Contact WHERE Ocdla_Current_Member_Flag__c = true');	//  AND Ocdla_Member_Status__c = R
+		$result = $api->query($query);
 
-		return $assets;
+		//  AND Ocdla_Member_Status__c = R
+
+		return $result->getRecords();
 	}
 
 	/**

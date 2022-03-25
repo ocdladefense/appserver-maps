@@ -12,19 +12,11 @@ class MapTemplate extends Template
 		)
 	);
 
-	/*
-      <apex:stylesheet value="{!$Resource.MapStyles}" />
-      <apex:stylesheet value="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-      <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </apex:includeScript> 
-      <apex:includeScript value="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></apex:includeScript>
-		*/
-
 
 	// Core scripts,
 	//   typically loaded from the framework and not a module.
 	private $core = array(
-		"User.js",
-		"SiteLibraries.js"
+		"User.js"
 	);
 
 

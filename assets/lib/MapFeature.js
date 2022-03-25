@@ -38,6 +38,7 @@ const MapFeature = (function () {
 	 * Consistently returns Promises for use with .then().
 	 */
 	function loadData() {
+		console.log(this);
 		//send method lives in Callout.js
 		this.data = this.datasource.send(this);
 	}

@@ -147,13 +147,11 @@ const MapApplication = (function () {
         var apiKey = this.config.apiKey;
 
 
-        var promise = new Promise(function (resolve, reject) {
+        var promise = new Promise(function(resolve, reject) {
             let mapElement = document.createElement("script");
             mapElement.async = true;
             mapElement.defer = true;
-            mapElement.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB7xT16UiXsYTLS5_LaGLswFCPmA5tNVK8";
-            // + apiKey
-            ;// + "&callback=initMap";
+            mapElement.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCfWNi-jamfXgtp5iPBLn63XV_3u5RJK0c";
             mapElement.onload = resolve;
 
             document.head.appendChild(mapElement);
