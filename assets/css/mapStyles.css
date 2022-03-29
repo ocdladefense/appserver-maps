@@ -12,8 +12,7 @@
     position: relative;
     overflow-y: hidden !important;
     overflow-x: auto !important;
-    max-width: 80%;
-    width:900px;
+
 }
 
 #toolbar {
