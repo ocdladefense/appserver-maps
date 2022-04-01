@@ -16,18 +16,25 @@ const MapApplication = (function () {
         for (var MapFeature in this.features) {
             // Set up the new feature
             let feature = this.features[MapFeature];
+            //feature.loadData();
+            //feature.loadMarkers();
             feature.isInitialized = true;
         }
 
         // get the allMembers feature, load the data, then the markers
         let f = this.features.find(element => element.name == "allMembers");
-        f.loadData(this.features);
+        f.loadData();
         f.markers = f.loadMemberMarkers(this.features);
-
+        /*
         // Set up circuit courts
         let c = this.features.find(element => element.name == "courts");
         c.data = c.loadCourts();
         c.markers = c.loadCourtMarkers(c);
+
+        let w = this.features.find(element => element.name == "allWitnesses");
+        w.loadData(this.features);
+        w.markers = w.loadWitnessMarkers(this.features);
+        */
     }
 
     /**
@@ -79,6 +86,7 @@ const MapApplication = (function () {
         // find the feature
         let f = this.features.find(element => element.name == feature);
 
+        console.log(f);
         // check its map property
         if (f.markers[0].map !== null) {
             return true;
@@ -142,7 +150,11 @@ const MapApplication = (function () {
 
     // Set up the maps script and initialize the map object
     // Return the Promise
-    function init() {
+    function init(fn) {
+        if(!!fn)
+        {
+            let cache = fn();
+        }
 
         var apiKey = this.config.apiKey;
 

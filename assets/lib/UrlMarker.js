@@ -20,6 +20,7 @@ const UrlMarker = (function () {
         this.size = { height: size.height, width: size.width };
     }
 
+    //TODO: Change function name to createGoogleMapsMarker
     function createMarker() {
         // Check to see if the marker has a default size property
         let defaultMarkerSize = !!this.size ? this.size : null;

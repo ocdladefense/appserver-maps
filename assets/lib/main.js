@@ -39,7 +39,7 @@ function handleEvent(e) {
 	var featureName = target.dataset && target.dataset.featureName;
 	if (!featureName) return;
 
-
+	//console.log(featureName);
 
 	if (myMap.isVisible(featureName)) {
 		target.classList.remove("feature-active");

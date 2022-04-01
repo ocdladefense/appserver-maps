@@ -38,6 +38,15 @@
 					</ul>
 				</li>
 				<li class="nav-item dropdown">
+					<a class="nav-link text-dark" data-toggle="dropdown">Witnesses</a>
+					<ul class="dropdown-menu">
+						<li>
+							<input type="checkbox" data-feature-name="witness">
+							<label>Expert Witness</label>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
 					<a class="nav-link text-dark" data-toggle="dropdown">Locations</a>
 					<ul class="dropdown-menu">
 						<li>
