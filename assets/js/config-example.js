@@ -128,8 +128,35 @@ const features = {
     name: "nonlawyer/regular",
     label: "Professional",
     data: [],
+    markerLabel: "N",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-green.svg",
+    datasource: new Callout(function (feature) {
+      $contacts = fetch("/maps/contacts").then(function (resp) {
+        return resp.json();
+      });
+
+      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
+      $members = $contacts.then(function (contacts) {
+        //console.log(contacts);
+
+        return contacts.map(function (contact) {
+          let newMember = new Member(contact);
+
+          // console log any members that may cause issues
+          try {
+            nonlawyer.data.push(newMember);
+          } catch {
+            console.log(featureName);
+            console.log(newMember);
+          }
+
+          return newMember;
+        });
+      });
+
+      return $members;
+    }),
   },
 
   regular: {
@@ -138,6 +165,32 @@ const features = {
     data: [],
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-red.svg",
+    datasource: new Callout(function (feature) {
+      $contacts = fetch("/maps/contacts").then(function (resp) {
+        return resp.json();
+      });
+
+      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
+      $members = $contacts.then(function (contacts) {
+        //console.log(contacts);
+
+        return contacts.map(function (contact) {
+          let newMember = new Member(contact);
+
+          // console log any members that may cause issues
+          try {
+            regular.data.push(newMember);
+          } catch {
+            console.log(featureName);
+            console.log(newMember);
+          }
+
+          return newMember;
+        });
+      });
+
+      return $members;
+    }),
   },
   //custom datasource
   sustaining: {
@@ -181,6 +234,32 @@ const features = {
     data: [],
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-blue.svg",
+    datasource: new Callout(function (feature) {
+      $contacts = fetch("/maps/contacts").then(function (resp) {
+        return resp.json();
+      });
+
+      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
+      $members = $contacts.then(function (contacts) {
+        //console.log(contacts);
+
+        return contacts.map(function (contact) {
+          let newMember = new Member(contact);
+
+          // console log any members that may cause issues
+          try {
+            lifetime.data.push(newMember);
+          } catch {
+            console.log(featureName);
+            console.log(newMember);
+          }
+
+          return newMember;
+        });
+      });
+
+      return $members;
+    }),
   },
 
   library: {
@@ -197,6 +276,32 @@ const features = {
     data: [],
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
+    datasource: new Callout(function (feature) {
+      $contacts = fetch("/maps/contacts").then(function (resp) {
+        return resp.json();
+      });
+
+      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
+      $members = $contacts.then(function (contacts) {
+        //console.log(contacts);
+
+        return contacts.map(function (contact) {
+          let newMember = new Member(contact);
+
+          // console log any members that may cause issues
+          try {
+            honored.data.push(newMember);
+          } catch {
+            console.log(featureName);
+            console.log(newMember);
+          }
+
+          return newMember;
+        });
+      });
+
+      return $members;
+    }),
   },
 
   teamMember: {
@@ -214,7 +319,7 @@ const features = {
     markerLabel: "W",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
-      datasource: new Callout(function (feature) {
+    datasource: new Callout(function (feature) {
       $contacts = fetch("/maps/witnesses").then(function (resp) {
         return resp.json();
       });
@@ -241,11 +346,20 @@ const features = {
       return $members;
     }),
   },
-
+  // court: {
+  // 	name: "courts",
+  // 	label: "Circuit Court",
+  // 	data: [],
+  // 	markerStyle: '/modules/maps/assets/markers/courthouse/courthouse-marker-round-white-black.svg',
+  // 	datasource:function() {
+  // 		const courts = new Courts();
+  // 		return courts.getCourts();
+  // 	}
   court: {
     name: "courts",
     label: "Circuit Court",
     data: [],
+    markerLabel: "C",
     markerStyle:
       "/modules/maps/assets/markers/courthouse/courthouse-marker-round-white-black.svg",
     //Get the circuit courts json file -- not implemented yet
@@ -256,15 +370,15 @@ const features = {
       $courts = $courts.then(function (courts) {
         //console.log(contacts);
 
-        return contacts.map(function (contact) {
-          let newMember = new Member(contact);
+        return courts.map(function (court) {
+          let newCourt = new Court(court);
 
           // console log any members that may cause issues
           try {
-            court.data.push(newMember);
+            court.data.push(newCourt);
           } catch {
             console.log(featureName);
-            console.log(newMember);
+            console.log(newCourt);
           }
 
           return newMember;
@@ -316,5 +430,3 @@ const features = {
     }),
   },
 };
-
-
