@@ -211,8 +211,35 @@ const features = {
     name: "expertWitness",
     label: "ExpertWitness",
     data: [],
+    markerLabel: "W",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
+      datasource: new Callout(function (feature) {
+      $contacts = fetch("/maps/witnesses").then(function (resp) {
+        return resp.json();
+      });
+
+      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
+      $members = $contacts.then(function (contacts) {
+        //console.log(contacts);
+
+        return contacts.map(function (contact) {
+          let newMember = new Member(contact);
+
+          // console log any members that may cause issues
+          try {
+            expertWitness.data.push(newMember);
+          } catch {
+            console.log(featureName);
+            console.log(newMember);
+          }
+
+          return newMember;
+        });
+      });
+
+      return $members;
+    }),
   },
 
   court: {
@@ -290,12 +317,4 @@ const features = {
   },
 };
 
-// court: {
-// 	name: "courts",
-// 	label: "Circuit Court",
-// 	data: [],
-// 	markerStyle: '/modules/maps/assets/markers/courthouse/courthouse-marker-round-white-black.svg',
-// 	datasource:function() {
-// 		const courts = new Courts();
-// 		return courts.getCourts();
-// 	}
+
