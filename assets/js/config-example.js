@@ -93,18 +93,66 @@ const featureLabelConfig = {
   W: "expertWitness",
 };
 
-/**
- * Describe MapFeatures that can be layered
- *  onto the map.
- */
-const features = {
-  administration: {
-    name: "administration",
-    label: "Admin",
-    data: [],
-    markerStyle:
-      "https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg",
+const mapinit = [
+  function() {
+      this.cache["contacts"] = fetch("/maps/contacts").then(resp => {
+        return resp.json();
+      });
   },
+  /*
+  fn2,
+  fn3,
+  fn4,
+  */
+];
+
+
+/*
+*
+*/
+function populateData()
+{
+  console.log(this);
+  //This is the next step to make it not 
+  $contacts = this.map.cache["contacts"];
+  $contacts = fetch("/maps/contacts").then(resp => {
+    return resp.json();
+  });
+
+  // Contacts 'cause simple reminder this is from the Salesforce Contact object.
+  $members = $contacts.then(contacts => {
+    //console.log("contacts:"+contacts);
+    let results = contacts.filter(contact => {return contact.Ocdla_Member_Status__c == this.status;});
+
+    return results.map(contact => {
+      let newMember = new Member(contact);
+
+      // console log any members that may cause issues
+      try {
+        this.data.push(newMember);
+      } catch {
+        console.log(newMember);
+      }
+
+      return newMember;
+    });
+  });
+  return $members;
+};
+
+const features = {
+
+    //custom datasource
+    sustaining: {
+      name: "sustaining",
+      label: "Sustaining",
+      markerLabel: "S",
+      data: [],
+      status: "S",
+      markerStyle:"/modules/maps/assets/markers/members/member-marker-round-purple.svg",
+      datasource: populateData
+  
+    },
 
   academic: {
     name: "academic",
@@ -112,15 +160,7 @@ const features = {
     data: [],
     markerStyle:
       "https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg",
-  },
-
-  // Update this name, as well as the featureLabelConfig above for reference
-  exec_investigator: {
-    name: "exec_investigator",
-    label: "other",
-    data: [],
-    markerStyle:
-      "https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg",
+      datasource: populateData
   },
 
   // Classified as "regular", but needs a different name for now
@@ -131,32 +171,7 @@ const features = {
     markerLabel: "N",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-green.svg",
-    datasource: new Callout(function (feature) {
-      $contacts = fetch("/maps/contacts").then(function (resp) {
-        return resp.json();
-      });
-
-      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-      $members = $contacts.then(function (contacts) {
-        //console.log(contacts);
-
-        return contacts.map(function (contact) {
-          let newMember = new Member(contact);
-
-          // console log any members that may cause issues
-          try {
-            nonlawyer.data.push(newMember);
-          } catch {
-            console.log(featureName);
-            console.log(newMember);
-          }
-
-          return newMember;
-        });
-      });
-
-      return $members;
-    }),
+    datasource: populateData
   },
 
   regular: {
@@ -165,67 +180,7 @@ const features = {
     data: [],
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-red.svg",
-    datasource: new Callout(function (feature) {
-      $contacts = fetch("/maps/contacts").then(function (resp) {
-        return resp.json();
-      });
-
-      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-      $members = $contacts.then(function (contacts) {
-        //console.log(contacts);
-
-        return contacts.map(function (contact) {
-          let newMember = new Member(contact);
-
-          // console log any members that may cause issues
-          try {
-            regular.data.push(newMember);
-          } catch {
-            console.log(featureName);
-            console.log(newMember);
-          }
-
-          return newMember;
-        });
-      });
-
-      return $members;
-    }),
-  },
-  //custom datasource
-  sustaining: {
-    name: "sustaining",
-    label: "Sustaining",
-    markerLabel: "S",
-    data: [],
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-purple.svg",
-    datasource: new Callout(function (feature) {
-      $contacts = fetch("/maps/contacts").then(function (resp) {
-        return resp.json();
-      });
-
-      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-      $members = $contacts.then(function (contacts) {
-        //console.log(contacts);
-
-        return contacts.map(function (contact) {
-          let newMember = new Member(contact);
-
-          // console log any members that may cause issues
-          try {
-            sustaining.data.push(newMember);
-          } catch {
-            console.log(featureName);
-            console.log(newMember);
-          }
-
-          return newMember;
-        });
-      });
-
-      return $members;
-    }),
+    datasource: populateData
   },
 
   lifetime: {
@@ -234,40 +189,7 @@ const features = {
     data: [],
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-blue.svg",
-    datasource: new Callout(function (feature) {
-      $contacts = fetch("/maps/contacts").then(function (resp) {
-        return resp.json();
-      });
-
-      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-      $members = $contacts.then(function (contacts) {
-        //console.log(contacts);
-
-        return contacts.map(function (contact) {
-          let newMember = new Member(contact);
-
-          // console log any members that may cause issues
-          try {
-            lifetime.data.push(newMember);
-          } catch {
-            console.log(featureName);
-            console.log(newMember);
-          }
-
-          return newMember;
-        });
-      });
-
-      return $members;
-    }),
-  },
-
-  library: {
-    name: "library",
-    label: "Law Library",
-    data: [],
-    markerStyle:
-      "https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg",
+    datasource: populateData
   },
 
   honored: {
@@ -276,40 +198,7 @@ const features = {
     data: [],
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
-    datasource: new Callout(function (feature) {
-      $contacts = fetch("/maps/contacts").then(function (resp) {
-        return resp.json();
-      });
-
-      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-      $members = $contacts.then(function (contacts) {
-        //console.log(contacts);
-
-        return contacts.map(function (contact) {
-          let newMember = new Member(contact);
-
-          // console log any members that may cause issues
-          try {
-            honored.data.push(newMember);
-          } catch {
-            console.log(featureName);
-            console.log(newMember);
-          }
-
-          return newMember;
-        });
-      });
-
-      return $members;
-    }),
-  },
-
-  teamMember: {
-    name: "teamMember",
-    label: "TeamMember",
-    data: [],
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
+    datasource: populateData
   },
   //expertwitness
   expertWitness: {
@@ -368,7 +257,7 @@ const features = {
         return resp.json();
       });
       $courts = $courts.then(function (courts) {
-        //console.log(contacts);
+      console.log(courts);
 
         return courts.map(function (court) {
           let newCourt = new Court(court);
@@ -391,42 +280,45 @@ const features = {
    * The all members feature is never used, instead it is responsible
    *  for getting and sorting data to the other features
    */
-  allMembers: {
-    name: "allMembers",
-    label: "Member",
-    data: [],
-    // Setting up call to get member data
-    datasource: new Callout(function (feature) {
-      $contacts = fetch("/maps/contacts").then(function (resp) {
-        return resp.json();
-      });
 
-      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-      $members = $contacts.then(function (contacts) {
-        //console.log(contacts);
+  // allMembers: {
+  //   name: "allMembers",
+  //   label: "Member",
+  //   data: [],
+  //   // Setting up call to get member data
+  //   datasource: new Callout(function (feature) {
+  //     $contacts = fetch("/maps/contacts").then(function (resp) {
+  //       return resp.json();
+  //     });
 
-        return contacts.map(function (contact) {
-          let newMember = new Member(contact);
+  //     // Contacts 'cause simple reminder this is from the Salesforce Contact object.
+  //     $members = $contacts.then(function (contacts) {
+  //       //console.log(contacts);
 
-          // Push to the features array
-          features.allMembers.data.push(newMember);
+  //       return contacts.map(function (contact) {
+  //         let newMember = new Member(contact);
 
-          // Testing member sort here
-          let featureName = featureLabelConfig[newMember.status];
+  //         // Push to the features array
+  //         features.allMembers.data.push(newMember);
 
-          // console log any members that may cause issues
-          try {
-            features[featureName].data.push(newMember);
-          } catch {
-            console.log(featureName);
-            console.log(newMember);
-          }
+  //         // Testing member sort here
+  //         let featureName = featureLabelConfig[newMember.status];
 
-          return newMember;
-        });
-      });
+  //         // console log any members that may cause issues
+  //         try {
+  //           features[featureName].data.push(newMember);
+  //         } catch {
+  //           console.log(featureName);
+  //           console.log(newMember);
+  //         }
 
-      return $members;
-    }),
-  },
+  //         return newMember;
+  //       });
+  //     });
+
+  //     return $members;
+  //   }),
+    
+  // },
+  
 };
