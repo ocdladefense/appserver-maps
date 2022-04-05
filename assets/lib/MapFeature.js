@@ -25,7 +25,8 @@ const MapFeature = (function () {
 		this.data = feature.data || [];
 		this.markers = [];
 		this.markerStyle = feature.markerStyle;
-		this.datasource = feature.datasource || null;
+		this.status = feature.status;
+		this.datasource = feature.datasource.bind(this) || null;
 
 		// For testing...
 		//console.log("Marker config for feature, ", this.name, " is: ", this.marker);
@@ -39,9 +40,9 @@ const MapFeature = (function () {
 	 * Consistently returns Promises for use with .then().
 	 */
 	function loadData() {
-		console.log(this);
 		//send method lives in Callout.js
-		this.data = this.datasource.send(this);
+		this.data = this.datasource();
+		return this.data;
 	}
 
 	function loadCourts() {
@@ -89,7 +90,7 @@ const MapFeature = (function () {
 				// Get the dataset
 				let item = sources[i];
 				let label = this.getLabel();
-				if (item.position.latitude == null) continue;
+				if (item.position.lat == null) continue;
 					
 				// Set the source for the marker URL
 				item.markerUrl = this.markerStyle;
@@ -263,6 +264,8 @@ const MapFeature = (function () {
 		loadData: loadData,
 		loadCourts: loadCourts,
 		loadWitnesses: loadWitnesses,
+		loadMarkers: loadMarkers,
+		getLabel: getLabel,
 		loadMemberMarkers: loadMemberMarkers,
 		loadCourtMarkers: loadCourtMarkers,
 		loadWitnessMarkers: loadWitnessMarkers,

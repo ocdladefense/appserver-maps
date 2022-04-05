@@ -7,6 +7,7 @@ const MapApplication = (function () {
         this.map = null;
         this.defaultMarkerCoordinates = this.config.mapOptions.center;
         this.defaultMarkerSize = this.config.mapOptions.defaultMarkerStyles.icon.scaledSize;
+        this.cache = {};
     }
 
     // This gets called during startup
@@ -16,15 +17,16 @@ const MapApplication = (function () {
         for (var MapFeature in this.features) {
             // Set up the new feature
             let feature = this.features[MapFeature];
-            //feature.loadData();
-            //feature.loadMarkers();
+            feature.loadData().then(()=>feature.loadMarkers());
             feature.isInitialized = true;
         }
 
         // get the allMembers feature, load the data, then the markers
-        let f = this.features.find(element => element.name == "allMembers");
-        f.loadData();
-        f.markers = f.loadMemberMarkers(this.features);
+        // let f = this.features.find(element => element.name == "allMembers");
+        // f.loadData();
+        // f.markers = f.loadMemberMarkers(this.features);
+
+
         /*
         // Set up circuit courts
         let c = this.features.find(element => element.name == "courts");
@@ -45,6 +47,7 @@ const MapApplication = (function () {
         for (var name in config) {
             // Set up the new feature
             let f = new MapFeature(config[name]);
+            f.setMap(this);
             this.features.push(f);
         }
     }
@@ -153,7 +156,7 @@ const MapApplication = (function () {
     function init(fn) {
         if(!!fn)
         {
-            let cache = fn();
+            fn.foreach((func)=>func());
         }
 
         var apiKey = this.config.apiKey;

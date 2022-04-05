@@ -52,9 +52,14 @@ class MapModule extends Module
 	 */
 	function getCourtData()
 	{
-		$data = file_get_contents('../modules/maps/assets/data/circuitcourts.json');
-		$jsonData = json_decode($data, true);
+		$query = "SELECT JudicialDistrict, District, CourtName, streetAddress, city, state, zipcode, position FROM courts";	
+		
+		$api = $this->loadForceApi();
 
-		return $jsonData;
+		$result = $api->query($query);
+
+		//  AND Ocdla_Member_Status__c = R
+
+		return $result->getRecords();
 	}
 }
