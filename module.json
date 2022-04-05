@@ -18,6 +18,11 @@
         "maps/courts": {
             "callback": "getCourtData",
             "content-type": "application\/json"
+        },
+        "maps/witnesses": {
+            "callback": "getWitnessData",
+            "content-type": "application\/json"
         }
+
     }
 }

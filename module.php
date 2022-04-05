@@ -32,15 +32,34 @@ class MapModule extends Module
 		return $result->getRecords();
 	}
 
+	function getWitnessData()
+	{
+		$query = "SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Is_Expert_Witness__c = true";	
+		
+		$api = $this->loadForceApi();
+
+		$result = $api->query($query);
+
+		//Testing Purposes
+		/*var_dump($result);
+		exit;*/
+		return $result->getRecords();
+	}
+
 	/**
 	 * Need to update courts to this method call,
 	 * 	currently using Courts.js -> getCourts()
 	 */
 	function getCourtData()
 	{
-		$data = file_get_contents('../modules/maps/assets/data/circuitcourts.json');
-		$jsonData = json_decode($data, true);
+		$query = "SELECT JudicialDistrict, District, CourtName, streetAddress, city, state, zipcode, position FROM courts";	
+		
+		$api = $this->loadForceApi();
 
-		return $jsonData;
+		$result = $api->query($query);
+
+		//  AND Ocdla_Member_Status__c = R
+
+		return $result->getRecords();
 	}
 }

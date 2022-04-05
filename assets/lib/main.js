@@ -14,7 +14,7 @@ const mapTheme = new OCDLATheme();
 
 // Render the map to the page
 // After the map finished initializing, get and set the users 
-let init = myMap.init().then(function () {
+let init = myMap.init(mapinit).then(function () {
 	console.log("map loaded");
 	
 	// The OCDLA icon Info Window is currently being unused
@@ -39,7 +39,7 @@ function handleEvent(e) {
 	var featureName = target.dataset && target.dataset.featureName;
 	if (!featureName) return;
 
-
+	//console.log(featureName);
 
 	if (myMap.isVisible(featureName)) {
 		target.classList.remove("feature-active");
