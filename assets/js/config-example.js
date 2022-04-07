@@ -93,9 +93,11 @@ const featureLabelConfig = {
   W: "expertWitness",
 };
 
+const cache = [];
+
 const mapinit = [
   function() {
-      this.cache["contacts"] = fetch("/maps/contacts").then(resp => {
+      cache["contacts"] = fetch("/maps/contacts").then(resp => {
         return resp.json();
       });
   },
@@ -112,12 +114,9 @@ const mapinit = [
 */
 function populateData()
 {
-  console.log(this);
+  //console.log(this);
   //This is the next step to make it not 
-  $contacts = this.map.cache["contacts"];
-  $contacts = fetch("/maps/contacts").then(resp => {
-    return resp.json();
-  });
+  $contacts = cache["contacts"];
 
   // Contacts 'cause simple reminder this is from the Salesforce Contact object.
   $members = $contacts.then(contacts => {
@@ -128,11 +127,11 @@ function populateData()
       let newMember = new Member(contact);
 
       // console log any members that may cause issues
-      try {
-        this.data.push(newMember);
-      } catch {
-        console.log(newMember);
-      }
+    //   try {
+    //     this.data.push(newMember);
+    //   } catch {
+    //     console.log(newMember);
+    //   }
 
       return newMember;
     });
@@ -141,26 +140,27 @@ function populateData()
 };
 
 const features = {
-
-    //custom datasource
-    sustaining: {
-      name: "sustaining",
-      label: "Sustaining",
-      markerLabel: "S",
-      data: [],
-      status: "S",
-      markerStyle:"/modules/maps/assets/markers/members/member-marker-round-purple.svg",
-      datasource: populateData
-  
-    },
-
+  //custom datasources through populateData
+  sustaining: {
+    name: "sustaining",
+    label: "Sustaining",
+    markerLabel: "S",
+    data: [],
+    status: "S",
+    markerStyle:
+      "/modules/maps/assets/markers/members/member-marker-round-purple.svg",
+    datasource: populateData,
+  },
+  //TODO: add the checkbox
   academic: {
     name: "academic",
     label: "Student",
+    markerLabel: null,
+    status: null,
     data: [],
     markerStyle:
       "https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg",
-      datasource: populateData
+    datasource: populateData,
   },
 
   // Classified as "regular", but needs a different name for now
@@ -169,112 +169,110 @@ const features = {
     label: "Professional",
     data: [],
     markerLabel: "N",
+    status: "N",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-green.svg",
-    datasource: populateData
+    datasource: populateData,
   },
 
   regular: {
     name: "regular",
     label: "Regular",
     data: [],
+    markerLabel: "R",
+    status: "R",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-red.svg",
-    datasource: populateData
+    datasource: populateData,
   },
 
   lifetime: {
     name: "lifetime",
     label: "Lifetime",
     data: [],
+    markerLabel: "L",
+    status: "L",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-blue.svg",
-    datasource: populateData
+    datasource: populateData,
   },
 
   honored: {
     name: "honored",
     label: "Honored",
     data: [],
+    markerLabel: "H",
+    status: "H",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
-    datasource: populateData
+    datasource: populateData,
   },
   //expertwitness
-  expertWitness: {
-    name: "expertWitness",
-    label: "ExpertWitness",
-    data: [],
-    markerLabel: "W",
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
-    datasource: new Callout(function (feature) {
-      $contacts = fetch("/maps/witnesses").then(function (resp) {
-        return resp.json();
-      });
+  //   expertWitness: {
+  //     name: "expertWitness",
+  //     label: "ExpertWitness",
+  //     data: [],
+  //     markerLabel: "W",
+  //     markerStyle:
+  //       "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
+  //     datasource: new Callout(function (feature) {
+  //       $contacts = fetch("/maps/witnesses").then(function (resp) {
+  //         return resp.json();
+  //       });
 
-      // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-      $members = $contacts.then(function (contacts) {
-        //console.log(contacts);
+  //       // Contacts 'cause simple reminder this is from the Salesforce Contact object.
+  //       $members = $contacts.then(function (contacts) {
+  //         //console.log(contacts);
 
-        return contacts.map(function (contact) {
-          let newMember = new Member(contact);
+  //         return contacts.map(function (contact) {
+  //           let newMember = new Member(contact);
 
-          // console log any members that may cause issues
-          try {
-            expertWitness.data.push(newMember);
-          } catch {
-            console.log(featureName);
-            console.log(newMember);
-          }
+  //           // console log any members that may cause issues
+  //           try {
+  //             expertWitness.data.push(newMember);
+  //           } catch {
+  //             console.log(featureName);
+  //             console.log(newMember);
+  //           }
 
-          return newMember;
-        });
-      });
+  //           return newMember;
+  //         });
+  //       });
 
-      return $members;
-    }),
-  },
-  // court: {
-  // 	name: "courts",
-  // 	label: "Circuit Court",
-  // 	data: [],
-  // 	markerStyle: '/modules/maps/assets/markers/courthouse/courthouse-marker-round-white-black.svg',
-  // 	datasource:function() {
-  // 		const courts = new Courts();
-  // 		return courts.getCourts();
-  // 	}
-  court: {
-    name: "courts",
-    label: "Circuit Court",
-    data: [],
-    markerLabel: "C",
-    markerStyle:
-      "/modules/maps/assets/markers/courthouse/courthouse-marker-round-white-black.svg",
-    //Get the circuit courts json file -- not implemented yet
-    datasource: new Callout(function (feature) {
-      $courts = fetch("/maps/courts").then(function (resp) {
-        return resp.json();
-      });
-      $courts = $courts.then(function (courts) {
-      console.log(courts);
+  //       return $members;
+  //     }),
+  //   },
+  //   court: {
+  //     name: "courts",
+  //     label: "Circuit Court",
+  //     data: [],
+  //     markerLabel: "C",
+  //     markerStyle:
+  //       "/modules/maps/assets/markers/courthouse/courthouse-marker-round-white-black.svg",
+  //     //Get the circuit courts json file -- not implemented yet
+  //     datasource: new Callout(function (feature) {
+  //       $courts = fetch("/maps/courts").then(function (resp) {
+  //         return resp.json();
+  //       });
+  //       $courts = $courts.then(function (courts) {
+  //       console.log(courts);
 
-        return courts.map(function (court) {
-          let newCourt = new Court(court);
+  //         return courts.map(function (court) {
+  //           let newCourt = new Court(court);
 
-          // console log any members that may cause issues
-          try {
-            court.data.push(newCourt);
-          } catch {
-            console.log(featureName);
-            console.log(newCourt);
-          }
+  //           // console log any members that may cause issues
+  //           try {
+  //             court.data.push(newCourt);
+  //           } catch {
+  //             console.log(featureName);
+  //             console.log(newCourt);
+  //           }
 
-          return newMember;
-        });
-      });
-    }),
-  },
+  //           return newMember;
+  //         });
+  //       });
+  //     }),
+  //   },
 
   /**
    * The all members feature is never used, instead it is responsible
@@ -318,7 +316,6 @@ const features = {
 
   //     return $members;
   //   }),
-    
+
   // },
-  
 };
