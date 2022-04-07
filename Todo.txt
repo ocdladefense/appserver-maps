@@ -1,7 +1,4 @@
-In MapFeature & MapApplication: Trying to abstract the loadfeaturedata method so that we can initialize every feature in the config file.
 
-In config.js: Line 182 needs to do a proper callout to maps/courts 
-
-Finish working on witness in config.js
+Implement court and student features
 
 add law students to the maps

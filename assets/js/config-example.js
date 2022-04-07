@@ -6,6 +6,7 @@ const repository = MapDatasources.index(function (feature) {
   // Must return an instance of Callout to be consumed by a MapFeature.
   if (
     [
+      "academic",
       "regular",
       "nonlawyer",
       "sustaining",
@@ -80,16 +81,11 @@ const config = {
 // This config is used to assist sorting all members into each perspective feature (feature.name.data)
 const featureLabelConfig = {
   null: "academic",
-  ADMIN: "administration",
-  admin: "administration",
-  A: "exec_investigator", // Need to change this name to reflect "Admin/Exec/Private Investigator (licensed)"
   N: "nonlawyer",
   R: "regular",
   S: "sustaining",
   L: "lifetime",
-  LL: "library",
   H: "honored",
-  T: "teamMember",
   W: "expertWitness",
 };
 
@@ -101,6 +97,11 @@ const mapinit = [
         return resp.json();
       });
   },
+  function() {
+    cache["witness"] = fetch("/maps/witnesses").then(resp => {
+      return resp.json();
+    });
+},
   /*
   fn2,
   fn3,
@@ -112,7 +113,7 @@ const mapinit = [
 /*
 *
 */
-function populateData()
+function populateMemberData()
 {
   //console.log(this);
   //This is the next step to make it not 
@@ -139,6 +140,19 @@ function populateData()
   return $members;
 };
 
+function populateWitnessData()
+{ 
+  $witness = cache["witness"];
+
+  $members = $witness.then(witnesses => {
+    return witnesses.map(witness => {
+      let newMember = new Member(witness);
+      return newMember;
+    });
+  });
+  return $members;
+};
+
 const features = {
   //custom datasources through populateData
   sustaining: {
@@ -149,18 +163,18 @@ const features = {
     status: "S",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-purple.svg",
-    datasource: populateData,
+    datasource: populateMemberData,
   },
   //TODO: add the checkbox
   academic: {
     name: "academic",
     label: "Student",
     markerLabel: null,
-    status: null,
+    status: "null",
     data: [],
     markerStyle:
       "https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg",
-    datasource: populateData,
+    datasource: populateMemberData,
   },
 
   // Classified as "regular", but needs a different name for now
@@ -172,7 +186,7 @@ const features = {
     status: "N",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-green.svg",
-    datasource: populateData,
+    datasource: populateMemberData,
   },
 
   regular: {
@@ -183,7 +197,7 @@ const features = {
     status: "R",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-red.svg",
-    datasource: populateData,
+    datasource: populateMemberData,
   },
 
   lifetime: {
@@ -194,7 +208,7 @@ const features = {
     status: "L",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-blue.svg",
-    datasource: populateData,
+    datasource: populateMemberData,
   },
 
   honored: {
@@ -205,43 +219,18 @@ const features = {
     status: "H",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
-    datasource: populateData,
+    datasource: populateMemberData,
   },
-  //expertwitness
-  //   expertWitness: {
-  //     name: "expertWitness",
-  //     label: "ExpertWitness",
-  //     data: [],
-  //     markerLabel: "W",
-  //     markerStyle:
-  //       "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
-  //     datasource: new Callout(function (feature) {
-  //       $contacts = fetch("/maps/witnesses").then(function (resp) {
-  //         return resp.json();
-  //       });
 
-  //       // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-  //       $members = $contacts.then(function (contacts) {
-  //         //console.log(contacts);
-
-  //         return contacts.map(function (contact) {
-  //           let newMember = new Member(contact);
-
-  //           // console log any members that may cause issues
-  //           try {
-  //             expertWitness.data.push(newMember);
-  //           } catch {
-  //             console.log(featureName);
-  //             console.log(newMember);
-  //           }
-
-  //           return newMember;
-  //         });
-  //       });
-
-  //       return $members;
-  //     }),
-  //   },
+    expertWitness: {
+      name: "expertWitness",
+      label: "ExpertWitness",
+      data: [],
+      markerLabel: "W",
+      markerStyle:
+        "/modules/maps/assets/markers/members/member-marker-round-yellow.png",
+      datasource: populateWitnessData,
+    },
   //   court: {
   //     name: "courts",
   //     label: "Circuit Court",

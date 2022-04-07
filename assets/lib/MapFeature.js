@@ -4,17 +4,12 @@ const MapFeature = (function () {
 	// 	perspective feature (used in loadMarkers())
 	const featureLabelConfig = {
 		null: "academic",
-		ADMIN: "administration",
-		admin: "administration",
-		A: "exec_investigator", // Need to change this name 
 		N: "nonlawyer/regular",
 		R: "regular",
 		S: "sustaining",
 		L: "lifetime",
-		LL: "library",
 		H: "honored",
-		T: "teamMember",
-		W: "witness"
+		W: "expertWitness"
 	};
 
 

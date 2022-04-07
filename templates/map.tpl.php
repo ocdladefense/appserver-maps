@@ -35,13 +35,17 @@
 							<input type="checkbox" data-feature-name="honored">
 							<label>Honored</label>
 						</li>
+						<li>
+							<input type="checkbox" data-feature-name="academic">
+							<label>Academic</label>
+						</li>
 					</ul>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link text-dark" data-toggle="dropdown">Witnesses</a>
 					<ul class="dropdown-menu">
 						<li>
-							<input type="checkbox" data-feature-name="witness">
+							<input type="checkbox" data-feature-name="expertWitness">
 							<label>Expert Witness</label>
 						</li>
 					</ul>
