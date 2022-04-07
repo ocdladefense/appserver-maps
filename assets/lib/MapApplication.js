@@ -17,7 +17,8 @@ const MapApplication = (function () {
         for (var MapFeature in this.features) {
             // Set up the new feature
             let feature = this.features[MapFeature];
-            feature.loadData().then(()=>feature.loadMarkers());
+            feature.loadData()
+            feature.loadMarkers();
             feature.isInitialized = true;
         }
 
@@ -47,7 +48,7 @@ const MapApplication = (function () {
         for (var name in config) {
             // Set up the new feature
             let f = new MapFeature(config[name]);
-            f.setMap(this);
+            //f.setMap(this);
             this.features.push(f);
         }
     }
@@ -154,10 +155,7 @@ const MapApplication = (function () {
     // Set up the maps script and initialize the map object
     // Return the Promise
     function init(fn) {
-        if(!!fn)
-        {
-            fn.foreach((func)=>func());
-        }
+        
 
         var apiKey = this.config.apiKey;
 
@@ -178,6 +176,10 @@ const MapApplication = (function () {
             //this.map = new google.maps.Map(document.getElementById("map"), this.config.getConfig()); // This line renders the map to the screen
             this.map = new google.maps.Map(document.getElementById("map"), this.config.mapOptions);
         });
+
+        if (!!fn) {
+          fn.forEach((func) => func(this.map));
+        }//load feature data after map
 
         return mapReady;
     }

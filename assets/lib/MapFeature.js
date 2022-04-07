@@ -26,15 +26,12 @@ const MapFeature = (function () {
 		this.markers = [];
 		this.markerStyle = feature.markerStyle;
 		this.status = feature.status;
-		this.datasource = feature.datasource.bind(this) || null;
+		this.datasource = feature.datasource.bind(this);
 
 		// For testing...
 		//console.log("Marker config for feature, ", this.name, " is: ", this.marker);
 	}
 
-	function setDatasource(callout) {
-		this.datasource = callout;
-	}
 
 	/**
 	 * Consistently returns Promises for use with .then().
@@ -42,7 +39,7 @@ const MapFeature = (function () {
 	function loadData() {
 		//send method lives in Callout.js
 		this.data = this.datasource();
-		return this.data;
+		//return this.data;
 	}
 
 	function loadCourts() {
@@ -57,7 +54,7 @@ const MapFeature = (function () {
 
 	function initialize() {
 		this.isInitialized = true;
-		//this.loadData();
+		this.loadData();
 		this.markers = this.loadMarkers();
 		console.log(this);
 	}
@@ -83,7 +80,7 @@ const MapFeature = (function () {
 	}
 
 	function loadMarkers(){
-		return this.data.then((sources) =>{
+        return this.data.then((sources) =>{
 			let errors =[];
 
 			for (let i = 0; i < sources.length; i++) {
@@ -272,7 +269,6 @@ const MapFeature = (function () {
 		getMarkers: getMarkers,
 		render: render,
 		hide: hide,
-		setDatasource: setDatasource,
 		initialize: initialize
 	};
 

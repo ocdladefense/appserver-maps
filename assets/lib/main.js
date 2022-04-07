@@ -8,6 +8,7 @@
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config); // Where does config come from?
+//---- config comes from init in map application
 const mapTheme = new OCDLATheme();
 
 
