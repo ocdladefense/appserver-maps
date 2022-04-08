@@ -1,5 +1,5 @@
-load map after checkboxes to avoid clicking too fast
+map loading UX
 
-Implement court and student features
+Implement court and add law students to the maps
 
-add law students to the maps
+new custom object salesforce sanbox for courts

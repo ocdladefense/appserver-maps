@@ -22,18 +22,18 @@ class MapTemplate extends Template
 
 	private $module = array(
 		"lib/Location.js",
-		"lib/Courts.js",
-		"lib/UrlMarker.js",
-		"lib/CustomMarker.js",
-		"lib/GoogleMarker.js",
+		"js/Courts.js",
+		"lib/markers/UrlMarker.js",
+		"lib/markers/CustomMarker.js",
+		"lib/markers/GoogleMarker.js",
 		"lib/Marker.js",
-		"lib/OCDLATheme.js",
+		"js/OCDLATheme.js",
 		"lib/MapConfiguration.js",
 		"lib/MapApplication.js",
 		"lib/MapFeature.js",
 		"lib/MapDatasources.js",
 		"js/config.js",
-		"lib/main.js"
+		"js/main.js"
 	);
 
 	private $moduleCore = array(
