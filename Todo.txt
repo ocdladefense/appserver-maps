@@ -1,3 +1,4 @@
+load map after checkboxes to avoid clicking too fast
 
 Implement court and student features
 

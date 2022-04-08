@@ -102,37 +102,19 @@ const mapinit = [
       return resp.json();
     });
 },
-  /*
-  fn2,
-  fn3,
-  fn4,
-  */
 ];
 
 
-/*
-*
-*/
+//populates features with data
 function populateMemberData()
 {
-  //console.log(this);
-  //This is the next step to make it not 
   $contacts = cache["contacts"];
 
-  // Contacts 'cause simple reminder this is from the Salesforce Contact object.
   $members = $contacts.then(contacts => {
-    //console.log("contacts:"+contacts);
     let results = contacts.filter(contact => {return contact.Ocdla_Member_Status__c == this.status;});
 
     return results.map(contact => {
       let newMember = new Member(contact);
-
-      // console log any members that may cause issues
-    //   try {
-    //     this.data.push(newMember);
-    //   } catch {
-    //     console.log(newMember);
-    //   }
 
       return newMember;
     });
@@ -152,9 +134,8 @@ function populateWitnessData()
   });
   return $members;
 };
-
+//custom datasources
 const features = {
-  //custom datasources through populateData
   sustaining: {
     name: "sustaining",
     label: "Sustaining",
@@ -262,49 +243,4 @@ const features = {
   //       });
   //     }),
   //   },
-
-  /**
-   * The all members feature is never used, instead it is responsible
-   *  for getting and sorting data to the other features
-   */
-
-  // allMembers: {
-  //   name: "allMembers",
-  //   label: "Member",
-  //   data: [],
-  //   // Setting up call to get member data
-  //   datasource: new Callout(function (feature) {
-  //     $contacts = fetch("/maps/contacts").then(function (resp) {
-  //       return resp.json();
-  //     });
-
-  //     // Contacts 'cause simple reminder this is from the Salesforce Contact object.
-  //     $members = $contacts.then(function (contacts) {
-  //       //console.log(contacts);
-
-  //       return contacts.map(function (contact) {
-  //         let newMember = new Member(contact);
-
-  //         // Push to the features array
-  //         features.allMembers.data.push(newMember);
-
-  //         // Testing member sort here
-  //         let featureName = featureLabelConfig[newMember.status];
-
-  //         // console log any members that may cause issues
-  //         try {
-  //           features[featureName].data.push(newMember);
-  //         } catch {
-  //           console.log(featureName);
-  //           console.log(newMember);
-  //         }
-
-  //         return newMember;
-  //       });
-  //     });
-
-  //     return $members;
-  //   }),
-
-  // },
 };
