@@ -144,7 +144,6 @@ const MapApplication = (function () {
     //load feature data after map
     let results;
     if (!!fn) {
-      //fn.forEach((func) => func(this));
       results = Promise.all(
         fn.map((func) => {
           return func(this);

@@ -9,19 +9,16 @@ const MapFeature = (function () {
 		this.markerStyle = feature.markerStyle;
 		this.status = feature.status;
 		this.datasource = feature.datasource && feature.datasource.bind(this);
-
-		// For testing...
-		//console.log("Marker config for feature, ", this.name, " is: ", this.marker);
 	}
+
     function setMap(map) {
         this.map = map;
     }
 
-	/**
+	/*
 	 * Consistently returns Promises for use with .then().
 	 */
 	function loadData() {
-		//send method lives in Callout.js
 		this.data = this.datasource();
 		return this.data;
 	}
@@ -30,7 +27,6 @@ const MapFeature = (function () {
 		this.isInitialized = true;
 		this.loadData();
 		this.markers = this.loadMarkers();
-		console.log(this);
 	}
 
 
@@ -70,11 +66,9 @@ const MapFeature = (function () {
 				let urlMarker = new UrlMarker(item);
 				let googleMarker = urlMarker.createMarker();
 
-				/**
-				 * Push the new marker to the appropriate arrays
-				 * 	One to the specific feature, then one that will get
-				 * 	returned to the allMembers feature
-				 */
+				
+				//Push the new marker to the marker array
+				 
 				this.markers.push(googleMarker);
 			}
 		});
