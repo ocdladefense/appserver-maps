@@ -16,6 +16,8 @@ const mapTheme = new OCDLATheme();
 // Render the map to the page
 // After the map finished initializing, get and set the users 
 let init = myMap.init(mapinit).then(function () {
+	//Hides the filters until data is loaded
+	myMap.hideFilters();
 	console.log("map loaded");
 	
 	// The OCDLA icon Info Window is currently being unused
@@ -24,8 +26,10 @@ let init = myMap.init(mapinit).then(function () {
 	myMap.render(ocdlaIcon);
 
 	// Set up the features and load in the data
+
 	myMap.loadFeatures(features);
 	myMap.loadFeatureData();
+
 });
 
 
