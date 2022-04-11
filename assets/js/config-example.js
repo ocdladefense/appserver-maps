@@ -12,7 +12,6 @@ const repository = MapDatasources.index(function (feature) {
       "sustaining",
       "lifetime",
       "honored",
-      "libraries",
       "expertWitness",
       "allMembers",
       "allWitnesses",
@@ -91,6 +90,8 @@ const featureLabelConfig = {
 
 const cache = [];
 
+
+//By placing document.getElementById("toolbarOptions").style.display="block"; in the last fetch call you will not load the filters until the data is loaded
 const mapinit = [
   function() {
       cache["contacts"] = fetch("/maps/contacts").then(resp => {
@@ -98,7 +99,8 @@ const mapinit = [
       });
   },
   function() {
-    cache["witness"] = fetch("/maps/witnesses").then(resp => {
+    cache["witness"] = fetch("/maps/witnesses").then(resp => {    
+      document.getElementById("filters").style.display ="block";   
       return resp.json();
     });
 },
@@ -146,15 +148,14 @@ const features = {
       "/modules/maps/assets/markers/members/member-marker-round-purple.svg",
     datasource: populateMemberData,
   },
-  //TODO: add the checkbox
   academic: {
     name: "academic",
     label: "Student",
-    markerLabel: null,
-    status: "null",
+    markerLabel: "A",
+    status: "A",
     data: [],
     markerStyle:
-      "https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg",
+    "/modules/maps/assets/markers/members/member-marker-round-orange.png",
     datasource: populateMemberData,
   },
 
