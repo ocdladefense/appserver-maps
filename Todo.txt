@@ -2,4 +2,10 @@ map loading UX
 
 Implement court and add law students to the maps
 
-new custom object salesforce sanbox for courts
+new custom object salesforce sandbox for courts
+
+object manager salesforce(sandbox) - with credentials later
+build job object, add a couple of fields
+
+existing cover letters and resume (update)
+-at least 1 important place to apply among list
