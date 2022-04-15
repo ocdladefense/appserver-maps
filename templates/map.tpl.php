@@ -56,7 +56,7 @@
 						<a class="nav-link text-dark" data-toggle="dropdown">Locations</a>
 						<ul class="dropdown-menu">
 							<li>
-								<input type="checkbox" data-feature-name="courts">
+								<input type="checkbox" data-feature-name="circuitCourt">
 								<label>Circuit Courts</label>
 							</li>
 						</ul>

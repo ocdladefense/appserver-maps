@@ -13,8 +13,7 @@ const repository = MapDatasources.index(function (feature) {
       "lifetime",
       "honored",
       "expertWitness",
-      "allMembers",
-      "allWitnesses",
+      "circuitCourt"
     ].includes(feature.name)
   ) {
     key = USE_MOCK_DATASOURCES ? "mockMemberData" : "phpMemberData";
@@ -104,6 +103,11 @@ const mapinit = [
       return resp.json();
     });
 },
+function() {
+  cache["courts"] = fetch("/maps/courts").then(resp => {      
+    return resp.json();
+  });
+},
 ];
 
 
@@ -135,6 +139,19 @@ function populateWitnessData()
     });
   });
   return $members;
+};
+
+function populateCourtData()
+{ 
+  $court = cache["courts"];
+
+  $courts = $court.then(courts => {
+    return courts.map(court => {
+      let newCourt = new Court(court);
+      return newCourt;
+    });
+  });
+  return $courts;
 };
 //custom datasources
 const features = {
@@ -213,35 +230,14 @@ const features = {
         "/modules/maps/assets/markers/members/member-marker-round-yellow.png",
       datasource: populateWitnessData,
     },
-  //   court: {
-  //     name: "courts",
-  //     label: "Circuit Court",
-  //     data: [],
-  //     markerLabel: "C",
-  //     markerStyle:
-  //       "/modules/maps/assets/markers/courthouse/courthouse-marker-round-white-black.svg",
-  //     //Get the circuit courts json file -- not implemented yet
-  //     datasource: new Callout(function (feature) {
-  //       $courts = fetch("/maps/courts").then(function (resp) {
-  //         return resp.json();
-  //       });
-  //       $courts = $courts.then(function (courts) {
-  //       console.log(courts);
 
-  //         return courts.map(function (court) {
-  //           let newCourt = new Court(court);
-
-  //           // console log any members that may cause issues
-  //           try {
-  //             court.data.push(newCourt);
-  //           } catch {
-  //             console.log(featureName);
-  //             console.log(newCourt);
-  //           }
-
-  //           return newMember;
-  //         });
-  //       });
-  //     }),
-  //   },
+    court: {
+      name: "circuitCourt",
+      label: "CircuitCourt",
+      data: [],
+      markerLabel: "C",
+      markerStyle:
+        "/modules/maps/assets/markers/members/member-marker-round-black.png",
+      datasource: populateCourtData,
+    },
 };

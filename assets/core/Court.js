@@ -1,18 +1,19 @@
 const Court = (function () {
-  function Court(courts) {
-    this.judicialDistrict = courts.judicialDistrict;
-    this.District = courts.District;
-    this.name = courts.courtName;
-    this.mailingAddress = courts.streetAddress || "";
-    this.city = courts.city;
-    this.state = courts.state;
-    this.zipcode = courts.zipcode;
-    this.position = { lat: courts.position.lat, lng: courts.position.lng };
+  function Court(court) {
+    this.judicialDistrict = court.Jusicial_District__c;
+    this.District = court.District_Name__c;
+    this.name = court.Name;
+    this.mailingAddress = court.Address__c || "";
+    this.city = court.City__c;
+    this.state = court.State__c;
+    this.zipcode = court.Zipcode__c;
+    this.website = court.Website__c;
+    this.position = { lat: court.Position__c.latitude, lng: court.Position__c.longitude };
   }
 
   function getInfo() {
     // Info window for marker, showing member details
-    let courts = this;
+    let court = this;
 
     return `<div id="infoWindow">
                 <div>
@@ -24,7 +25,7 @@ const Court = (function () {
     getPosition: function () {
       return this.position;
     },
-    getInfo: getInfo,
+    getInfo: getInfo
   };
   Court.prototype = prototype;
 
