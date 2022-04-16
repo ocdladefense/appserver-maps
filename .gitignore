@@ -103,8 +103,7 @@ dist
 # TernJS port file
 .tern-port
 
-# Configuration file
-#config.js
+# Configuration file -config.js
 
 # Api key
 mapkey.js

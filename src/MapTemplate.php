@@ -21,6 +21,7 @@ class MapTemplate extends Template
 
 
 	private $module = array(
+        "js/mapkey.js",
 		"lib/Location.js",
 		"js/Courts.js",
 		"lib/markers/UrlMarker.js",
