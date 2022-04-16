@@ -145,7 +145,7 @@ const Courts = (function () {
         {
             "judicialDistrict": "8",
             "district": "Baker County",
-            "courtName": "Jackson County Circuit Court",
+            "courtName": "Baker County Circuit Court",
             "streetAddress": "1995 Third Street, Suite #220",
             "city": "Baker city",
             "state": "OR",

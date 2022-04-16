@@ -14,7 +14,6 @@ const MapFeature = (function () {
     function setMap(map) {
         this.map = map;
     }
-
 	/*
 	 * Consistently returns Promises for use with .then().
 	 */

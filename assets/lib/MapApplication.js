@@ -11,6 +11,46 @@ const MapApplication = (function () {
       this.config.mapOptions.defaultMarkerStyles.icon.scaledSize;
   }
 
+    // Set up the maps script and initialize the map object
+  // Return the Promise
+  function init(fn) {
+    //load feature data after map
+    let results;
+    if (!!fn) {
+      results = Promise.all(
+        fn.map((func) => {
+          return func(this);
+        }),
+      );
+    }
+
+    var apiKey = this.config.apiKey;
+
+    var p = new Promise(function (resolve, reject) {
+      let mapElement = document.createElement("script");
+      mapElement.async = true;
+      mapElement.defer = true;
+      mapElement.src =
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCfWNi-jamfXgtp5iPBLn63XV_3u5RJK0c";
+      mapElement.onload = resolve;
+
+      document.head.appendChild(mapElement);
+    });
+
+    var mapReady = p.then(() => {
+      // How do I extract data from the two params
+      //this.map = new google.maps.Map(document.getElementById("map"), this.config.getConfig()); // This line renders the map to the screen
+      results.then(() => {
+        this.map = new google.maps.Map(
+          document.getElementById("map"),
+          this.config.mapOptions
+        );
+      });
+    });
+
+    return mapReady;
+  }
+
   function getCache(key) {
     return cache[key];
   }
@@ -44,6 +84,14 @@ const MapApplication = (function () {
       this.features.push(f);
     }
   }
+  function hideFilters()
+	{
+	  document.getElementById("filters").style.display="none";	
+	}
+	function showFilters()
+	{
+	  document.getElementById("filters").style.display="block";	
+	}
 
   function sortFeatureData() {
     console.log(this.features);
@@ -138,45 +186,7 @@ const MapApplication = (function () {
     }
   }
 
-  // Set up the maps script and initialize the map object
-  // Return the Promise
-  function init(fn) {
-    //load feature data after map
-    let results;
-    if (!!fn) {
-      results = Promise.all(
-        fn.map((func) => {
-          return func(this);
-        })
-      );
-    }
 
-    var apiKey = this.config.apiKey;
-
-    var p = new Promise(function (resolve, reject) {
-      let mapElement = document.createElement("script");
-      mapElement.async = true;
-      mapElement.defer = true;
-      mapElement.src =
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCfWNi-jamfXgtp5iPBLn63XV_3u5RJK0c";
-      mapElement.onload = resolve;
-
-      document.head.appendChild(mapElement);
-    });
-
-    var mapReady = p.then(() => {
-      // How do I extract data from the two params
-      //this.map = new google.maps.Map(document.getElementById("map"), this.config.getConfig()); // This line renders the map to the screen
-      results.then(() => {
-        this.map = new google.maps.Map(
-          document.getElementById("map"),
-          this.config.mapOptions
-        );
-      });
-    });
-
-    return mapReady;
-  }
 
   function getRoot() {
     return document.getElementById(this.config.get("target"));
@@ -233,6 +243,8 @@ const MapApplication = (function () {
     getFeature: getFeature,
     showFeature: showFeature,
     hideFeature: hideFeature,
+    showFilters: showFilters,
+		hideFilters: hideFilters,
     loadFeatureData: loadFeatureData,
     loadFeatures: loadFeatures,
     isVisible: isVisible,
