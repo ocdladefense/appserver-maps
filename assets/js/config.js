@@ -12,10 +12,8 @@ const repository = MapDatasources.index(function (feature) {
       "sustaining",
       "lifetime",
       "honored",
-      "libraries",
       "expertWitness",
-      "allMembers",
-      "allWitnesses",
+      "circuitCourt"
     ].includes(feature.name)
   ) {
     key = USE_MOCK_DATASOURCES ? "mockMemberData" : "phpMemberData";
@@ -45,7 +43,7 @@ const startingMapPosition = {
 
 // Set up a MapConfiguration object
 const config = {
-  apiKey: Keys.mapKey,
+  apiKey: "AIzaSyCfWNi-jamfXgtp5iPBLn63XV_3u5RJK0c",
   target: "map",
   repository: repository, // Where to get data consumed by the Map.
   mapOptions: {
@@ -91,6 +89,8 @@ const featureLabelConfig = {
 
 const cache = [];
 
+
+//By placing document.getElementById("toolbarOptions").style.display="block"; in the last fetch call you will not load the filters until the data is loaded
 const mapinit = [
   function() {
       cache["contacts"] = fetch("/maps/contacts").then(resp => {
@@ -98,9 +98,15 @@ const mapinit = [
       });
   },
   function() {
-    cache["witness"] = fetch("/maps/witnesses").then(resp => {
+    cache["witness"] = fetch("/maps/witnesses").then(resp => {    
+      document.getElementById("filters").style.display ="block";   
       return resp.json();
     });
+},
+function() {
+  cache["courts"] = fetch("/maps/courts").then(resp => {      
+    return resp.json();
+  });
 },
 ];
 
@@ -134,6 +140,19 @@ function populateWitnessData()
   });
   return $members;
 };
+
+function populateCourtData()
+{ 
+  $court = cache["courts"];
+
+  $courts = $court.then(courts => {
+    return courts.map(court => {
+      let newCourt = new Court(court);
+      return newCourt;
+    });
+  });
+  return $courts;
+};
 //custom datasources
 const features = {
   sustaining: {
@@ -146,15 +165,14 @@ const features = {
       "/modules/maps/assets/markers/members/member-marker-round-purple.svg",
     datasource: populateMemberData,
   },
-  //TODO: add the checkbox
   academic: {
     name: "academic",
     label: "Student",
-    markerLabel: null,
-    status: "null",
+    markerLabel: "A",
+    status: "A",
     data: [],
     markerStyle:
-      "https://ocdla.s3-us-west-2.amazonaws.com/member-marker-round-purple.svg",
+    "/modules/maps/assets/markers/members/member-marker-round-orange.png",
     datasource: populateMemberData,
   },
 
@@ -212,35 +230,14 @@ const features = {
         "/modules/maps/assets/markers/members/member-marker-round-yellow.png",
       datasource: populateWitnessData,
     },
-  //   court: {
-  //     name: "courts",
-  //     label: "Circuit Court",
-  //     data: [],
-  //     markerLabel: "C",
-  //     markerStyle:
-  //       "/modules/maps/assets/markers/courthouse/courthouse-marker-round-white-black.svg",
-  //     //Get the circuit courts json file -- not implemented yet
-  //     datasource: new Callout(function (feature) {
-  //       $courts = fetch("/maps/courts").then(function (resp) {
-  //         return resp.json();
-  //       });
-  //       $courts = $courts.then(function (courts) {
-  //       console.log(courts);
 
-  //         return courts.map(function (court) {
-  //           let newCourt = new Court(court);
-
-  //           // console log any members that may cause issues
-  //           try {
-  //             court.data.push(newCourt);
-  //           } catch {
-  //             console.log(featureName);
-  //             console.log(newCourt);
-  //           }
-
-  //           return newMember;
-  //         });
-  //       });
-  //     }),
-  //   },
+    court: {
+      name: "circuitCourt",
+      label: "CircuitCourt",
+      data: [],
+      markerLabel: "C",
+      markerStyle:
+        "/modules/maps/assets/markers/members/member-marker-round-black.png",
+      datasource: populateCourtData,
+    },
 };

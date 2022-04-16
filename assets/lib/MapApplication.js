@@ -31,7 +31,7 @@ const MapApplication = (function () {
       mapElement.async = true;
       mapElement.defer = true;
       mapElement.src =
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCfWNi-jamfXgtp5iPBLn63XV_3u5RJK0c";
+        "https://maps.googleapis.com/maps/api/js?key=" + apiKey;
       mapElement.onload = resolve;
 
       document.head.appendChild(mapElement);
