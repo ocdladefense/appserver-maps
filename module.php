@@ -46,19 +46,16 @@ class MapModule extends Module
 		return $result->getRecords();
 	}
 
-	/**
-	 * Need to update courts to this method call,
-	 * 	currently using Courts.js -> getCourts()
-	 */
+
 	function getCourtData()
 	{
-		$query = "SELECT JudicialDistrict, District, CourtName, streetAddress, city, state, zipcode, position FROM courts";	
+		$query = "SELECT Name, Judicial_District__c, District_Name__c, Address__c, City__c, State__c, Zipcode__c, Position__c FROM Court__c Where Position__latitude__s != null";	
 		
 		$api = $this->loadForceApi();
 
 		$result = $api->query($query);
 
-		//  AND Ocdla_Member_Status__c = R
+
 
 		return $result->getRecords();
 	}

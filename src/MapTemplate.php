@@ -23,11 +23,10 @@ class MapTemplate extends Template
 	private $module = array(
         "js/mapkey.js",
 		"lib/Location.js",
-		"js/Courts.js",
 		"lib/markers/UrlMarker.js",
 		"lib/markers/CustomMarker.js",
 		"lib/markers/GoogleMarker.js",
-		"lib/Marker.js",
+		"lib/markers/Marker.js",
 		"js/OCDLATheme.js",
 		"lib/MapConfiguration.js",
 		"lib/MapApplication.js",
@@ -38,9 +37,8 @@ class MapTemplate extends Template
 	);
 
 	private $moduleCore = array(
-		// "Repository.js", // Included in -- "/content/libraries/core/"
-		// "Callout.js",	// Included in -- "/content/libraries/core/"
-		"Member.js"
+		"Member.js",
+		"Court.js"
 	);
 
 

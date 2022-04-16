@@ -1,6 +1,6 @@
-map loading UX
+map loading UX 
 
-Implement court and add law students to the maps
+Implement court and add to the map
 
 new custom object salesforce sandbox for courts
 
