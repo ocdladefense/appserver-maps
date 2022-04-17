@@ -4,7 +4,7 @@
  * MapApplication will consume one or more datasources/Callouts from
  *  the MapDatasource repository and one or more MapFeatures.
  */
-
+import MapApplication from './node_modules/custom-google-map/dist/MapApplication.js';
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
@@ -60,3 +60,4 @@ function handleEvent(e) {
 
 document.addEventListener("click", handleEvent, true);
 
+export default "app-running";
