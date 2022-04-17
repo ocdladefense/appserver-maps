@@ -22,12 +22,12 @@ class MapTemplate extends Template
 
 	private $module = array(
         "js/mapkey.js",
-		"js/OCDLATheme.js",
-		"js/config.js",
+		"js/OCDLATheme.js"
 	);
 
     private $main = array(
-		"js/main.js"
+		"main.js",
+        "config.js",
 	);
 
 	private $moduleCore = array(
@@ -54,7 +54,7 @@ class MapTemplate extends Template
 			$scripts[] = array("src" => "/modules/maps/assets/" . $name);
 		}
         foreach ($this->main as $name) {
-			$scripts[] = array("src" => "/modules/maps/assets/js/main.js", "type" => "module");
+			$scripts[] = array("src" => "/modules/maps/assets/js/" . $name, "type" => "module");
 		}
 
 

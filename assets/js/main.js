@@ -4,7 +4,9 @@
  * MapApplication will consume one or more datasources/Callouts from
  *  the MapDatasource repository and one or more MapFeatures.
  */
-import MapApplication from './node_modules/custom-google-map/dist/MapApplication.js';
+import MapApplication from './node_modules/custom-google-map/MapApplication.js';
+
+import config from "./config";
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
@@ -15,6 +17,8 @@ const mapTheme = new OCDLATheme();
 
 // Render the map to the page
 // After the map finished initializing, get and set the users 
+
+//mapinit is not defined here. where does it get created?
 let init = myMap.init(mapinit).then(function () {
 	//Hides the filters until data is loaded
 	myMap.hideFilters();

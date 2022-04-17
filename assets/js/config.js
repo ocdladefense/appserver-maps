@@ -1,6 +1,8 @@
 // const USE_MOCK_DATASOURCES = true;
 const USE_MOCK_DATASOURCES = false;
 
+import MapDatasources from "./node_modules/custom-google-map/MapDatasources.js";
+
 const repository = MapDatasources.index(function (feature) {
   let key = null;
   // Must return an instance of Callout to be consumed by a MapFeature.
@@ -241,3 +243,5 @@ const features = {
       datasource: populateCourtData,
     },
 };
+
+export default config;
