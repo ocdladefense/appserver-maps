@@ -22,18 +22,12 @@ class MapTemplate extends Template
 
 	private $module = array(
         "js/mapkey.js",
-		"lib/Location.js",
-		"lib/markers/UrlMarker.js",
-		"lib/markers/CustomMarker.js",
-		"lib/markers/GoogleMarker.js",
-		"lib/markers/Marker.js",
-		"js/OCDLATheme.js",
-		"lib/MapConfiguration.js",
-		"lib/MapApplication.js",
-		"lib/MapFeature.js",
-		"lib/MapDatasources.js",
-		"js/config.js",
-		"js/main.js"
+		"js/OCDLATheme.js"
+	);
+
+    private $main = array(
+		"main.js",
+        "config.js",
 	);
 
 	private $moduleCore = array(
@@ -58,6 +52,9 @@ class MapTemplate extends Template
 		}
 		foreach ($this->module as $name) {
 			$scripts[] = array("src" => "/modules/maps/assets/" . $name);
+		}
+        foreach ($this->main as $name) {
+			$scripts[] = array("src" => "/modules/maps/assets/js/" . $name, "type" => "module");
 		}
 
 

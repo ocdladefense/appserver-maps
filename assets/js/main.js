@@ -4,17 +4,23 @@
  * MapApplication will consume one or more datasources/Callouts from
  *  the MapDatasource repository and one or more MapFeatures.
  */
+import MapApplication from './node_modules/custom-google-map/MapApplication.js';
 
+import UrlMarker from './node_modules/custom-google-map/markers/UrlMarker';
+
+import {config, mapinit, features} from "./config";
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
-//---- config comes from init in map application
+
 const mapTheme = new OCDLATheme();
 
 
 
 // Render the map to the page
 // After the map finished initializing, get and set the users 
+
+//mapinit is not defined here. where does it get created?
 let init = myMap.init(mapinit).then(function () {
 	//Hides the filters until data is loaded
 	myMap.hideFilters();
@@ -60,3 +66,4 @@ function handleEvent(e) {
 
 document.addEventListener("click", handleEvent, true);
 
+export default "app-running";
