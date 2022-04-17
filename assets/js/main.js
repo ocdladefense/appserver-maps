@@ -6,11 +6,13 @@
  */
 import MapApplication from './node_modules/custom-google-map/MapApplication.js';
 
-import config from "./config";
+import UrlMarker from './node_modules/custom-google-map/markers/UrlMarker';
+
+import {config, mapinit, features} from "./config";
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
-//---- config comes from init in map application
+
 const mapTheme = new OCDLATheme();
 
 

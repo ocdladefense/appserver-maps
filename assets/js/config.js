@@ -244,4 +244,4 @@ const features = {
     },
 };
 
-export default config;
+export {config, mapinit, features};
