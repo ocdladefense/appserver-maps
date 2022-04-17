@@ -1,32 +1,33 @@
 // const USE_MOCK_DATASOURCES = true;
 const USE_MOCK_DATASOURCES = false;
 
-import MapDatasources from "./node_modules/custom-google-map/MapDatasources.js";
+//import MapDatasources from "./node_modules/custom-google-map/MapDatasources.js";
 
-const repository = MapDatasources.index(function (feature) {
-  let key = null;
-  // Must return an instance of Callout to be consumed by a MapFeature.
-  if (
-    [
-      "academic",
-      "regular",
-      "nonlawyer",
-      "sustaining",
-      "lifetime",
-      "honored",
-      "expertWitness",
-      "circuitCourt"
-    ].includes(feature.name)
-  ) {
-    key = USE_MOCK_DATASOURCES ? "mockMemberData" : "phpMemberData";
-  } else if (["courts", "libraries", "colleges", "W"].includes(feature.name)) {
-    key = USE_MOCK_DATASOURCES ? "mockLocationData" : "mockLocationData";
-  }
+const mapKey = Keys.mapKey;
+// const repository = MapDatasources.index(function (feature) {
+//   let key = null;
+//   // Must return an instance of Callout to be consumed by a MapFeature.
+//   if (
+//     [
+//       "academic",
+//       "regular",
+//       "nonlawyer",
+//       "sustaining",
+//       "lifetime",
+//       "honored",
+//       "expertWitness",
+//       "circuitCourt"
+//     ].includes(feature.name)
+//   ) {
+//     key = USE_MOCK_DATASOURCES ? "mockMemberData" : "phpMemberData";
+//   } else if (["courts", "libraries", "colleges", "W"].includes(feature.name)) {
+//     key = USE_MOCK_DATASOURCES ? "mockLocationData" : "mockLocationData";
+//   }
 
-  console.log("Found repository key ", key, " when searching using: ", feature);
+//   console.log("Found repository key ", key, " when searching using: ", feature);
 
-  return key;
-});
+//   return key;
+// });
 
 // Get the initial styles (theme) for the map -- OCDLA theme
 const startTheme = new OCDLATheme();
@@ -45,9 +46,9 @@ const startingMapPosition = {
 
 // Set up a MapConfiguration object
 const config = {
-  apiKey: "AIzaSyCfWNi-jamfXgtp5iPBLn63XV_3u5RJK0c",
+  apiKey: mapKey,
   target: "map",
-  repository: repository, // Where to get data consumed by the Map.
+  //repository: repository, // Where to get data consumed by the Map.
   mapOptions: {
     zoom: 6,
     center: {
@@ -91,16 +92,15 @@ const featureLabelConfig = {
 
 const cache = [];
 
-
 //By placing document.getElementById("toolbarOptions").style.display="block"; in the last fetch call you will not load the filters until the data is loaded
 const mapinit = [
   function() {
       cache["contacts"] = fetch("/maps/contacts").then(resp => {
         return resp.json();
       });
-  },
+    },
   function() {
-    cache["witness"] = fetch("/maps/witnesses").then(resp => {    
+    cache["witnesses"] = fetch("/maps/witnesses").then(resp => {    
       document.getElementById("filters").style.display ="block";   
       return resp.json();
     });
@@ -116,6 +116,7 @@ function() {
 //populates features with data
 function populateMemberData()
 {
+    //contacts no longer defined?
   $contacts = cache["contacts"];
 
   $members = $contacts.then(contacts => {
@@ -132,7 +133,7 @@ function populateMemberData()
 
 function populateWitnessData()
 { 
-  $witness = cache["witness"];
+  $witness = cache["witnesses"];
 
   $members = $witness.then(witnesses => {
     return witnesses.map(witness => {
@@ -244,4 +245,4 @@ const features = {
     },
 };
 
-export {config, mapinit, features};
+//export {config, mapinit, features};

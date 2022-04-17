@@ -4,11 +4,10 @@
  * MapApplication will consume one or more datasources/Callouts from
  *  the MapDatasource repository and one or more MapFeatures.
  */
+//import { config, mapinit, features } from "./config";
 import MapApplication from './node_modules/custom-google-map/MapApplication.js';
-
 import UrlMarker from './node_modules/custom-google-map/markers/UrlMarker';
 
-import {config, mapinit, features} from "./config";
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
@@ -16,15 +15,13 @@ const myMap = new MapApplication(config);
 const mapTheme = new OCDLATheme();
 
 
-
 // Render the map to the page
 // After the map finished initializing, get and set the users 
 
-//mapinit is not defined here. where does it get created?
 let init = myMap.init(mapinit).then(function () {
 	//Hides the filters until data is loaded
 	myMap.hideFilters();
-	console.log("map loaded");
+	//console.log("map loaded");
 	
 	// The OCDLA icon Info Window is currently being unused
 	// 
@@ -66,4 +63,4 @@ function handleEvent(e) {
 
 document.addEventListener("click", handleEvent, true);
 
-export default "app-running";
+export default myMap;

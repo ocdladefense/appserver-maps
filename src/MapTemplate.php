@@ -22,12 +22,12 @@ class MapTemplate extends Template
 
 	private $module = array(
         "js/mapkey.js",
-		"js/OCDLATheme.js"
+		"js/OCDLATheme.js",
+        "js/config.js",
 	);
 
     private $main = array(
 		"main.js",
-        "config.js",
 	);
 
 	private $moduleCore = array(
