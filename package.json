@@ -1,0 +1,24 @@
+{
+  "name": "maps",
+  "version": "1.0.0",
+  "description": "Module to display and interact with a Google map.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm i --prefix ./assets/js custom-google-map"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ocdladefense/appserver-maps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ocdladefense/appserver-maps/issues"
+  },
+  "dependencies": {
+    "custom-google-map": "^1.1.6"
+  },
+  "homepage": "https://github.com/ocdladefense/appserver-maps#readme"
+}
