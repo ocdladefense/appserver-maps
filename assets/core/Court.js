@@ -9,6 +9,7 @@ const Court = (function () {
     this.zipcode = court.Zipcode__c;
     this.website = court.Website__c;
     this.position = { lat: court.Position__c.latitude, lng: court.Position__c.longitude };
+    this.type = "Court";
   }
 
   function getInfo() {
@@ -18,6 +19,7 @@ const Court = (function () {
     return `<div id="infoWindow">
                 <div>
                 <label>${court.Name}</label><br>
+                test test test
                 </div>`;
   }
 

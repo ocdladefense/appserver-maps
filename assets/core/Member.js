@@ -9,6 +9,7 @@ const Member = (function () {
 		this.phone = contact.Phone;
 		this.mailingAddress = contact.MailingAddress || "";
 		this.position = { lat: contact.MailingAddress.latitude, lng: contact.MailingAddress.longitude };
+		this.type = "Member";
 	}
 
 

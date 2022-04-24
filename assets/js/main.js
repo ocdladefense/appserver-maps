@@ -6,7 +6,7 @@
  */
 //import { config, mapinit, features } from "./config";
 import MapApplication from './node_modules/custom-google-map/MapApplication.js';
-
+import UrlMarker  from './node_modules/custom-google-map/markers/UrlMarker';
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
