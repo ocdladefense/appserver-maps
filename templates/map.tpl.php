@@ -39,7 +39,7 @@
 							</li>
 							<li>
 								<input type="checkbox" data-feature-name="academic">
-								<label>Academic</label>
+								<label>Law Students</label>
 							</li>
 						</ul>
 					</li>

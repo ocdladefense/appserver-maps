@@ -17,7 +17,7 @@ const Court = (function () {
 
     return `<div id="infoWindow">
                 <div>
-                not yet implemented
+                <label>${court.Name}</label><br>
                 </div>`;
   }
 

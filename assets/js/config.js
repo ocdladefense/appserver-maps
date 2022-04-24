@@ -101,12 +101,13 @@ const mapinit = [
     },
   function() {
     cache["witnesses"] = fetch("/maps/witnesses").then(resp => {    
-      document.getElementById("filters").style.display ="block";   
+ 
       return resp.json();
     });
 },
 function() {
-  cache["courts"] = fetch("/maps/courts").then(resp => {      
+  cache["courts"] = fetch("/maps/courts").then(resp => {     
+    document.getElementById("filters").style.display ="block";        
     return resp.json();
   });
 },

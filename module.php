@@ -34,7 +34,7 @@ class MapModule extends Module
 
 	function getWitnessData()
 	{
-		$query = "SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Is_Expert_Witness__c = true";	
+		$query = "SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c, Ocdla_Expert_Witness_Primary__c, Ocdla_Expert_Witness_Other_Areas__c FROM Contact WHERE Ocdla_Is_Expert_Witness__c = true";	
 		
 		$api = $this->loadForceApi();
 
