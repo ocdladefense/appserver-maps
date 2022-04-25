@@ -27,8 +27,7 @@ class MapTemplate extends Template
 	);
 
     private $main = array(
-		"main.js",
-		"UrlMarker.js"
+		"main.js"
 	);
 
 	private $moduleCore = array(
