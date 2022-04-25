@@ -1,13 +1,8 @@
 map loading UX 
-
-Implement court and add to the map
-
-new custom object salesforce sandbox for courts
-
-object manager salesforce(sandbox) - with credentials later
-build job object, add a couple of fields
-
-jose linkedin?
+court data
 
 example application of map package
-what to do next - UI styling?
+
+display count of members
+fix UX, widget is a bit smushed to the left
+zoom in on marker when clicked
