@@ -1,8 +1,20 @@
-map loading UX 
-court data
-
+Package:
 example application of map package
+urlmarker - marker, simplify package for use in map module
+
+Directory:
+button from directory to filter results onto map
+map icon submits post req
+
+Maps:
+new php callback function to grab data with ids
+fetch into cache
+new search results feature box
 
 display count of members
-fix UX, widget is a bit smushed to the left
+style UX
 zoom in on marker when clicked
+map loading UX 
+
+Search:
+Get links to map for any results that have geolocation data
