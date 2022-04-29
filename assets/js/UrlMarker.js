@@ -71,6 +71,9 @@ const UrlMarker = (function () {
                             <label style="text-align:center;"><b>${marker.name || ""}</b></label><br><br>
                         </div>
                         <div>
+                        <label style="text-align:center;"><b>${marker.firstName || ""}</b><b>${marker.lastName || ""}</b></label><br><br>
+                        </div>
+                        <div>
                         <label>${marker.primary || ""}</label><br>
                         </div>
                         <div>

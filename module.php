@@ -13,6 +13,12 @@ class MapModule extends Module
 
 	function home()
 	{
+		//Check for a post request
+		//If this is received you extract the data and send it to custom feature object
+		$req = $this->getRequest();
+        $data = $req->getBody();
+		$_SESSION["searchQuery"] = $data->query;
+		//$_SESSION["searchQuery"] = "SELECT Id, Name, Phone, MailingAddress FROM Contact WHERE LastName like '%Smith'";
 		$tpl = new MapTemplate("map");
 		$tpl->addPath(__DIR__ . "/templates");
 
@@ -21,15 +27,30 @@ class MapModule extends Module
 
 	function getMemberData()
 	{
-		$query = "SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Current_Member_Flag__c = true";	
-		
+		$query = "SELECT Id,Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Current_Member_Flag__c = true";	
+
 		$api = $this->loadForceApi();
 
 		$result = $api->query($query);
 
 		//  AND Ocdla_Member_Status__c = R
 
-		return $result->getRecords();
+		return $result->getRecords();			
+
+	}
+	function getSearchData()
+	{
+		if($_SESSION["searchQuery"] != null)
+		{
+			$query = $_SESSION["searchQuery"];	
+
+			$api = $this->loadForceApi();
+
+			$result = $api->query($query);
+
+			return $result->getRecords();				
+		}
+		return;
 	}
 
 	function getWitnessData()

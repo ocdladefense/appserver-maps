@@ -22,7 +22,10 @@
         "maps/witnesses": {
             "callback": "getWitnessData",
             "content-type": "application\/json"
+        },
+        "maps/search": {
+            "callback": "getSearchData",
+            "content-type": "application\/json"
         }
-
     }
 }

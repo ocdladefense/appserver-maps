@@ -111,6 +111,11 @@ function() {
     return resp.json();
   });
 },
+function() {
+  cache["custom"] = fetch("/maps/contacts").then(resp => {
+    return resp.json();
+  });
+},
 ];
 
 
@@ -157,6 +162,23 @@ function populateCourtData()
   });
   return $courts;
 };
+
+function populateSearchData()
+{
+  //$search = cache["custom"];
+  $search = fetch("/maps/search").then(resp => {
+    return resp.json();
+  });
+
+  $members = $search.then(members => {
+    return members.map(member => {
+      let newMember = new Member(member);
+      return newMember;
+    });
+  });
+  return $members;
+
+}
 //custom datasources
 const features = {
   sustaining: {
@@ -243,6 +265,15 @@ const features = {
       markerStyle:
         "/modules/maps/assets/markers/members/member-marker-round-black.png",
       datasource: populateCourtData,
+    },
+    search: {
+      name: "search",
+      label: "search",
+      data: [],
+      markerLabel: "SE",
+      markerStyle:
+        "/modules/maps/assets/markers/members/member-marker-round-black.png",
+      datasource: populateSearchData,
     },
 };
 
