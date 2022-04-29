@@ -1,59 +1,29 @@
-// const USE_MOCK_DATASOURCES = true;
-const USE_MOCK_DATASOURCES = false;
-
-//import MapDatasources from "./node_modules/custom-google-map/MapDatasources.js";
+/**
+ * Config for OCDLA Map implementation.
+ */
 
 const mapKey = Keys.mapKey;
-// const repository = MapDatasources.index(function (feature) {
-//   let key = null;
-//   // Must return an instance of Callout to be consumed by a MapFeature.
-//   if (
-//     [
-//       "academic",
-//       "regular",
-//       "nonlawyer",
-//       "sustaining",
-//       "lifetime",
-//       "honored",
-//       "expertWitness",
-//       "circuitCourt"
-//     ].includes(feature.name)
-//   ) {
-//     key = USE_MOCK_DATASOURCES ? "mockMemberData" : "phpMemberData";
-//   } else if (["courts", "libraries", "colleges", "W"].includes(feature.name)) {
-//     key = USE_MOCK_DATASOURCES ? "mockLocationData" : "mockLocationData";
-//   }
 
-//   console.log("Found repository key ", key, " when searching using: ", feature);
+const cache = [];
 
-//   return key;
-// });
 
 // Get the initial styles (theme) for the map -- OCDLA theme
 const startTheme = new OCDLATheme();
 
 const ocdlaInfoWindow = {
-  content: `
-        <h1>OCDLA</h1>
-    `,
+  content: `<h1>OCDLA</h1>`
 };
 
-// Starting/default position for the center of the map (Vancouver, WA)
-const startingMapPosition = {
-  latitude: 44.04457,
-  longitude: -123.09078,
-};
 
 // Set up a MapConfiguration object
 const config = {
   apiKey: mapKey,
   target: "map",
-  //repository: repository, // Where to get data consumed by the Map.
   mapOptions: {
     zoom: 6,
     center: {
-      lat: startingMapPosition.latitude,
-      lng: startingMapPosition.longitude,
+      lat: 44.04457,
+      lng: -123.09078,
     },
     styles: startTheme.getTheme(),
     defaultMarkerStyles: {
@@ -61,56 +31,51 @@ const config = {
         scaledSize: {
           height: 70,
           width: 80,
-        },
-      },
+        }
+      }
     },
     ocdlaInfoWindow: ocdlaInfoWindow,
   },
-  enableHighAccuracy: true,
+  enableHighAccuracy: true
 };
 
-/*
-	  memberTypes = "null", A", "N", "R", "S", "L", "LL",
-	null = Academic Members (typically law students),
-	A = Admin/Exec/Private Investigator (licensed)
-	N = NonLawyer (Professional Member)
-	R = Regular Members (practicing lawyers)
-	S = Sustaining Members (paid extra fee for annual perks)
-	L = Lifetime Members (paid extra fee for lifetime membership)
-	LL = Law Library (could have a membership)
-*/
+
 // This config is used to assist sorting all members into each perspective feature (feature.name.data)
 const featureLabelConfig = {
-  null: "academic",
-  N: "nonlawyer",
-  R: "regular",
-  S: "sustaining",
-  L: "lifetime",
-  H: "honored",
-  W: "expertWitness",
+  A: "Law Student",
+  N: "Professional",
+  R: "Regular",
+  S: "Sustaining",
+  L: "Lifetime",
+  H: "Honored",
+  W: "Expert Witnesses"
 };
 
-const cache = [];
 
-//By placing document.getElementById("toolbarOptions").style.display="block"; in the last fetch call you will not load the filters until the data is loaded
+
+
+
+
+
+// By placing document.getElementById("toolbarOptions").style.display="block"; in the last fetch call you will not load the filters until the data is loaded
 const mapinit = [
   function() {
-      cache["contacts"] = fetch("/maps/contacts").then(resp => {
-        return resp.json();
-      });
-    },
+    cache["contacts"] = fetch("/maps/contacts").then(resp => {
+      return resp.json();
+    });
+  },
   function() {
     cache["witnesses"] = fetch("/maps/witnesses").then(resp => {    
  
       return resp.json();
     });
-},
-function() {
-  cache["courts"] = fetch("/maps/courts").then(resp => {     
-    document.getElementById("filters").style.display ="block";        
-    return resp.json();
-  });
-},
+  },
+  function() {
+    cache["courts"] = fetch("/maps/courts").then(resp => {     
+      document.getElementById("filters").style.display ="block";        
+      return resp.json();
+    });
+  }
 ];
 
 
@@ -157,7 +122,12 @@ function populateCourtData()
   });
   return $courts;
 };
-//custom datasources
+
+
+
+
+
+
 const features = {
   sustaining: {
     name: "sustaining",
@@ -165,9 +135,8 @@ const features = {
     markerLabel: "S",
     data: [],
     status: "S",
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-purple.svg",
-    datasource: populateMemberData,
+    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-purple.svg",
+    datasource: populateMemberData
   },
   academic: {
     name: "academic",
@@ -175,9 +144,8 @@ const features = {
     markerLabel: "A",
     status: "A",
     data: [],
-    markerStyle:
-    "/modules/maps/assets/markers/members/member-marker-round-orange.png",
-    datasource: populateMemberData,
+    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-orange.png",
+    datasource: populateMemberData
   },
 
   // Classified as "regular", but needs a different name for now
@@ -187,9 +155,8 @@ const features = {
     data: [],
     markerLabel: "N",
     status: "N",
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-green.svg",
-    datasource: populateMemberData,
+    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-green.svg",
+    datasource: populateMemberData
   },
 
   regular: {
@@ -198,9 +165,8 @@ const features = {
     data: [],
     markerLabel: "R",
     status: "R",
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-red.svg",
-    datasource: populateMemberData,
+    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-red.svg",
+    datasource: populateMemberData
   },
 
   lifetime: {
@@ -209,9 +175,8 @@ const features = {
     data: [],
     markerLabel: "L",
     status: "L",
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-blue.svg",
-    datasource: populateMemberData,
+    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-blue.svg",
+    datasource: populateMemberData
   },
 
   honored: {
@@ -220,30 +185,25 @@ const features = {
     data: [],
     markerLabel: "H",
     status: "H",
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
-    datasource: populateMemberData,
+    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-aqua.svg",
+    datasource: populateMemberData
   },
 
-    expertWitness: {
-      name: "expertWitness",
-      label: "ExpertWitness",
-      data: [],
-      markerLabel: "W",
-      markerStyle:
-        "/modules/maps/assets/markers/members/member-marker-round-yellow.png",
-      datasource: populateWitnessData,
-    },
+  expertWitness: {
+    name: "expertWitness",
+    label: "ExpertWitness",
+    data: [],
+    markerLabel: "W",
+    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-yellow.png",
+    datasource: populateWitnessData
+  },
 
-    court: {
-      name: "circuitCourt",
-      label: "CircuitCourt",
-      data: [],
-      markerLabel: "C",
-      markerStyle:
-        "/modules/maps/assets/markers/members/member-marker-round-black.png",
-      datasource: populateCourtData,
-    },
+  court: {
+    name: "circuitCourt",
+    label: "CircuitCourt",
+    data: [],
+    markerLabel: "C",
+    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-black.png",
+    datasource: populateCourtData
+  }
 };
-
-//export {config, mapinit, features};

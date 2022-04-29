@@ -29,7 +29,6 @@ let init = myMap.init(mapinit).then(function () {
 
 	myMap.loadFeatures(features);
 	myMap.loadFeatureData();
-
 });
 
 
