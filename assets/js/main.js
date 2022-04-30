@@ -6,6 +6,7 @@
  */
 //import { config, mapinit, features } from "./config";
 import MapApplication from './node_modules/custom-google-map/MapApplication.js';
+import MapFeature from './node_modules/custom-google-map/MapFeature.js';
 import UrlMarker  from './UrlMarker.js';
 
 // Instantiate the app and pass in the mapConfig obj
@@ -59,4 +60,60 @@ function handleEvent(e) {
 
 document.addEventListener("click", handleEvent, true);
 
-export default myMap;
+
+window.contactQuery = function(query) {
+	// Construct a config object.
+    let config = {
+		name: "search",
+		label: "search",
+		markerLabel: "SE",
+		markerStyle: "/modules/maps/assets/markers/members/member-marker-round-black.png"
+	};
+
+	let f = new MapFeature(config);
+
+	myMap.addFeature(f);
+
+	function doSearch(query) {
+
+		let body = JSON.stringify({query:query});
+		console.log(body);
+
+	  	//$search = cache["custom"];
+	  let $search = fetch("/maps/search",{
+		method: 'POST', // *GET, POST, PUT, DELETE, etc.
+		mode: 'cors', // no-cors, *cors, same-origin
+		cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached	
+		credentials: 'same-origin', // include, *same-origin, omit
+		headers: {
+		  'Content-Type': 'application/json',
+		  'Accept': 'text/html'
+		  // 'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: JSON.stringify({query:query})
+	  }).then(resp => {
+		return resp.json();
+	  });
+	
+	  let $members = $search.then(members => {
+		return members.map(member => {
+		  let newMember = new Member(member);
+		  return newMember;
+		});
+	  });
+	
+	  return $members;
+	}
+
+	f.setDatasource(doSearch.bind(null,query));
+	
+	
+	// Load the feature's data.
+	f.loadData();
+
+	// Load the feature's markers.
+	f.loadMarkers();
+};
+
+
+export default contactQuery;

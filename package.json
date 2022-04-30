@@ -18,7 +18,8 @@
     "url": "https://github.com/ocdladefense/appserver-maps/issues"
   },
   "dependencies": {
-    "custom-google-map": "^1.2.5"
+    "@ocdladefense/google-maps": "^1.2.5",
+    "@ocdladefense/view": "^1.0.8"
   },
   "homepage": "https://github.com/ocdladefense/appserver-maps#readme"
 }
