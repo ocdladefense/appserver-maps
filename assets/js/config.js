@@ -128,6 +128,7 @@ function populateCourtData()
 
 
 
+//custom datasources
 const features = {
   sustaining: {
     name: "sustaining",
@@ -189,21 +190,21 @@ const features = {
     datasource: populateMemberData
   },
 
-  expertWitness: {
-    name: "expertWitness",
-    label: "ExpertWitness",
-    data: [],
-    markerLabel: "W",
-    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-yellow.png",
-    datasource: populateWitnessData
-  },
+    expertWitness: {
+      name: "expertWitness",
+      label: "ExpertWitness",
+      data: [],
+      markerLabel: "W",
+      markerStyle: "/modules/maps/assets/markers/members/member-marker-round-yellow.png",
+      datasource: populateWitnessData
+    },
 
-  court: {
-    name: "circuitCourt",
-    label: "CircuitCourt",
-    data: [],
-    markerLabel: "C",
-    markerStyle: "/modules/maps/assets/markers/members/member-marker-round-black.png",
-    datasource: populateCourtData
-  }
+    court: {
+      name: "circuitCourt",
+      label: "CircuitCourt",
+      data: [],
+      markerLabel: "C",
+      markerStyle: "/modules/maps/assets/markers/members/member-marker-round-black.png",
+      datasource: populateCourtData
+    }
 };
