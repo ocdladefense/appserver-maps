@@ -5,8 +5,8 @@
  *  the MapDatasource repository and one or more MapFeatures.
  */
 //import { config, mapinit, features } from "./config";
-import MapApplication from './node_modules/custom-google-map/MapApplication.js';
-import MapFeature from './node_modules/custom-google-map/MapFeature.js';
+import MapApplication from '../../node_modules/@ocdladefense/google-maps/MapApplication.js';
+import MapFeature from '../../node_modules/@ocdladefense/google-maps/MapFeature.js';
 import UrlMarker  from './UrlMarker.js';
 
 // Instantiate the app and pass in the mapConfig obj
@@ -79,7 +79,7 @@ window.contactQuery = function(query) {
 		let body = JSON.stringify({query:query});
 		console.log(body);
 
-	  	//$search = cache["custom"];
+		// $search = cache["custom"];
 	  let $search = fetch("/maps/search",{
 		method: 'POST', // *GET, POST, PUT, DELETE, etc.
 		mode: 'cors', // no-cors, *cors, same-origin
