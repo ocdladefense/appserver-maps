@@ -38,19 +38,20 @@ class MapModule extends Module
 		return $result->getRecords();			
 
 	}
-	function getSearchData()
-	{
-		if($_SESSION["searchQuery"] != null)
-		{
-			$query = $_SESSION["searchQuery"];	
+	
+	function getSearchData() {
+		$request = $this->getRequest();
+		$body = $request->getBody();
 
-			$api = $this->loadForceApi();
+		
+		$query = $body->query;
+		// $query = "SELECT Id, Name, MailingAddress FROM Contact LIMIT 25";
 
-			$result = $api->query($query);
+		$api = $this->loadForceApi();
 
-			return $result->getRecords();				
-		}
-		return;
+		$result = $api->query($query);
+
+		return $result->getRecords();				
 	}
 
 	function getWitnessData()
