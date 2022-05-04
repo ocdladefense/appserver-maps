@@ -44,8 +44,23 @@ class MapModule extends Module
 		$body = $request->getBody();
 
 		
-		$query = $body->query;
-		// $query = "SELECT Id, Name, MailingAddress FROM Contact LIMIT 25";
+		$where = $body->where;
+		$limit = $body->limit;
+		$query = "SELECT Id,Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact ";
+		if($limit != null)
+		{
+			$query.="LIMIT ".$limit;
+		}
+		if($where != null)
+		{
+			$query.="WHERE ";
+			$struct = [];
+			foreach($where as $obj)
+			{
+				$struct[]= $obj->field."= '".$obj->value."'";
+			}
+			$query.= implode("AND",$struct);
+		}
 
 		$api = $this->loadForceApi();
 
