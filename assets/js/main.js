@@ -7,7 +7,7 @@
 //import { config, mapinit, features } from "./config";
 import MapApplication from '../../node_modules/@ocdladefense/google-maps/MapApplication.js';
 import MapFeature from '../../node_modules/@ocdladefense/google-maps/MapFeature.js';
-import UrlMarker  from './UrlMarker.js';
+import UrlMarker  from '../../node_modules/@ocdladefense/google-maps/UrlMarker.js';
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
@@ -60,8 +60,15 @@ function handleEvent(e) {
 
 document.addEventListener("click", handleEvent, true);
 
-
-window.contactQuery = function(query) {
+window.query1 = {
+	where:[{field:"Name",value:"Thad Higgins"}],
+	limit:null
+};
+let query2 = {
+	where:null,
+	limit:25
+};
+window.contactQuery = function(qb) {
 	// Construct a config object.
     let config = {
 		name: "search",
@@ -74,9 +81,9 @@ window.contactQuery = function(query) {
 
 	myMap.addFeature(f);
 
-	function doSearch(query) {
+	function doSearch(qb) {
 
-		let body = JSON.stringify({query:query});
+		let body = JSON.stringify(qb);
 		console.log(body);
 
 		// $search = cache["custom"];
@@ -90,7 +97,7 @@ window.contactQuery = function(query) {
 		  'Accept': 'text/html'
 		  // 'Content-Type': 'application/x-www-form-urlencoded',
 		},
-		body: JSON.stringify({query:query})
+		body: body
 	  }).then(resp => {
 		return resp.json();
 	  });
@@ -105,7 +112,7 @@ window.contactQuery = function(query) {
 	  return $members;
 	}
 
-	f.setDatasource(doSearch.bind(null,query));
+	f.setDatasource(doSearch.bind(null,qb));
 	
 	
 	// Load the feature's data.
