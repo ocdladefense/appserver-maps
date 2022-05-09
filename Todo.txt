@@ -18,3 +18,12 @@ map loading UX
 
 Search:
 Get links to map for any results that have geolocation data
+
+--
+document.create element for checkboxes in where query
+new function in main.js - addCondition, removeCondition
+hardcode checkboxes at first ie Thad Higgins
+if unchecked, what happens when checked
+default for limit
+firstname, lastname, city , county in where clause
+contact type: ocdlaoccupation

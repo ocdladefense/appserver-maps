@@ -27,7 +27,7 @@ class MapModule extends Module
 
 	function getMemberData()
 	{
-		$query = "SELECT Id,Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Current_Member_Flag__c = true";	
+		$query = "SELECT Id, Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Current_Member_Flag__c = true";	
 
 		$api = $this->loadForceApi();
 
@@ -46,21 +46,26 @@ class MapModule extends Module
 		
 		$where = $body->where;
 		$limit = $body->limit;
-		$query = "SELECT Id,Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact ";
-		if($limit != null)
-		{
-			$query.="LIMIT ".$limit;
-		}
+		$query = "SELECT Id, Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact ";
+
 		if($where != null)
 		{
-			$query.="WHERE ";
+            //null position and limit bug fixed
+            //unsure if we can persist feature on map and change its datasource
+            //may need to update library, mapfeature class
+			$query.="WHERE MailingLatitude != null AND ";
 			$struct = [];
 			foreach($where as $obj)
 			{
-				$struct[]= $obj->field."= '".$obj->value."'";
+				$struct[]= $obj->field." ".$obj->op." '".$obj->value."'";
 			}
 			$query.= implode("AND",$struct);
 		}
+        if($limit != null)
+		{
+			$query.=" LIMIT ".$limit;
+		}
+        //var_dump($query);
 
 		$api = $this->loadForceApi();
 
