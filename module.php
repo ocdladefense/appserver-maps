@@ -38,8 +38,10 @@ class MapModule extends Module
 		return $result->getRecords();			
 
 	}
-	
+
+
 	function getSearchData() {
+
 		$request = $this->getRequest();
 		$body = $request->getBody();
 
@@ -70,8 +72,11 @@ class MapModule extends Module
 		$api = $this->loadForceApi();
 
 		$result = $api->query($query);
+        $myResult = array();
+        $myResult["query"] = $query;
+        $myResult["results"] = $result->getRecords();	
 
-		return $result->getRecords();				
+		return $myResult;		
 	}
 
 	function getWitnessData()

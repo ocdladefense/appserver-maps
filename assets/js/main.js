@@ -52,55 +52,70 @@ function handleEvent(e) {
     target.classList.add("feature-active");
   }
 }
-window.getBoxes = function () {
-  let boxes = document.querySelectorAll(".query-filter:checked");
-  let query = {
-    where: [],
-    limit: null,
-  };
+//search query checkboxes
+function whichBox(e) {
+    var target = e.target;
+    if (target.classList.contains("query-filter")) {
+      getBox(target);
+    }
+  }
+  
+  document.addEventListener("click", handleEvent, true);
+  document.addEventListener("click", whichBox, true);
 
-  boxes.forEach((box) => {
+//query building
+const SQL_EQ = "=";
+const SQL_LIKE = "LIKE";
+const SQL_GT = ">";
+const SQL_LT = "<";
+
+let c1 = { field: "LastName", value: "Smith", op: SQL_EQ };
+//limiting to reduce data
+let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: SQL_EQ };
+let c3 = { field: "FirstName", value: "Gerry" };
+
+const userQuery = {
+  object: "Contact",
+  fields: [],
+  where: [c1, c2, c3],
+  limit: 20,
+};
+
+window.getBox = function(box) {
+    console.log(box);
+
     let field = box.dataset.field;
     let value = box.dataset.value;
     let op = box.dataset.op;
-
-    query.limit = box.dataset.limit;
 
     let cond = {
       field: field,
       value: value,
       op: op,
     };
-    query.where.push(cond);
-  });
 
-  if (query.where.length == 0 && !query.limit) {
-    query.limit = 25;
-  }
 
-  //console.log(boxes);
-  contactQuery(query); 
+    if (box.checked == true) {
+        userQuery.where.push(cond);
+    }
+    else {
+        let newWhere = userQuery.where.filter((c) => 
+        {
+            //unchecked
+            if (c.field == cond.field && c.value == cond.value) {
+
+                return false;
+            }
+            return true;
+        });
+        userQuery.where = newWhere;
+    }
+    console.log(userQuery);
+  contactQuery(userQuery);
 };
 
-//search query checkboxes
-function whichBox(e) {
-  var target = e.target;
-  if (target.classList.contains("query-filter")) {
-    getBoxes();
-  }
-}
 
-document.addEventListener("click", handleEvent, true);
-document.addEventListener("click", whichBox, true);
 
-let query1 = {
-  where: [{ field: "Name", value: "Thad Higgins" }],
-  limit: 10,
-};
-let query2 = {
-  where: null,
-  limit: 25,
-};
 window.contactQuery = function (qb) {
   // Construct a config object.
   let config = {
@@ -111,7 +126,7 @@ window.contactQuery = function (qb) {
       "/modules/maps/assets/markers/members/member-marker-round-black.png",
     datasource: function () {
       return "";
-    }
+    },
   };
 
   let searchFeature = new MapFeature(config);
@@ -125,7 +140,7 @@ window.contactQuery = function (qb) {
 
   function doSearch(qb) {
     let body = JSON.stringify(qb);
-    console.log(body);
+    //console.log(body);
 
     // $search = cache["custom"];
     let $search = fetch("/maps/search", {
@@ -160,57 +175,73 @@ window.contactQuery = function (qb) {
 
   // Load the feature's markers.
   searchFeature.loadMarkers().then(() => {
-      //show the feature
+    //show the feature
 
-      let boxes = document.querySelectorAll(".query-filter:checked");
-      if (myMap.isVisible('search')) {
-        boxes.forEach((box) => {
-            box.classList.remove("feature-active");
-        });
+    let boxes = document.querySelectorAll(
+      ".query-filter:checked",
+      ".feature-active"
+    );
+    if (myMap.isVisible("search")) {
+      boxes.forEach((box) => {
+        box.classList.remove("feature-active");
+      });
+      //myMap.removeFeature('search');
 
-        myMap.hideFeature('search');
-      } else {
-        myMap.showFeature('search');
-        boxes.forEach((box) => {
-            box.classList.add("feature-active");
-        });
-      }
+      myMap.hideFeature("search");
+    } else {
+      myMap.showFeature("search");
+      boxes.forEach((box) => {
+        box.classList.add("feature-active");
+      });
+    }
+    //searchFeature.markers = [];
   });
-      //shows all search results after 1 box, currently the search query is only added to
-  searchFeature.data = null;
+  //shows all search results after 1 box, currently the search query is only added to
 };
 
-const SQL_EQ = "=";
-const SQL_LIKE = "LIKE";
-const SQL_GT = ">";
-const SQL_LT = "<";
 
-let inputs = [];
+//new module
+
 let checkboxes = [];
-let c1 = { field: "LastName", value: "Smith", op: SQL_EQ, limit: 10 };
-//limiting to reduce data
-let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: SQL_EQ, limit: 20 };
+checkboxes = userQuery.where.map(conditionToCheckbox);
+checkboxes.push(limitToCheckbox(userQuery.limit));
 
-inputs = [c1, c2];
+function conditionToCheckbox(c) {
+        // Create li elements; each li will have a <label> and <input type="checkbox"> element as "children."
+        let myLi = document.createElement("li");
+        let myOp = c.op || SQL_EQ;
+        let label = document.createElement("label");
+        label.innerHTML = " " + c.field + "  " + myOp + " " + c.value;
+        let box = document.createElement("input");
+        box.setAttribute("type", "checkbox");
+        box.setAttribute("class", "query-filter");
+        box.setAttribute("data-field", c.field);
+        box.setAttribute("data-value", c.value);
+        box.setAttribute("data-op", myOp);
+        box.setAttribute("data-feature-name", "search");
+        box.setAttribute("checked", "checked");
+      
+        myLi.appendChild(box);
+        myLi.appendChild(label);
+        return myLi;   
+}
+function limitToCheckbox(limit) {
+        // Create li elements; each li will have a <label> and <input type="checkbox"> element as "children."
+        let myLi = document.createElement("li");
+        let label = document.createElement("label");
+        label.innerHTML = " Limit = " + limit;
+        let box = document.createElement("input");
+        box.setAttribute("type", "checkbox");
+        box.setAttribute("class", "query-filter");
+        box.setAttribute("data-limit", limit);
+        box.setAttribute("checked", "checked");
+        box.setAttribute("disabled", true);
+      
+        myLi.appendChild(box);
+        myLi.appendChild(label);
+        return myLi; 
+}
 
-inputs.forEach((input) => {
-  // Create li elements; each li will have a <label> and <input type="checkbox"> element as "children."
-  let myLi = document.createElement("li");
-  let label = document.createElement("label");
-  label.innerHTML = " " + input.field + " : " + input.value;
-  let box = document.createElement("input");
-  box.setAttribute("type", "checkbox");
-  box.setAttribute("class", "query-filter");
-  box.setAttribute("data-field", input.field);
-  box.setAttribute("data-value", input.value);
-  box.setAttribute("data-op", input.op);
-  box.setAttribute("data-limit", input.limit);
-  box.setAttribute("data-feature-name", "search");
-
-  myLi.appendChild(box);
-  myLi.appendChild(label);
-  checkboxes.push(myLi);
-});
 
 // Add the created li's (from above) to the current document.
 checkboxes.forEach((checkbox) => {
