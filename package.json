@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm i --prefix ./assets/js @ocdladefense/google-maps"
+    "build": "babel assets/js/src -d assets/js/lib"
   },
   "repository": {
     "type": "git",
@@ -17,9 +17,18 @@
   "bugs": {
     "url": "https://github.com/ocdladefense/appserver-maps/issues"
   },
+  "devDependencies": {
+    "@babel/cli": "^7.16.7",
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3"
+  },
   "dependencies": {
     "@ocdladefense/google-maps": "~1.0.0",
     "@ocdladefense/view": "~1.0.0"
   },
-  "homepage": "https://github.com/ocdladefense/appserver-maps#readme"
+  "homepage": "https://github.com/ocdladefense/appserver-maps#readme",
+  "type": "module"
 }

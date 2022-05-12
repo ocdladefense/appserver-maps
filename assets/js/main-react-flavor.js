@@ -12,7 +12,7 @@ import MapFeature from "../../node_modules/@ocdladefense/google-maps/MapFeature.
 import UrlMarker from "../../node_modules/@ocdladefense/google-maps/UrlMarker.js";
 import { vNode, addEvent, getMainContainer, changeMainContainer, myAppEventHandler, render } from '../../node_modules/@ocdladefense/view/view.js';
 import { CACHE, HISTORY } from '../../node_modules/@ocdladefense/view/cache.js';
-import { MapLayersWidget } from "./components/MapLayer.js";
+import { MapLayersWidget } from "./components/MapLayerWidget.js";
 
 // Instantiate the app and pass in the map's config.
 const myMap = new MapApplication(config);
