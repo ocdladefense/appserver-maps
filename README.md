@@ -2,7 +2,8 @@
 Module to display and interact with a Google map.
 
 ## Installation
-Run <code>npm run build</code> to transpile any JSX to JavaScript.
+- Run <code>npm update --save-dev</code> to update packages and install any development packages.
+- Run <code>npm run build</code> to transpile any JSX to JavaScript.
 
 ## Next round of work:
 
