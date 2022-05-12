@@ -1,11 +1,5 @@
 /** @jsx vNode */
-
 import { vNode, View } from '../../node_modules/@ocdladefense/view/view.js';
-
-
-
-let root = View.createRoot("#map");
-root.render("<h1>Hello World!</h1>");
-
-
+var root = View.createRoot("#map");
+root.render(vNode("h1", null, "Hello World!"));
 console.log("loaded");

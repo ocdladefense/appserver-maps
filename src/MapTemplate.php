@@ -27,7 +27,7 @@ class MapTemplate extends Template
 	);
 
     private $main = array(
-		"main.js"
+		"main-react-simple.js"
 	);
 
 	private $moduleCore = array(
@@ -54,7 +54,7 @@ class MapTemplate extends Template
 			$scripts[] = array("src" => "/modules/maps/assets/" . $name);
 		}
         foreach ($this->main as $name) {
-			$scripts[] = array("src" => "/modules/maps/assets/js/" . $name, "type" => "module");
+			$scripts[] = array("src" => "/modules/maps/assets/lib/" . $name, "type" => "module");
 		}
 
 
