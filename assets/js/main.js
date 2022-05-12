@@ -72,7 +72,7 @@ const SQL_LT = "<";
 let c1 = { field: "LastName", value: "Smith", op: SQL_EQ };
 //limiting to reduce data
 let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: SQL_EQ };
-let c3 = { field: "FirstName", value: "Gerry" };
+let c3 = { field: "FirstName", value: "Gerry"};
 
 const userQuery = {
   object: "Contact",
@@ -140,7 +140,7 @@ window.contactQuery = function (qb) {
 
   function doSearch(qb) {
     let body = JSON.stringify(qb);
-    //console.log(body);
+    console.log(body);
 
     // $search = cache["custom"];
     let $search = fetch("/maps/search", {

@@ -61,7 +61,7 @@ class MapModule extends Module
 			{
 				$struct[]= $obj->field." ".$obj->op." '".$obj->value."'";
 			}
-			$query.= implode("AND",$struct);
+			$query.= implode(" AND ",$struct);
 		}
         if($limit != null)
 		{

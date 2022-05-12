@@ -23,7 +23,7 @@ window.myMap = myMap;
 // This query can be used to ad-hoc create a search feature on the Map.
 let c1 = { field: "LastName", value: "Smith", op: QueryBuilder.SQL_EQ };
 let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: QueryBuilder.SQL_EQ };
-let c3 = { field: "FirstName", value: "Gerry" };
+let c3 = { field: "FirstName", value: "Gerry"};
 
 const userQuery = {
   object: "Contact",
