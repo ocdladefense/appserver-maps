@@ -64,6 +64,10 @@
 					<li class="nav-item dropdown">
 						<a class="nav-link text-dark" data-toggle="dropdown">Misc</a>
 						<ul class="dropdown-menu" id="custom">
+							<li>
+								<input type="checkbox" data-feature-name="search">
+								<label>Search</label>
+							</li>
 						</ul>
 					</li>
 				</div>

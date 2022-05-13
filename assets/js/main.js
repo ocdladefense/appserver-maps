@@ -14,9 +14,25 @@ const myMap = new MapApplication(config);
 window.myMap = myMap;
 // Render the map to the page
 // After the map finished initializing, get and set the users
+const SQL_EQ = "=";
+const SQL_LIKE = "LIKE";
+const SQL_GT = ">";
+const SQL_LT = "<";
 
+let c1 = { field: "LastName", value: "Smith", op: SQL_EQ };
+//limiting to reduce data
+let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: SQL_EQ };
+let c3 = { field: "FirstName", value: "Gerry"};
+
+const userQuery = {
+  object: "Contact",
+  fields: [],
+  where: [c1,c2],
+  limit: 20,
+};
 let init = myMap.init(mapinit).then(function () {
   //Hides the filters until data is loaded
+  
   myMap.hideFilters();
   //console.log("map loaded");
 
@@ -29,8 +45,20 @@ let init = myMap.init(mapinit).then(function () {
 
   // Set up the features and load in the data
 
+  let config = {
+    name: "search",
+    label: "search",
+    markerLabel: "SE",
+    markerStyle:
+      "/modules/maps/assets/markers/members/member-marker-round-black.png",
+    datasource: doSearch.bind(null, userQuery)
+    
+  };
+
+  features.search = config;  
   myMap.loadFeatures(features);
   myMap.loadFeatureData();
+
 });
 
 /**
@@ -64,29 +92,14 @@ function whichBox(e) {
   document.addEventListener("click", whichBox, true);
 
 //query building
-const SQL_EQ = "=";
-const SQL_LIKE = "LIKE";
-const SQL_GT = ">";
-const SQL_LT = "<";
 
-let c1 = { field: "LastName", value: "Smith", op: SQL_EQ };
-//limiting to reduce data
-let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: SQL_EQ };
-let c3 = { field: "FirstName", value: "Gerry"};
-
-const userQuery = {
-  object: "Contact",
-  fields: [],
-  where: [c1, c2, c3],
-  limit: 20,
-};
 
 window.getBox = function(box) {
     console.log(box);
 
     let field = box.dataset.field;
     let value = box.dataset.value;
-    let op = box.dataset.op;
+    let op = box.dataset.op || SQL_EQ;
 
     let cond = {
       field: field,
@@ -114,60 +127,40 @@ window.getBox = function(box) {
   contactQuery(userQuery);
 };
 
+function doSearch(qb) {
+  let body = JSON.stringify(qb);
+  console.log(body);
 
+  return fetch("/maps/search", {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "text/html",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: body,
+  })
+  .then((resp) => {
+    return resp.json();
+  })
+  .then((queryAndResults) => { 
+    console.log(queryAndResults["query"]);
+    console.log(queryAndResults["results"]);
+    let members = queryAndResults.results;
+    return members.map((member) => {
+      let newMember = new Member(member);
+      return newMember;
+    });
+  });
+}
 
 window.contactQuery = function (qb) {
-  // Construct a config object.
-  let config = {
-    name: "search",
-    label: "search",
-    markerLabel: "SE",
-    markerStyle:
-      "/modules/maps/assets/markers/members/member-marker-round-black.png",
-    datasource: function () {
-      return "";
-    },
-  };
-
-  let searchFeature = new MapFeature(config);
-
-  //check if ran before
-  if (!myMap.getFeature("search")) {
-    myMap.addFeature(searchFeature);
-  } else {
-    searchFeature = myMap.getFeature("search");
-  }
-
-  function doSearch(qb) {
-    let body = JSON.stringify(qb);
-    console.log(body);
-
-    // $search = cache["custom"];
-    let $search = fetch("/maps/search", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "text/html",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: body,
-    }).then((resp) => {
-      return resp.json();
-    });
-
-    let $members = $search.then((members) => {
-      return members.map((member) => {
-        let newMember = new Member(member);
-        return newMember;
-      });
-    });
-
-    return $members;
-  }
-
+  // Get a config object.
+  let searchFeature = myMap.getFeature("search");
+  //need to clear markers
   searchFeature.setDatasource(doSearch.bind(null, qb));
 
   // Load the feature's data.
