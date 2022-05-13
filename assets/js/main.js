@@ -6,7 +6,7 @@
  */
 //import { config, mapinit, features } from "./config";
 import MapApplication from "../../node_modules/@ocdladefense/google-maps/MapApplication.js";
-import MapFeature from "../../node_modules/@ocdladefense/google-maps/MapFeature.js";
+import { doSearch,getBox } from "./search.js";
 import UrlMarker from "../../node_modules/@ocdladefense/google-maps/UrlMarker.js";
 
 // Instantiate the app and pass in the mapConfig obj
@@ -30,6 +30,13 @@ const userQuery = {
   where: [c1,c2],
   limit: 20,
 };
+//TODO
+//let qb = new QueryBuilder(userQuery);
+//qb.render("custom");
+//let query = qb.getObject();
+//qb.addCondition(c1);
+//qb.removeCondition(c2);
+//let newQuery = qb.getObject();
 let init = myMap.init(mapinit).then(function () {
   //Hides the filters until data is loaded
   
@@ -80,88 +87,16 @@ function handleEvent(e) {
     target.classList.add("feature-active");
   }
 }
-//search query checkboxes
-function whichBox(e) {
-    var target = e.target;
-    if (target.classList.contains("query-filter")) {
-      getBox(target);
-    }
-  }
-  
-  document.addEventListener("click", handleEvent, true);
-  document.addEventListener("click", whichBox, true);
+//Add event listener
+document.addEventListener("click", handleEvent, true);
 
-//query building
+document.addEventListener("queryChange",contactQuery);
 
-
-window.getBox = function(box) {
-    console.log(box);
-
-    let field = box.dataset.field;
-    let value = box.dataset.value;
-    let op = box.dataset.op || SQL_EQ;
-
-    let cond = {
-      field: field,
-      value: value,
-      op: op,
-    };
-
-
-    if (box.checked == true) {
-        userQuery.where.push(cond);
-    }
-    else {
-        let newWhere = userQuery.where.filter((c) => 
-        {
-            //unchecked
-            if (c.field == cond.field && c.value == cond.value) {
-
-                return false;
-            }
-            return true;
-        });
-        userQuery.where = newWhere;
-    }
-    console.log(userQuery);
-  contactQuery(userQuery);
-};
-
-function doSearch(qb) {
-  let body = JSON.stringify(qb);
-  console.log(body);
-
-  return fetch("/maps/search", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "text/html",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: body,
-  })
-  .then((resp) => {
-    return resp.json();
-  })
-  .then((queryAndResults) => { 
-    console.log(queryAndResults["query"]);
-    console.log(queryAndResults["results"]);
-    let members = queryAndResults.results;
-    return members.map((member) => {
-      let newMember = new Member(member);
-      return newMember;
-    });
-  });
-}
-
-window.contactQuery = function (qb) {
+function contactQuery() {
   // Get a config object.
   let searchFeature = myMap.getFeature("search");
   //need to clear markers
-  searchFeature.setDatasource(doSearch.bind(null, qb));
+  searchFeature.setDatasource(doSearch.bind(null, qb.GetObject()));
 
   // Load the feature's data.
   searchFeature.loadData();
@@ -193,53 +128,35 @@ window.contactQuery = function (qb) {
 };
 
 
-//new module
+function doSearch(qb) {
+  let body = JSON.stringify(qb);
+  console.log(body);
 
-let checkboxes = [];
-checkboxes = userQuery.where.map(conditionToCheckbox);
-checkboxes.push(limitToCheckbox(userQuery.limit));
-
-function conditionToCheckbox(c) {
-        // Create li elements; each li will have a <label> and <input type="checkbox"> element as "children."
-        let myLi = document.createElement("li");
-        let myOp = c.op || SQL_EQ;
-        let label = document.createElement("label");
-        label.innerHTML = " " + c.field + "  " + myOp + " " + c.value;
-        let box = document.createElement("input");
-        box.setAttribute("type", "checkbox");
-        box.setAttribute("class", "query-filter");
-        box.setAttribute("data-field", c.field);
-        box.setAttribute("data-value", c.value);
-        box.setAttribute("data-op", myOp);
-        box.setAttribute("data-feature-name", "search");
-        box.setAttribute("checked", "checked");
-      
-        myLi.appendChild(box);
-        myLi.appendChild(label);
-        return myLi;   
-}
-function limitToCheckbox(limit) {
-        // Create li elements; each li will have a <label> and <input type="checkbox"> element as "children."
-        let myLi = document.createElement("li");
-        let label = document.createElement("label");
-        label.innerHTML = " Limit = " + limit;
-        let box = document.createElement("input");
-        box.setAttribute("type", "checkbox");
-        box.setAttribute("class", "query-filter");
-        box.setAttribute("data-limit", limit);
-        box.setAttribute("checked", "checked");
-        box.setAttribute("disabled", true);
-      
-        myLi.appendChild(box);
-        myLi.appendChild(label);
-        return myLi; 
+  return fetch("/maps/search", {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "text/html",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: body,
+  })
+  .then((resp) => {
+    return resp.json();
+  })
+  .then((queryAndResults) => { 
+    console.log(queryAndResults["query"]);
+    console.log(queryAndResults["results"]);
+    let members = queryAndResults.results;
+    return members.map((member) => {
+      let newMember = new Member(member);
+      return newMember;
+    });
+  });
 }
 
 
-// Add the created li's (from above) to the current document.
-checkboxes.forEach((checkbox) => {
-  let container = document.getElementById("custom");
-  container.appendChild(checkbox);
-});
 
-export default contactQuery;
