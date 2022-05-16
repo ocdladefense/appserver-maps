@@ -26,6 +26,7 @@
     "babel-loader": "^8.2.3"
   },
   "dependencies": {
+    "@ashirk94/query-builder": "^1.0.5",
     "@ocdladefense/google-maps": "~1.0.0",
     "@ocdladefense/view": "~1.0.0"
   },

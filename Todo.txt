@@ -29,3 +29,10 @@ qb:
 query obj - convert to ui element
 parse out (main.js data (specific implementation))
 keyboard shortcut for query, type in
+
+let qb = new QueryBuilder
+
+custom events mdn
+
+next tuesday
+library logic review map code, virtual nodes intro

@@ -123,11 +123,6 @@ function populateCourtData()
   return $courts;
 };
 
-
-
-
-
-
 //custom datasources
 const features = {
   sustaining: {

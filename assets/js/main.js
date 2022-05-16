@@ -6,23 +6,25 @@
  */
 //import { config, mapinit, features } from "./config";
 import MapApplication from "../../node_modules/@ocdladefense/google-maps/MapApplication.js";
-import { doSearch,getBox } from "./search.js";
+import QueryBuilder from "../../node_modules/@ashirk94/query-builder/QueryBuilder.js"
 import UrlMarker from "../../node_modules/@ocdladefense/google-maps/UrlMarker.js";
+//import MapFeature
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
 window.myMap = myMap;
 // Render the map to the page
 // After the map finished initializing, get and set the users
+
+//mock soql query components
 const SQL_EQ = "=";
 const SQL_LIKE = "LIKE";
 const SQL_GT = ">";
 const SQL_LT = "<";
 
 let c1 = { field: "LastName", value: "Smith", op: SQL_EQ };
-//limiting to reduce data
 let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: SQL_EQ };
-let c3 = { field: "FirstName", value: "Gerry"};
+//let c3 = { field: "FirstName", value: "Gerry"};
 
 const userQuery = {
   object: "Contact",
@@ -30,14 +32,21 @@ const userQuery = {
   where: [c1,c2],
   limit: 20,
 };
-//TODO
-//let qb = new QueryBuilder(userQuery);
-//qb.render("custom");
-//let query = qb.getObject();
-//qb.addCondition(c1);
-//qb.removeCondition(c2);
-//let newQuery = qb.getObject();
-let init = myMap.init(mapinit).then(function () {
+//Query building with npm package
+let qb = new QueryBuilder(userQuery);
+qb.render("custom");
+let box = document.querySelector('.query-filter');
+let query = qb.getObject();
+qb.addCondition(c1);
+qb.removeCondition(c2);
+let newQuery = qb.getObject();
+console.log(query);
+console.log(newQuery);
+
+let boxes = document.querySelectorAll('.query-filter');
+
+
+myMap.init(mapinit).then(function () {
   //Hides the filters until data is loaded
   
   myMap.hideFilters();
@@ -62,7 +71,8 @@ let init = myMap.init(mapinit).then(function () {
     
   };
 
-  features.search = config;  
+//qb.onQueryUpdate(contactQuery);
+  features["search"] = config;  
   myMap.loadFeatures(features);
   myMap.loadFeatureData();
 
@@ -87,14 +97,18 @@ function handleEvent(e) {
     target.classList.add("feature-active");
   }
 }
-//Add event listener
-document.addEventListener("click", handleEvent, true);
 
-document.addEventListener("queryChange",contactQuery);
+
 
 function contactQuery() {
   // Get a config object.
-  let searchFeature = myMap.getFeature("search");
+  console.log(qb);
+  let searchFeature = new Promise( () => {
+      myMap.getFeature("search")
+  }).then(() => {
+      console.log(searchFeature);
+  });
+
   //need to clear markers
   searchFeature.setDatasource(doSearch.bind(null, qb.GetObject()));
 
@@ -158,5 +172,9 @@ function doSearch(qb) {
   });
 }
 
+//Add event listener
+document.addEventListener("click", handleEvent, true);
 
+
+boxes.addEventListener('click', qb.onQueryUpdate(contactQuery), true);
 
