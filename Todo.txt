@@ -36,3 +36,11 @@ custom events mdn
 
 next tuesday
 library logic review map code, virtual nodes intro
+
+
+copy back querybuilder updates from node modules
+remove/add condition bugged
+
+lastname isn't pulled in query
+datasource bug, initial query working
+this.markers = []

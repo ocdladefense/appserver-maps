@@ -6,7 +6,7 @@
  */
 //import { config, mapinit, features } from "./config";
 import MapApplication from "../../node_modules/@ocdladefense/google-maps/MapApplication.js";
-import QueryBuilder from "../../node_modules/@ashirk94/query-builder/QueryBuilder.js"
+import QueryBuilder from "../../node_modules/@ashirk94/query-builder/QueryBuilder.js";
 import UrlMarker from "../../node_modules/@ocdladefense/google-maps/UrlMarker.js";
 //import MapFeature
 
@@ -29,26 +29,39 @@ let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: SQL_EQ };
 const userQuery = {
   object: "Contact",
   fields: [],
-  where: [c1,c2],
+  where: [c1, c2],
   limit: 20,
 };
+//custom event
+document.addEventListener("querychange", contactQuery, true);
+
+function contactQuery(e) {
+    console.log(e);
+  let query = e.detail;
+
+  let searchFeature = myMap.getFeature("search");
+
+  //need to clear markers?
+  searchFeature.setDatasource(doSearch.bind(null, e.detail));
+
+  // Load the feature's data.
+  searchFeature.loadData();
+
+  // Load the feature's markers.
+  searchFeature.loadMarkers().then(() => {
+    //show the feature
+  });
+  //searchFeature.markers = [];
+  //shows all search results after 1 box, currently the search query is only added to
+}
+
 //Query building with npm package
 let qb = new QueryBuilder(userQuery);
 qb.render("custom");
-let box = document.querySelector('.query-filter');
-let query = qb.getObject();
-qb.addCondition(c1);
-qb.removeCondition(c2);
-let newQuery = qb.getObject();
-console.log(query);
-console.log(newQuery);
-
-let boxes = document.querySelectorAll('.query-filter');
-
 
 myMap.init(mapinit).then(function () {
   //Hides the filters until data is loaded
-  
+
   myMap.hideFilters();
   //console.log("map loaded");
 
@@ -67,17 +80,42 @@ myMap.init(mapinit).then(function () {
     markerLabel: "SE",
     markerStyle:
       "/modules/maps/assets/markers/members/member-marker-round-black.png",
-    datasource: doSearch.bind(null, userQuery)
-    
+    datasource: doSearch.bind(null, qb.getObject()),
   };
 
-//qb.onQueryUpdate(contactQuery);
-  features["search"] = config;  
+  //qb.onQueryUpdate(contactQuery);
+  features["search"] = config;
   myMap.loadFeatures(features);
   myMap.loadFeatureData();
-
 });
 
+//get data
+function doSearch(qb) {
+  let body = JSON.stringify(qb);
+
+  return fetch("/maps/search", {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "text/html",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: body,
+  })
+    .then((resp) => {
+      return resp.json();
+    })
+    .then((queryAndResults) => {
+      let members = queryAndResults.results;
+      return members.map((member) => {
+        let newMember = new Member(member);
+        return newMember;
+      });
+    });
+}
 /**
  * Let the user turn features on and off.
  */
@@ -97,84 +135,5 @@ function handleEvent(e) {
     target.classList.add("feature-active");
   }
 }
-
-
-
-function contactQuery() {
-  // Get a config object.
-  console.log(qb);
-  let searchFeature = new Promise( () => {
-      myMap.getFeature("search")
-  }).then(() => {
-      console.log(searchFeature);
-  });
-
-  //need to clear markers
-  searchFeature.setDatasource(doSearch.bind(null, qb.GetObject()));
-
-  // Load the feature's data.
-  searchFeature.loadData();
-
-  // Load the feature's markers.
-  searchFeature.loadMarkers().then(() => {
-    //show the feature
-
-    let boxes = document.querySelectorAll(
-      ".query-filter:checked",
-      ".feature-active"
-    );
-    if (myMap.isVisible("search")) {
-      boxes.forEach((box) => {
-        box.classList.remove("feature-active");
-      });
-      //myMap.removeFeature('search');
-
-      myMap.hideFeature("search");
-    } else {
-      myMap.showFeature("search");
-      boxes.forEach((box) => {
-        box.classList.add("feature-active");
-      });
-    }
-    //searchFeature.markers = [];
-  });
-  //shows all search results after 1 box, currently the search query is only added to
-};
-
-
-function doSearch(qb) {
-  let body = JSON.stringify(qb);
-  console.log(body);
-
-  return fetch("/maps/search", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "text/html",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: body,
-  })
-  .then((resp) => {
-    return resp.json();
-  })
-  .then((queryAndResults) => { 
-    console.log(queryAndResults["query"]);
-    console.log(queryAndResults["results"]);
-    let members = queryAndResults.results;
-    return members.map((member) => {
-      let newMember = new Member(member);
-      return newMember;
-    });
-  });
-}
-
 //Add event listener
 document.addEventListener("click", handleEvent, true);
-
-
-boxes.addEventListener('click', qb.onQueryUpdate(contactQuery), true);
-
