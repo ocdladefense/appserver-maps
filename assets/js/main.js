@@ -5,9 +5,9 @@
  *  the MapDatasource repository and one or more MapFeatures.
  */
 //import { config, mapinit, features } from "./config";
-import MapApplication from "../../node_modules/@ocdladefense/google-maps/MapApplication.js";
-import QueryBuilder from "../../node_modules/@ashirk94/query-builder/QueryBuilder.js";
-import UrlMarker from "../../node_modules/@ocdladefense/google-maps/UrlMarker.js";
+import MapApplication from "/node_modules/@ocdladefense/google-maps/MapApplication.js";
+import QueryBuilder from "/node_modules/@ocdladefense/query-builder/QueryBuilder.js";
+import UrlMarker from "/node_modules/@ocdladefense/google-maps/UrlMarker.js";
 //import MapFeature
 
 // Instantiate the app and pass in the mapConfig obj
@@ -16,14 +16,10 @@ window.myMap = myMap;
 // Render the map to the page
 // After the map finished initializing, get and set the users
 
-//mock soql query components
-const SQL_EQ = "=";
-const SQL_LIKE = "LIKE";
-const SQL_GT = ">";
-const SQL_LT = "<";
 
-let c1 = { field: "LastName", value: "Smith", op: SQL_EQ };
-let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: SQL_EQ };
+
+let c1 = { field: "LastName", value: "Smith", op: QueryBuilder.SQL_EQ };
+let c2 = { field: "Ocdla_Member_Status__c", value: "R", op: QueryBuilder.SQL_EQ };
 //let c3 = { field: "FirstName", value: "Gerry"};
 
 const userQuery = {
