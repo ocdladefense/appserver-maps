@@ -1,3 +1,0 @@
-SELECT Id, Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE MailingLatitude != null AND FirstName  'Gerry'ANDOcdla_Member_Status__c = 'R' LIMIT 20
-
-syntax errors (spaces, eq)
