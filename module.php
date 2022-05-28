@@ -59,7 +59,14 @@ class MapModule extends Module
 			$struct = [];
 			foreach($where as $obj)
 			{
-				$struct[]= $obj->field." ".$obj->op." '".$obj->value."'";
+                if (is_bool($obj->value))
+                {
+                    $struct[]= $obj->field." ".$obj->op." ".($obj->value ? "true" : "false");
+                }
+                else 
+                {
+				    $struct[]= $obj->field." ".$obj->op." '".$obj->value."'";
+                }
 			}
 			$query.= implode(" AND ",$struct);
 		}
