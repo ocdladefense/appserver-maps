@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel assets/js/src -d assets/js/lib"
+    "build": "babel assets/js/src -d assets/js/components"
   },
   "repository": {
     "type": "git",
@@ -26,9 +26,9 @@
     "babel-loader": "^8.2.3"
   },
   "dependencies": {
-    "@ashirk94/query-builder": "^1.0.5",
+    "@ocdladefense/query-builder": "^1.0.5",
     "@ocdladefense/google-maps": "~1.0.0",
-    "@ocdladefense/view": "~1.0.0"
+    "@ocdladefense/view": "~2.0.0"
   },
   "homepage": "https://github.com/ocdladefense/appserver-maps#readme",
   "type": "module"
