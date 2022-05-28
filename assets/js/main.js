@@ -5,10 +5,11 @@
  *  the MapDatasource repository and one or more MapFeatures.
  */
 //import { config, mapinit, features } from "./config";
+import { vNode, View } from '/node_modules/@ocdladefense/view/view.js';
 import MapApplication from "/node_modules/@ocdladefense/google-maps/MapApplication.js";
 import QueryBuilder from "/node_modules/@ocdladefense/query-builder/QueryBuilder.js";
 import UrlMarker from "/node_modules/@ocdladefense/google-maps/UrlMarker.js";
-//import MapFeature
+import MapLegend from "./components/components.js";
 
 // Instantiate the app and pass in the mapConfig obj
 const myMap = new MapApplication(config);
@@ -16,6 +17,19 @@ window.myMap = myMap;
 // Render the map to the page
 // After the map finished initializing, get and set the users
 
+function showLegend() {
+  let features = [
+      {label: "Regular Members", name: "regular"},
+      {label: "Sustaining Members", name: "sustaining"}
+  ];
+  var legend = vNode(MapLegend, {
+    features: features
+  });
+  let tools = View.createRoot("#toolbar");
+  tools.render(legend);
+}
+
+showLegend();
 
 
 let c1 = { field: "LastName", value: "Smith", op: QueryBuilder.SQL_EQ };
@@ -53,7 +67,7 @@ function contactQuery(e) {
 
 //Query building with npm package
 let qb = new QueryBuilder(userQuery);
-qb.render("custom");
+// qb.render("custom");
 
 myMap.init(mapinit).then(function () {
   //Hides the filters until data is loaded
