@@ -1,0 +1,36 @@
+{
+  "name": "maps",
+  "version": "1.0.0",
+  "description": "Module to display and interact with a Google map.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel assets/js/src -d assets/js/components"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ocdladefense/appserver-maps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ocdladefense/appserver-maps/issues"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.7",
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3"
+  },
+  "dependencies": {
+    "@ocdladefense/google-maps": "~1.0.0",
+    "@ocdladefense/ocdla-maps": "git+https://github.com/ocdladefense/node-ocdla-maps.git#development",
+    "@ocdladefense/query-builder": "^1.0.5",
+    "@ocdladefense/view": "~2.0.0"
+  },
+  "homepage": "https://github.com/ocdladefense/appserver-maps#readme",
+  "type": "module"
+}
