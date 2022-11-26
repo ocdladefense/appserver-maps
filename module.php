@@ -27,7 +27,7 @@ class MapModule extends Module
 
 	function getMemberData()
 	{
-		$query = "SELECT Id, Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Current_Member_Flag__c = true";	
+		$query = "SELECT Id, Name, FirstName, LastName, Ocdla_Occupation_Field_Type__c, Ocdla_Organization__c, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact WHERE Ocdla_Current_Member_Flag__c = True";	
 
 		$api = $this->loadForceApi();
 
@@ -48,7 +48,7 @@ class MapModule extends Module
 		
 		$where = $body->where;
 		$limit = $body->limit;
-		$query = "SELECT Id, Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact ";
+		$query = "SELECT Id, Name, FirstName, LastName, Ocdla_Member_Status__c, Ocdla_Occupation_Field_Type__c, Ocdla_Organization__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c FROM Contact ";
 
 		if($where != null)
 		{
@@ -88,7 +88,7 @@ class MapModule extends Module
 
 	function getWitnessData()
 	{
-		$query = "SELECT Name, Ocdla_Member_Status__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c, Ocdla_Expert_Witness_Primary__c, Ocdla_Expert_Witness_Other_Areas__c FROM Contact WHERE Ocdla_Is_Expert_Witness__c = true";	
+		$query = "SELECT Name, FirstName, LastName, Ocdla_Member_Status__c, Ocdla_Occupation_Field_Type__c, Ocdla_Organization__c, Phone, Email, MailingAddress, Ocdla_Current_Member_Flag__c, Ocdla_Is_Expert_Witness__c, Ocdla_Expert_Witness_Primary__c, Ocdla_Expert_Witness_Other_Areas__c FROM Contact WHERE Ocdla_Is_Expert_Witness__c = true";	
 		
 		$api = $this->loadForceApi();
 
